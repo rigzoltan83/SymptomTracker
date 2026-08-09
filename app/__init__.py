@@ -11,9 +11,16 @@ def create_app():
     app.config.from_object("config.Config")
 
     db.init_app(app)
-    migrate.init_app(app, db)
+
+    from app import models
+
+    migrate.init_app(
+        app,
+        db,
+    )
 
     from app.routes import main
+
     app.register_blueprint(main)
 
     return app
