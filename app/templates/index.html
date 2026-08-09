@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <title>SymptomTracker</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+</head>
+
+<body>
+
+    <main class="container">
+
+        <header class="header">
+            <h1>SymptomTracker</h1>
+            <p>Esemény rögzítése</p>
+        </header>
+
+        <section class="event-buttons">
+
+            <button class="event-button">
+                <span class="icon">💊</span>
+                <span>Cetirizin</span>
+            </button>
+
+            <button class="event-button">
+                <span class="icon">🍽️</span>
+                <span>Étel / ital</span>
+            </button>
+
+            <button class="event-button">
+                <span class="icon">🔴</span>
+                <span>Tünet</span>
+            </button>
+
+        </section>
+
+        <nav class="bottom-actions">
+
+            <button>
+                Korábbi események
+            </button>
+
+            <button>
+                Export
+            </button>
+
+        </nav>
+
+    </main>
+
+</body>
+</html>
