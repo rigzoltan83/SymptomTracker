@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <title>Tünet rögzítése</title>
+
+    <link
+        rel="stylesheet"
+        href="../static/css/style.css"
+    >
+</head>
+
+<body>
+
+<main class="container">
+
+    <header class="header">
+        <h1>🔴 Tünet</h1>
+        <p>Új tünet rögzítése</p>
+    </header>
+
+
+    {% if error %}
+
+        <div class="status status-error">
+            {{ error }}
+        </div>
+
+    {% endif %}
+
+
+    <section class="edit-card">
+
+        <form method="post">
+
+            <label class="form-field">
+
+                <span>Dátum és idő</span>
+
+                <input
+                    type="datetime-local"
+                    name="occurred_at"
+                    value="{{
+                        form.get(
+                            'occurred_at',
+                            local_now
+                        )
+                    }}"
+                    required
+                >
+
+            </label>
+
+
+            <label class="form-field">
+
+                <span>Tünet típusa</span>
+
+                <select
+                    name="symptom_type_id"
+                    required
+                >
+
+                    <option value="">
+                        Válassz...
+                    </option>
+
+                    {% for symptom_type in symptom_types %}
+
+                        <option
+                            value="{{ symptom_type.id }}"
+                            {% if
+                                form.get(
+                                    'symptom_type_id'
+                                ) == symptom_type.id|string
+                            %}
+                                selected
+                            {% endif %}
+                        >
+                            {{ symptom_type.name }}
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </label>
+
+
+            <label class="form-field">
+
+                <span>
+                    Erősség:
+                    <strong id="severity-value">
+                        {{
+                            form.get(
+                                'severity',
+                                '5'
+                            )
+                        }}
+                    </strong>
+                    / 10
+                </span>
+
+                <input
+                    id="severity"
+                    type="range"
+                    name="severity"
+                    min="0"
+                    max="10"
+                    step="1"
+                    value="{{
+                        form.get(
+                            'severity',
+                            '5'
+                        )
+                    }}"
+                >
+
+            </label>
+
+
+            <div class="form-field">
+
+                <span>Testrész(ek)</span>
+
+                <div class="body-part-grid">
+
+                    {% for body_part in body_parts %}
+
+                        <label class="body-part-option">
+
+                            <input
+                                type="checkbox"
+                                name="body_part_ids"
+                                value="{{ body_part.id }}"
+                                {% if
+                                    body_part.id
+                                    in selected_body_part_ids
+                                %}
+                                    checked
+                                {% endif %}
+                            >
+
+                            <span>
+                                {{ body_part.name }}
+                            </span>
+
+                        </label>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+
+            <label class="form-field">
+
+                <span>Megjegyzés</span>
+
+                <textarea
+                    name="notes"
+                    rows="3"
+                    placeholder="Opcionális..."
+                >{{ form.get('notes', '') }}</textarea>
+
+            </label>
+
+
+            <button
+                class="primary-button"
+                type="submit"
+            >
+                Tünet mentése
+            </button>
+
+        </form>
+
+    </section>
+
+
+    <nav class="page-bottom">
+
+        <a
+            class="home-button"
+            href="/symptomtracker/"
+        >
+            ← Mégse
+        </a>
+
+    </nav>
+
+</main>
+
+
+<script>
+    const severity =
+        document.getElementById("severity");
+
+    const severityValue =
+        document.getElementById("severity-value");
+
+    severity.addEventListener(
+        "input",
+        () => {
+            severityValue.textContent =
+                severity.value;
+        }
+    );
+</script>
+
+</body>
+</html>

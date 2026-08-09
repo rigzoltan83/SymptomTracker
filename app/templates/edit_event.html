@@ -107,6 +107,99 @@
 
             {% endif %}
 
+{% if (
+    event.event_type == "symptom"
+    and event.symptom_event
+) %}
+
+    <label class="form-field">
+
+        <span>Tünet típusa</span>
+
+        <select
+            name="symptom_type_id"
+            required
+        >
+
+            {% for symptom_type in symptom_types %}
+
+                <option
+                    value="{{ symptom_type.id }}"
+                    {% if
+                        symptom_type.id
+                        == event.symptom_event.symptom_type_id
+                    %}
+                        selected
+                    {% endif %}
+                >
+                    {{ symptom_type.name }}
+                </option>
+
+            {% endfor %}
+
+        </select>
+
+    </label>
+
+
+    <label class="form-field">
+
+        <span>
+            Erősség:
+            <strong id="severity-value">
+                {{ event.symptom_event.severity }}
+            </strong>
+            / 10
+        </span>
+
+        <input
+            id="severity"
+            type="range"
+            name="severity"
+            min="0"
+            max="10"
+            step="1"
+            value="{{ event.symptom_event.severity }}"
+        >
+
+    </label>
+
+
+    <div class="form-field">
+
+        <span>Testrész(ek)</span>
+
+        <div class="body-part-grid">
+
+            {% for body_part in body_parts %}
+
+                <label class="body-part-option">
+
+                    <input
+                        type="checkbox"
+                        name="body_part_ids"
+                        value="{{ body_part.id }}"
+                        {% if
+                            body_part.id
+                            in selected_body_part_ids
+                        %}
+                            checked
+                        {% endif %}
+                    >
+
+                    <span>
+                        {{ body_part.name }}
+                    </span>
+
+                </label>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+{% endif %}
 
             <label class="form-field">
 
@@ -147,6 +240,29 @@
     </nav>
 
 </main>
+
+{% if (
+    event.event_type == "symptom"
+    and event.symptom_event
+) %}
+
+<script>
+    const severity =
+        document.getElementById("severity");
+
+    const severityValue =
+        document.getElementById("severity-value");
+
+    severity.addEventListener(
+        "input",
+        () => {
+            severityValue.textContent =
+                severity.value;
+        }
+    );
+</script>
+
+{% endif %}
 
 </body>
 </html>

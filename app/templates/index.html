@@ -57,17 +57,16 @@
                 </span>
             </button>
 
-            <button
-                class="event-button"
-                type="button"
-                disabled
-            >
-                <span class="icon">🔴</span>
+<a
+    class="event-button event-link"
+    href="symptoms/new"
+>
+    <span class="icon">🔴</span>
 
-                <span>
-                    Tünet
-                </span>
-            </button>
+    <span>
+        Tünet
+    </span>
+</a>
 
         </section>
 
@@ -111,8 +110,19 @@
                                     💊 Cetirizin
                                 {% elif event.event_type == "food" %}
                                     🍽️ Étel / ital
-                                {% elif event.event_type == "symptom" %}
-                                    🔴 Tünet
+{% elif event.event_type == "symptom" %}
+
+    🔴
+
+    {% if event.symptom_event %}
+        {{ event.symptom_event.symptom_type.name }}
+
+        {% if event.symptom_event.severity is not none %}
+            ({{ event.symptom_event.severity }}/10)
+        {% endif %}
+    {% else %}
+        Tünet
+    {% endif %}
                                 {% else %}
                                     {{ event.event_type }}
                                 {% endif %}

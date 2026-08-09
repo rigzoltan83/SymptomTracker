@@ -180,15 +180,22 @@
                                     Étel / ital
                                 </span>
 
-                            {% elif event.event_type == "symptom" %}
 
-                                <span class="event-card-icon">
-                                    🔴
-                                </span>
+{% elif event.event_type == "symptom" %}
 
-                                <span>
-                                    Tünet
-                                </span>
+    <span class="event-card-icon">
+        🔴
+    </span>
+
+    <span>
+
+        {% if event.symptom_event %}
+            {{ event.symptom_event.symptom_type.name }}
+        {% else %}
+            Tünet
+        {% endif %}
+
+    </span>
 
                             {% endif %}
 
@@ -209,6 +216,38 @@
                         {{ event.occurred_at | local_datetime }}
                     </div>
 
+{% if (
+    event.event_type == "symptom"
+    and event.symptom_event
+) %}
+
+    <div class="symptom-summary">
+
+        <span class="severity-badge">
+            {{ event.symptom_event.severity }}/10
+        </span>
+
+        {% if event.symptom_event.body_parts %}
+
+            <span class="body-parts-summary">
+
+                {% for body_part
+                    in event.symptom_event.body_parts
+                %}
+
+                    {{ body_part.name }}{%
+                        if not loop.last
+                    %}, {% endif %}
+
+                {% endfor %}
+
+            </span>
+
+        {% endif %}
+
+    </div>
+
+{% endif %}
 
                     {% if (
                         event.event_type == "medication"
