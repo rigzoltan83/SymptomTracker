@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <title>Étel rögzítése</title>
+
+    <link
+        rel="stylesheet"
+        href="/symptomtracker/static/css/style.css"
+    >
+</head>
+
+<body>
+
+<main class="container">
+
+    <header class="header">
+
+        <h1>🍽️ {{ food.name }}</h1>
+
+        {% if food.brand %}
+            <p>{{ food.brand }}</p>
+        {% else %}
+            <p>Fogyasztás rögzítése</p>
+        {% endif %}
+
+    </header>
+
+
+    {% if error %}
+
+        <div class="status status-error">
+            {{ error }}
+        </div>
+
+    {% endif %}
+
+
+    {% if food.ingredients %}
+
+        <section class="food-detail-card">
+
+            <span class="food-detail-label">
+                Összetevők
+            </span>
+
+            <div class="food-detail-ingredients">
+
+                {% for food_ingredient
+                    in food.ingredients
+                %}
+
+                    <span>
+                        {{
+                            food_ingredient
+                            .ingredient
+                            .name
+                        }}
+                    </span>
+
+                {% endfor %}
+
+            </div>
+
+        </section>
+
+    {% endif %}
+
+<a
+    class="secondary-link food-edit-link"
+    href="/symptomtracker/foods/{{ food.id }}/edit"
+>
+    ✏️ Étel adatainak szerkesztése
+</a>
+
+    <section class="edit-card">
+
+        <form method="post">
+
+            <label class="form-field">
+
+                <span>Dátum és idő</span>
+
+                <input
+                    type="datetime-local"
+                    name="occurred_at"
+                    value="{{
+                        form.get(
+                            'occurred_at',
+                            local_now
+                        )
+                    }}"
+                    required
+                >
+
+            </label>
+
+
+            <label class="form-field">
+
+                <span>Mennyiség</span>
+
+                <input
+                    type="text"
+                    name="amount"
+                    value="{{ form.get('amount', '') }}"
+                    placeholder="pl. 2 szelet, 3 dl"
+                >
+
+            </label>
+
+
+            <label class="form-field">
+
+                <span>Megjegyzés</span>
+
+                <textarea
+                    name="notes"
+                    rows="3"
+                    placeholder="Opcionális..."
+                >{{ form.get('notes', '') }}</textarea>
+
+            </label>
+
+
+            <button
+                class="primary-button"
+                type="submit"
+            >
+                Rögzítés
+            </button>
+
+        </form>
+
+    </section>
+
+
+    <nav class="page-bottom">
+
+        <a
+            class="home-button"
+            href="/symptomtracker/foods"
+        >
+            ← Másik étel
+        </a>
+
+    </nav>
+
+</main>
+
+</body>
+</html>

@@ -45,17 +45,16 @@
                 </span>
             </button>
 
-            <button
-                class="event-button"
-                type="button"
-                disabled
-            >
-                <span class="icon">🍽️</span>
+<a
+    class="event-button event-link"
+    href="foods"
+>
+    <span class="icon">🍽️</span>
 
-                <span>
-                    Étel / ital
-                </span>
-            </button>
+    <span>
+        Étel / ital
+    </span>
+</a>
 
 <a
     class="event-button event-link"
@@ -108,8 +107,15 @@
 
                                 {% if event.event_type == "medication" %}
                                     💊 Cetirizin
-                                {% elif event.event_type == "food" %}
-                                    🍽️ Étel / ital
+{% elif event.event_type == "food" %}
+
+    🍽️
+
+    {% if event.food_event %}
+        {{ event.food_event.food.name }}
+    {% else %}
+        Étel / ital
+    {% endif %}
 {% elif event.event_type == "symptom" %}
 
     🔴

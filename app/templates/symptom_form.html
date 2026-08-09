@@ -173,6 +173,7 @@
                     📷 Fotó készítése
 
                     <input
+                        class="image-input"
                         type="file"
                         name="images"
                         accept="image/*"
@@ -186,6 +187,7 @@
                     🖼️ Kép kiválasztása
 
                     <input
+                        class="image-input"
                         type="file"
                         name="images"
                         accept="image/*"
@@ -193,6 +195,11 @@
                     >
 
                 </label>
+
+<div
+    id="image-preview"
+    class="upload-preview"
+></div>
 
                 <small class="field-help">
                     Több képet is csatolhatsz.
@@ -254,6 +261,74 @@
                 severity.value;
         }
     );
+
+const imageInputs =
+    document.querySelectorAll(
+        ".image-input"
+    );
+
+const imagePreview =
+    document.getElementById(
+        "image-preview"
+    );
+
+
+function addImagePreview(file) {
+    if (!file.type.startsWith("image/")) {
+        return;
+    }
+
+    const reader =
+        new FileReader();
+
+    reader.addEventListener(
+        "load",
+        () => {
+            const wrapper =
+                document.createElement("div");
+
+            wrapper.className =
+                "upload-preview-item";
+
+            const image =
+                document.createElement("img");
+
+            image.src =
+                reader.result;
+
+            image.alt =
+                "Kiválasztott kép";
+
+            wrapper.appendChild(
+                image
+            );
+
+            imagePreview.appendChild(
+                wrapper
+            );
+        }
+    );
+
+    reader.readAsDataURL(
+        file
+    );
+}
+
+
+imageInputs.forEach(
+    input => {
+        input.addEventListener(
+            "change",
+            () => {
+                Array.from(
+                    input.files
+                ).forEach(
+                    addImagePreview
+                );
+            }
+        );
+    }
+);
 </script>
 
 </body>

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <title>Étel szerkesztése</title>
+
+    <link
+        rel="stylesheet"
+        href="/symptomtracker/static/css/style.css"
+    >
+</head>
+
+<body>
+
+<main class="container">
+
+    <header class="header">
+        <h1>🍽️ Étel szerkesztése</h1>
+        <p>{{ food.name }}</p>
+    </header>
+
+
+    {% if error %}
+
+        <div class="status status-error">
+            {{ error }}
+        </div>
+
+    {% endif %}
+
+
+    <section class="edit-card">
+
+        <form
+            method="post"
+            enctype="multipart/form-data"
+        >
+
+            <label class="form-field">
+
+                <span>Név</span>
+
+                <input
+                    type="text"
+                    name="name"
+                    value="{{ food.name }}"
+                    required
+                >
+
+            </label>
+
+
+            <label class="form-field">
+
+                <span>Márka / gyártó</span>
+
+                <input
+                    type="text"
+                    name="brand"
+                    value="{{ food.brand or '' }}"
+                >
+
+            </label>
+
+
+            <div class="form-field">
+
+                <span>Összetevők</span>
+
+                <div class="ingredient-grid">
+
+                    {% for ingredient in ingredients %}
+
+                        <label class="ingredient-option">
+
+                            <input
+                                type="checkbox"
+                                name="ingredient_ids"
+                                value="{{ ingredient.id }}"
+                                {% if
+                                    ingredient.id
+                                    in selected_ingredient_ids
+                                %}
+                                    checked
+                                {% endif %}
+                            >
+
+                            <span>
+                                {{ ingredient.name }}
+                            </span>
+
+                        </label>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+
+            <div class="form-field">
+
+                <span>Új összetevő</span>
+
+                <div class="new-ingredient-row">
+
+                    <input
+                        id="new-ingredient-name"
+                        type="text"
+                        placeholder="pl. tej"
+                    >
+
+                    <button
+                        id="add-ingredient-button"
+                        type="button"
+                    >
+                        ＋
+                    </button>
+
+                </div>
+
+                <div
+                    id="new-ingredient-list"
+                    class="new-ingredient-list"
+                ></div>
+
+            </div>
+
+
+            <div class="form-field">
+
+                <span>Új kép hozzáadása</span>
+
+                <label class="camera-button">
+                    📷 Fotó készítése
+
+                    <input
+                        type="file"
+                        name="images"
+                        accept="image/*"
+                        capture="environment"
+                    >
+                </label>
+
+                <label class="gallery-button">
+                    🖼️ Kép kiválasztása
+
+                    <input
+                        type="file"
+                        name="images"
+                        accept="image/*"
+                        multiple
+                    >
+                </label>
+
+            </div>
+
+
+            {% if food.images %}
+
+                <div class="form-field">
+
+                    <span>Jelenlegi képek</span>
+
+                    <div class="symptom-image-grid">
+
+{% for image in food.images %}
+
+    <div class="image-manage-card">
+
+        <img
+            src="/symptomtracker/uploads/foods/{{ image.filename }}"
+            alt="{{ food.name }}"
+            loading="lazy"
+        >
+
+<button
+    class="image-delete-button"
+    type="submit"
+    formmethod="post"
+    formaction="/symptomtracker/foods/images/{{ image.id }}/delete"
+    formnovalidate
+    onclick="
+        return confirm(
+            'Biztosan törlöd ezt a képet?'
+        );
+    "
+>
+    🗑️ Kép törlése
+</button>
+
+    </div>
+
+{% endfor %}
+
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+
+            <label class="form-field">
+
+                <span>Megjegyzés az ételhez</span>
+
+                <textarea
+                    name="description"
+                    rows="3"
+                >{{ food.description or '' }}</textarea>
+
+            </label>
+
+
+            <button
+                class="primary-button"
+                type="submit"
+            >
+                Mentés
+            </button>
+
+        </form>
+
+    </section>
+
+<section class="danger-card">
+
+    <strong>
+        Ételtörzs állapota
+    </strong>
+
+    <p>
+        {% if food.active %}
+            Az étel jelenleg aktív és megjelenik
+            a gyors kiválasztási listában.
+        {% else %}
+            Az étel inaktív, ezért nem jelenik meg
+            a normál gyors listában.
+        {% endif %}
+    </p>
+
+    <form
+        method="post"
+        action="/symptomtracker/foods/{{ food.id }}/toggle"
+    >
+
+        <button
+            class="{% if food.active %}deactivate-button{% else %}activate-button{% endif %}"
+            type="submit"
+        >
+            {% if food.active %}
+                ⛔ Étel inaktiválása
+            {% else %}
+                ✅ Étel újraaktiválása
+            {% endif %}
+        </button>
+
+    </form>
+
+</section>
+
+    <nav class="page-bottom">
+
+        <a
+            class="home-button"
+            href="/symptomtracker/foods/{{ food.id }}/log"
+        >
+            ← Vissza az ételhez
+        </a>
+
+    </nav>
+
+</main>
+
+
+<script>
+    const input =
+        document.getElementById(
+            "new-ingredient-name"
+        );
+
+    const addButton =
+        document.getElementById(
+            "add-ingredient-button"
+        );
+
+    const list =
+        document.getElementById(
+            "new-ingredient-list"
+        );
+
+
+    function addIngredient() {
+        const name = input.value.trim();
+
+        if (!name) {
+            return;
+        }
+
+        const item =
+            document.createElement("div");
+
+        item.className =
+            "new-ingredient-chip";
+
+        const text =
+            document.createElement("span");
+
+        text.textContent = name;
+
+        const hidden =
+            document.createElement("input");
+
+        hidden.type = "hidden";
+        hidden.name = "new_ingredients";
+        hidden.value = name;
+
+        const remove =
+            document.createElement("button");
+
+        remove.type = "button";
+        remove.textContent = "×";
+
+        remove.addEventListener(
+            "click",
+            () => {
+                item.remove();
+            }
+        );
+
+        item.appendChild(text);
+        item.appendChild(hidden);
+        item.appendChild(remove);
+
+        list.appendChild(item);
+
+        input.value = "";
+        input.focus();
+    }
+
+
+    addButton.addEventListener(
+        "click",
+        addIngredient
+    );
+
+    input.addEventListener(
+        "keydown",
+        event => {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                addIngredient();
+            }
+        }
+    );
+</script>
+
+</body>
+</html>

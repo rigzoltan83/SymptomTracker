@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <title>Étel / ital</title>
+
+    <link
+        rel="stylesheet"
+        href="/symptomtracker/static/css/style.css"
+    >
+</head>
+
+<body>
+
+<main class="container">
+
+    <header class="header">
+        <h1>🍽️ Étel / ital</h1>
+        <p>Mit fogyasztottál?</p>
+    </header>
+
+
+    <form
+        class="food-search-form"
+        method="get"
+    >
+
+        <input
+            type="search"
+            name="q"
+            value="{{ search }}"
+            placeholder="🔎 Étel vagy márka keresése..."
+            autocomplete="off"
+        >
+
+<select name="status">
+
+    <option
+        value="active"
+        {% if selected_status == "active" %}
+            selected
+        {% endif %}
+    >
+        Aktív ételek
+    </option>
+
+    <option
+        value="inactive"
+        {% if selected_status == "inactive" %}
+            selected
+        {% endif %}
+    >
+        Inaktív ételek
+    </option>
+
+    <option
+        value="all"
+        {% if selected_status == "all" %}
+            selected
+        {% endif %}
+    >
+        Mind
+    </option>
+
+</select>
+
+        <button
+            class="primary-button"
+            type="submit"
+        >
+            Keresés
+        </button>
+
+    </form>
+
+
+    <a
+        class="new-food-button"
+        href="/symptomtracker/foods/new"
+    >
+        ＋ Új étel / ital felvétele
+    </a>
+
+
+    <section class="food-list">
+
+        {% if foods %}
+
+            {% for food in foods %}
+
+                <a
+                    class="food-card"
+href="{% if food.active %}/symptomtracker/foods/{{ food.id }}/log{% else %}/symptomtracker/foods/{{ food.id }}/edit{% endif %}"                    
+                >
+
+                    <div class="food-card-main">
+
+                        <strong>
+                            {{ food.name }}
+                        </strong>
+
+{% if not food.active %}
+    <span class="inactive-badge">
+        Inaktív
+    </span>
+{% endif %}
+
+                        {% if food.brand %}
+
+                            <span class="food-brand">
+                                {{ food.brand }}
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    {% if food.ingredients %}
+
+                        <div class="food-ingredients-preview">
+
+                            {% for food_ingredient
+                                in food.ingredients[:5]
+                            %}
+
+                                {{
+                                    food_ingredient
+                                    .ingredient
+                                    .name
+                                }}{%
+                                    if not loop.last
+                                %}, {% endif %}
+
+                            {% endfor %}
+
+                            {% if food.ingredients|length > 5 %}
+                                …
+                            {% endif %}
+
+                        </div>
+
+                    {% endif %}
+
+                    <span class="food-card-arrow">
+                        ›
+                    </span>
+
+                </a>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="empty-card">
+
+                {% if search %}
+
+                    Nincs találat erre:
+                    <strong>{{ search }}</strong>
+
+                {% else %}
+
+                    Még nincs felvett étel vagy ital.
+
+                {% endif %}
+
+            </div>
+
+        {% endif %}
+
+    </section>
+
+
+    <nav class="page-bottom">
+
+        <a
+            class="home-button"
+            href="/symptomtracker/"
+        >
+            ← Főoldal
+        </a>
+
+    </nav>
+
+</main>
+
+</body>
+</html>

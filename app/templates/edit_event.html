@@ -111,6 +111,67 @@
             {% endif %}
 
 {% if (
+    event.event_type == "food"
+    and event.food_event
+) %}
+
+    <label class="form-field">
+
+        <span>Étel / ital</span>
+
+        <select
+            name="food_id"
+            required
+        >
+
+            {% for food in foods %}
+
+                <option
+                    value="{{ food.id }}"
+                    {% if
+                        food.id
+                        == event.food_event.food_id
+                    %}
+                        selected
+                    {% endif %}
+                >
+                    {{ food.name }}
+                    {% if food.brand %}
+                        – {{ food.brand }}
+                    {% endif %}
+                </option>
+
+            {% endfor %}
+
+        </select>
+
+    </label>
+
+
+    <label class="form-field">
+
+        <span>Mennyiség</span>
+
+        <input
+            type="text"
+            name="amount"
+            value="{{ event.food_event.amount or '' }}"
+            placeholder="pl. 2 szelet, 3 dl"
+        >
+
+    </label>
+
+
+    <a
+        class="secondary-link"
+        href="/symptomtracker/foods/{{ event.food_event.food_id }}/edit"
+    >
+        🍽️ Étel adatainak szerkesztése
+    </a>
+
+{% endif %}
+
+{% if (
     event.event_type == "symptom"
     and event.symptom_event
 ) %}
@@ -211,6 +272,7 @@
         📷 Fotó készítése
 
         <input
+            class="image-input"
             type="file"
             name="images"
             accept="image/*"
@@ -224,6 +286,7 @@
         🖼️ Kép kiválasztása
 
         <input
+            class="image-input"
             type="file"
             name="images"
             accept="image/*"
@@ -238,6 +301,11 @@
 
 </div>
 
+<div
+    id="image-preview"
+    class="upload-preview"
+></div>
+
 {% if event.symptom_event.images %}
 
     <div class="form-field">
@@ -246,15 +314,36 @@
 
         <div class="symptom-image-grid">
 
-            {% for image in event.symptom_event.images %}
+{% for image in event.symptom_event.images %}
 
-                <img
-                    src="/symptomtracker/uploads/symptoms/{{ image.filename }}"
-                    alt="Tünetkép"
-                    loading="lazy"
-                >
+    <div class="image-manage-card">
 
-            {% endfor %}
+<div class="image-manage-card">
+
+    <img
+        src="/symptomtracker/uploads/symptoms/{{ image.filename }}"
+        alt="Tünetkép"
+        loading="lazy"
+    >
+
+    <button
+        class="image-delete-button"
+        type="submit"
+        formmethod="post"
+        formaction="/symptomtracker/symptoms/images/{{ image.id }}/delete"
+        formnovalidate
+        onclick="
+            return confirm(
+                'Biztosan törlöd ezt a képet?'
+            );
+        "
+    >
+        🗑️ Kép törlése
+    </button>
+
+</div>
+
+{% endfor %}
 
         </div>
 
@@ -323,6 +412,74 @@
                 severity.value;
         }
     );
+const imageInputs =
+    document.querySelectorAll(
+        ".image-input"
+    );
+
+const imagePreview =
+    document.getElementById(
+        "image-preview"
+    );
+
+
+function addImagePreview(file) {
+    if (!file.type.startsWith("image/")) {
+        return;
+    }
+
+    const reader =
+        new FileReader();
+
+    reader.addEventListener(
+        "load",
+        () => {
+            const wrapper =
+                document.createElement("div");
+
+            wrapper.className =
+                "upload-preview-item";
+
+            const image =
+                document.createElement("img");
+
+            image.src =
+                reader.result;
+
+            image.alt =
+                "Kiválasztott kép";
+
+            wrapper.appendChild(
+                image
+            );
+
+            imagePreview.appendChild(
+                wrapper
+            );
+        }
+    );
+
+    reader.readAsDataURL(
+        file
+    );
+}
+
+
+imageInputs.forEach(
+    input => {
+        input.addEventListener(
+            "change",
+            () => {
+                Array.from(
+                    input.files
+                ).forEach(
+                    addImagePreview
+                );
+            }
+        );
+    }
+);
+
 </script>
 
 {% endif %}
