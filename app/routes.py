@@ -1,3 +1,6 @@
+from pathlib import Path
+from uuid import uuid4
+from werkzeug.utils import secure_filename
 from datetime import datetime, timezone
 from zoneinfo import ZoneInfo
 
@@ -7,6 +10,7 @@ from flask import (
     redirect,
     render_template,
     request,
+    send_from_directory,
 )
 
 from sqlalchemy import or_
@@ -20,6 +24,7 @@ from app.models import (
     MedicationEvent,
     SymptomEvent,
     SymptomType,
+    SymptomImage,
 )
 
 
@@ -27,6 +32,54 @@ main = Blueprint("main", __name__)
 
 LOCAL_TIMEZONE = ZoneInfo("Europe/Budapest")
 
+ALLOWED_IMAGE_EXTENSIONS = {
+    ".jpg",
+    ".jpeg",
+    ".png",
+    ".webp",
+}
+
+
+def save_symptom_images(files):
+    saved_filenames = []
+
+    upload_dir = Path(
+        "/opt/symptomtracker/uploads/symptoms"
+    )
+
+    upload_dir.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
+
+    for file in files:
+        if not file or not file.filename:
+            continue
+
+        original_name = secure_filename(
+            file.filename
+        )
+
+        extension = Path(
+            original_name
+        ).suffix.lower()
+
+        if extension not in ALLOWED_IMAGE_EXTENSIONS:
+            continue
+
+        filename = (
+            f"{uuid4().hex}{extension}"
+        )
+
+        file.save(
+            upload_dir / filename
+        )
+
+        saved_filenames.append(
+            filename
+        )
+
+    return saved_filenames
 
 def local_datetime_value(value):
     if value is None:
@@ -322,6 +375,21 @@ def edit_event(event_id):
                 .all()
             )
 
+            uploaded_files = request.files.getlist(
+                "images"
+            )
+
+            saved_filenames = save_symptom_images(
+                uploaded_files
+            )
+
+            for filename in saved_filenames:
+                event.symptom_event.images.append(
+                    SymptomImage(
+                        filename=filename
+                    )
+                )
+
         db.session.commit()
 
         return redirect(
@@ -507,6 +575,21 @@ def add_symptom():
 
         event.symptom_event = symptom_event
 
+        uploaded_files = request.files.getlist(
+            "images"
+        )
+
+        saved_filenames = save_symptom_images(
+            uploaded_files
+        )
+
+        for filename in saved_filenames:
+            symptom_event.images.append(
+                SymptomImage(
+                    filename=filename
+                )
+            )
+
         db.session.add(event)
         db.session.commit()
 
@@ -528,6 +611,16 @@ def add_symptom():
         selected_body_part_ids=[],
         local_now=local_now,
         error=None,
+    )
+
+
+@main.route(
+    "/uploads/symptoms/<path:filename>"
+)
+def symptom_image(filename):
+    return send_from_directory(
+        "/opt/symptomtracker/uploads/symptoms",
+        filename,
     )
 
 

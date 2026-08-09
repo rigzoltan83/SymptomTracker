@@ -717,3 +717,68 @@ body {
         grid-template-columns: 1fr;
     }
 }
+
+.field-help {
+    color: #6b7280;
+    font-size: 12px;
+}
+
+.symptom-image-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0, 1fr)
+        );
+    gap: 10px;
+}
+
+.symptom-image-grid img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+
+    object-fit: cover;
+
+    border-radius: 10px;
+
+    background: #e5e7eb;
+}
+
+.camera-button,
+.gallery-button {
+    min-height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 10px 14px;
+
+    border-radius: 11px;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.camera-button {
+    background: #374151;
+    color: white;
+}
+
+.gallery-button {
+    background: #e5e7eb;
+    color: #1f2937;
+}
+
+.camera-button input,
+.gallery-button input {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    opacity: 0;
+    pointer-events: none;
+}

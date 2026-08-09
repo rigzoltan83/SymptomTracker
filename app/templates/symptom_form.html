@@ -37,7 +37,10 @@
 
     <section class="edit-card">
 
-        <form method="post">
+<form
+    method="post"
+    enctype="multipart/form-data"
+>
 
             <label class="form-field">
 
@@ -157,6 +160,43 @@
                     {% endfor %}
 
                 </div>
+
+            </div>
+
+
+            <div class="form-field">
+
+                <span>Fénykép</span>
+
+                <label class="camera-button">
+
+                    📷 Fotó készítése
+
+                    <input
+                        type="file"
+                        name="images"
+                        accept="image/*"
+                        capture="environment"
+                    >
+
+                </label>
+
+                <label class="gallery-button">
+
+                    🖼️ Kép kiválasztása
+
+                    <input
+                        type="file"
+                        name="images"
+                        accept="image/*"
+                        multiple
+                    >
+
+                </label>
+
+                <small class="field-help">
+                    Több képet is csatolhatsz.
+                </small>
 
             </div>
 

@@ -395,6 +395,41 @@ symptom_event_body_parts = db.Table(
 )
 
 
+class SymptomImage(db.Model):
+    __tablename__ = "symptom_images"
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True,
+    )
+
+    symptom_event_id = db.Column(
+        db.Integer,
+        db.ForeignKey(
+            "symptom_events.id",
+            ondelete="CASCADE",
+        ),
+        nullable=False,
+        index=True,
+    )
+
+    filename = db.Column(
+        db.String(500),
+        nullable=False,
+    )
+
+    created_at = db.Column(
+        db.DateTime(timezone=True),
+        nullable=False,
+        default=lambda: datetime.now(timezone.utc),
+    )
+
+    symptom_event = db.relationship(
+        "SymptomEvent",
+        back_populates="images",
+    )
+
+
 class SymptomEvent(db.Model):
     __tablename__ = "symptom_events"
 
@@ -437,6 +472,12 @@ class SymptomEvent(db.Model):
     body_parts = db.relationship(
         "BodyPart",
         secondary=symptom_event_body_parts,
+    )
+
+    images = db.relationship(
+        "SymptomImage",
+        back_populates="symptom_event",
+        cascade="all, delete-orphan",
     )
 
     __table_args__ = (

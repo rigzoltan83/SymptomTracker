@@ -52,7 +52,10 @@
 
     <section class="edit-card">
 
-        <form method="post">
+<form
+    method="post"
+    enctype="multipart/form-data"
+>
 
             <label class="form-field">
 
@@ -198,6 +201,66 @@
         </div>
 
     </div>
+
+<div class="form-field">
+
+    <span>Új kép hozzáadása</span>
+
+    <label class="camera-button">
+
+        📷 Fotó készítése
+
+        <input
+            type="file"
+            name="images"
+            accept="image/*"
+            capture="environment"
+        >
+
+    </label>
+
+    <label class="gallery-button">
+
+        🖼️ Kép kiválasztása
+
+        <input
+            type="file"
+            name="images"
+            accept="image/*"
+            multiple
+        >
+
+    </label>
+
+    <small class="field-help">
+        Új fotót készíthetsz vagy több meglévő képet is kiválaszthatsz.
+    </small>
+
+</div>
+
+{% if event.symptom_event.images %}
+
+    <div class="form-field">
+
+        <span>Jelenlegi képek</span>
+
+        <div class="symptom-image-grid">
+
+            {% for image in event.symptom_event.images %}
+
+                <img
+                    src="/symptomtracker/uploads/symptoms/{{ image.filename }}"
+                    alt="Tünetkép"
+                    loading="lazy"
+                >
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+{% endif %}
 
 {% endif %}
 
