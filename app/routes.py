@@ -211,30 +211,48 @@ def events():
     if search:
         pattern = f"%{search}%"
 
-        query = (
-            query
-            .outerjoin(
-                MedicationEvent,
-                MedicationEvent.event_id == Event.id,
-            )
-            .outerjoin(
-                Medication,
-                Medication.id
-                == MedicationEvent.medication_id,
-            )
-            .outerjoin(
-                FoodEvent,
-                FoodEvent.event_id == Event.id,
-            )
-            .outerjoin(
-                SymptomEvent,
-                SymptomEvent.event_id == Event.id,
-            )
-            .filter(
-                or_(
-                    Event.notes.ilike(pattern),
-                    Medication.name.ilike(pattern),
-                )
+        query = query.filter(
+            or_(
+                Event.notes.ilike(pattern),
+
+                Event.medication_event.has(
+                    MedicationEvent.medication.has(
+                        Medication.name.ilike(pattern)
+                    )
+                ),
+
+                Event.food_event.has(
+                    FoodEvent.food.has(
+                        or_(
+                            Food.name.ilike(pattern),
+                            Food.brand.ilike(pattern),
+
+                            Food.ingredients.any(
+                                FoodIngredient.ingredient.has(
+                                    Ingredient.name.ilike(
+                                        pattern
+                                    )
+                                )
+                            ),
+                        )
+                    )
+                ),
+
+                Event.symptom_event.has(
+                    or_(
+                        SymptomEvent.symptom_type.has(
+                            SymptomType.name.ilike(
+                                pattern
+                            )
+                        ),
+
+                        SymptomEvent.body_parts.any(
+                            BodyPart.name.ilike(
+                                pattern
+                            )
+                        ),
+                    )
+                ),
             )
         )
 
