@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <title>Esemény szerkesztése</title>
+
+    <link
+        rel="stylesheet"
+        href="../../static/css/style.css"
+    >
+</head>
+
+<body>
+
+<main class="container">
+
+    <header class="header">
+
+        <h1>
+            Esemény szerkesztése
+        </h1>
+
+        <p>
+
+            {% if event.event_type == "medication" %}
+                💊 Gyógyszer
+            {% elif event.event_type == "food" %}
+                🍽️ Étel / ital
+            {% elif event.event_type == "symptom" %}
+                🔴 Tünet
+            {% endif %}
+
+        </p>
+
+    </header>
+
+
+    {% if error %}
+
+        <div class="status status-error">
+            {{ error }}
+        </div>
+
+    {% endif %}
+
+
+    <section class="edit-card">
+
+        <form method="post">
+
+            <label class="form-field">
+
+                <span>
+                    Dátum és idő
+                </span>
+
+                <input
+                    type="datetime-local"
+                    name="occurred_at"
+                    value="{{ local_occurred_at }}"
+                    required
+                >
+
+            </label>
+
+
+            {% if (
+                event.event_type == "medication"
+                and event.medication_event
+            ) %}
+
+                <label class="form-field">
+
+                    <span>
+                        Gyógyszer
+                    </span>
+
+                    <input
+                        type="text"
+                        value="{{ event.medication_event.medication.name }}"
+                        disabled
+                    >
+
+                </label>
+
+
+                <label class="form-field">
+
+                    <span>
+                        Adag
+                    </span>
+
+                    <input
+                        type="text"
+                        name="dose"
+                        value="{{ event.medication_event.dose or '' }}"
+                        placeholder="pl. 10 mg"
+                    >
+
+                </label>
+
+            {% endif %}
+
+
+            <label class="form-field">
+
+                <span>
+                    Megjegyzés
+                </span>
+
+                <textarea
+                    name="notes"
+                    rows="4"
+                    placeholder="Opcionális megjegyzés..."
+                >{{ event.notes or '' }}</textarea>
+
+            </label>
+
+
+            <button
+                class="primary-button"
+                type="submit"
+            >
+                Mentés
+            </button>
+
+        </form>
+
+    </section>
+
+
+    <nav class="page-bottom">
+
+        <a
+            class="home-button"
+            href="/symptomtracker/events"
+        >
+            ← Vissza az eseményekhez
+        </a>
+
+    </nav>
+
+</main>
+
+</body>
+</html>

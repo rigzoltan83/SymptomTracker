@@ -26,6 +26,14 @@ class Event(db.Model):
         nullable=True,
     )
 
+    active = db.Column(
+        db.Boolean,
+        nullable=False,
+        default=True,
+        server_default=db.true(),
+        index=True,
+    )
+
     created_at = db.Column(
         db.DateTime(timezone=True),
         nullable=False,

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <title>Események - SymptomTracker</title>
+
+    <link
+        rel="stylesheet"
+        href="../static/css/style.css"
+    >
+</head>
+
+<body>
+
+<main class="container">
+
+    <header class="header">
+        <h1>Események</h1>
+
+        <p>
+            Keresés, szűrés és módosítás
+        </p>
+    </header>
+
+
+    <section class="filter-card">
+
+        <form
+            method="get"
+            class="filter-form"
+        >
+
+            <input
+                type="search"
+                name="q"
+                value="{{ search }}"
+                placeholder="🔎 Keresés..."
+            >
+
+            <div class="filter-grid">
+
+                <select name="type">
+
+                    <option value="">
+                        Minden típus
+                    </option>
+
+                    <option
+                        value="medication"
+                        {% if selected_type == "medication" %}
+                            selected
+                        {% endif %}
+                    >
+                        💊 Gyógyszer
+                    </option>
+
+                    <option
+                        value="food"
+                        {% if selected_type == "food" %}
+                            selected
+                        {% endif %}
+                    >
+                        🍽️ Étel / ital
+                    </option>
+
+                    <option
+                        value="symptom"
+                        {% if selected_type == "symptom" %}
+                            selected
+                        {% endif %}
+                    >
+                        🔴 Tünet
+                    </option>
+
+                </select>
+
+
+                <select name="status">
+
+                    <option
+                        value="active"
+                        {% if selected_status == "active" %}
+                            selected
+                        {% endif %}
+                    >
+                        Aktív
+                    </option>
+
+                    <option
+                        value="inactive"
+                        {% if selected_status == "inactive" %}
+                            selected
+                        {% endif %}
+                    >
+                        Inaktív
+                    </option>
+
+                    <option
+                        value="all"
+                        {% if selected_status == "all" %}
+                            selected
+                        {% endif %}
+                    >
+                        Mind
+                    </option>
+
+                </select>
+
+            </div>
+
+            <button
+                class="primary-button"
+                type="submit"
+            >
+                Szűrés
+            </button>
+
+        </form>
+
+    </section>
+
+
+    <section class="event-list-page">
+
+        {% if events %}
+
+            <div class="event-count">
+                {{ pagination.total }} esemény
+            </div>
+
+            {% for event in events %}
+
+                <article
+                    class="
+                        event-card
+                        {% if not event.active %}
+                            event-card-inactive
+                        {% endif %}
+                    "
+                >
+
+                    <div class="event-card-top">
+
+                        <div class="event-card-title">
+
+                            {% if event.event_type == "medication" %}
+
+                                <span class="event-card-icon">
+                                    💊
+                                </span>
+
+                                <span>
+
+                                    {% if event.medication_event %}
+                                        {{
+                                            event
+                                            .medication_event
+                                            .medication
+                                            .name
+                                        }}
+                                    {% else %}
+                                        Gyógyszer
+                                    {% endif %}
+
+                                </span>
+
+                            {% elif event.event_type == "food" %}
+
+                                <span class="event-card-icon">
+                                    🍽️
+                                </span>
+
+                                <span>
+                                    Étel / ital
+                                </span>
+
+                            {% elif event.event_type == "symptom" %}
+
+                                <span class="event-card-icon">
+                                    🔴
+                                </span>
+
+                                <span>
+                                    Tünet
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+                        {% if not event.active %}
+
+                            <span class="inactive-badge">
+                                Inaktív
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="event-card-time">
+                        {{ event.occurred_at | local_datetime }}
+                    </div>
+
+
+                    {% if (
+                        event.event_type == "medication"
+                        and event.medication_event
+                        and event.medication_event.dose
+                    ) %}
+
+                        <div class="event-card-detail">
+                            Adag:
+                            {{ event.medication_event.dose }}
+                        </div>
+
+                    {% endif %}
+
+
+                    {% if event.notes %}
+
+                        <div class="event-card-notes">
+                            {{ event.notes }}
+                        </div>
+
+                    {% endif %}
+
+
+                    <div class="event-card-actions">
+
+                        <a
+                            class="edit-button"
+                            href="/symptomtracker/events/{{ event.id }}/edit"
+                        >
+                            ✏️ Szerkesztés
+                        </a>
+
+                        <form
+                            method="post"
+                            action="/symptomtracker/events/{{ event.id }}/toggle"
+                        >
+
+                            <button
+                                class="
+                                    {% if event.active %}
+                                        deactivate-button
+                                    {% else %}
+                                        activate-button
+                                    {% endif %}
+                                "
+                                type="submit"
+                            >
+
+                                {% if event.active %}
+                                    ⛔ Inaktiválás
+                                {% else %}
+                                    ✅ Aktiválás
+                                {% endif %}
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </article>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="empty-card">
+                Nincs a szűrésnek megfelelő esemény.
+            </div>
+
+        {% endif %}
+
+    </section>
+
+
+    {% if pagination.pages > 1 %}
+
+        <nav class="pagination">
+
+            {% if pagination.has_prev %}
+
+                <a
+                    href="?page={{ pagination.prev_num }}&q={{ search }}&type={{ selected_type }}&status={{ selected_status }}"
+                >
+                    ← Előző
+                </a>
+
+            {% else %}
+
+                <span></span>
+
+            {% endif %}
+
+
+            <strong>
+                {{ pagination.page }}
+                /
+                {{ pagination.pages }}
+            </strong>
+
+
+            {% if pagination.has_next %}
+
+                <a
+                    href="?page={{ pagination.next_num }}&q={{ search }}&type={{ selected_type }}&status={{ selected_status }}"
+                >
+                    Következő →
+                </a>
+
+            {% else %}
+
+                <span></span>
+
+            {% endif %}
+
+        </nav>
+
+    {% endif %}
+
+
+    <nav class="page-bottom">
+
+        <a
+            class="home-button"
+            href="/symptomtracker/"
+        >
+            ← Főoldal
+        </a>
+
+    </nav>
+
+</main>
+
+</body>
+</html>

@@ -105,3 +105,449 @@ body {
 
     cursor: pointer;
 }
+
+.event-button:disabled,
+.bottom-actions button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.status {
+    margin-bottom: 18px;
+    padding: 14px 16px;
+
+    border-radius: 12px;
+
+    text-align: center;
+    font-weight: 600;
+}
+
+.status-success {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.status-error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.recent-events {
+    margin-top: 32px;
+}
+
+.recent-events h2 {
+    margin-bottom: 14px;
+    font-size: 20px;
+}
+
+.event-list {
+    display: grid;
+    gap: 10px;
+}
+
+.event-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+
+    padding: 14px 16px;
+
+    background: white;
+    border-radius: 12px;
+
+    box-shadow:
+        0 1px 4px
+        rgba(0, 0, 0, 0.06);
+}
+
+.event-time {
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.event-name {
+    font-weight: 600;
+    text-align: right;
+}
+
+.empty-message {
+    color: #6b7280;
+}
+
+.bottom-link {
+    min-height: 54px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background: #374151;
+    color: white;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+.filters {
+    margin-bottom: 24px;
+}
+
+.filters form {
+    display: grid;
+    gap: 12px;
+}
+
+.filters label {
+    display: grid;
+    gap: 6px;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.filters input,
+.filters select {
+    width: 100%;
+    min-height: 46px;
+
+    padding: 10px 12px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+
+    background: white;
+
+    font: inherit;
+}
+
+.filter-button {
+    min-height: 48px;
+
+    border: 0;
+    border-radius: 10px;
+
+    background: #374151;
+    color: white;
+
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.event-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.event-actions button {
+    padding: 8px 10px;
+
+    border: 0;
+    border-radius: 8px;
+
+    font-weight: 600;
+}
+
+.event-inactive {
+    opacity: 0.55;
+}
+
+.event-notes {
+    margin-top: 6px;
+
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.pagination {
+    margin-top: 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.pagination a,
+.page-bottom a {
+    color: #374151;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.page-bottom {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.filter-card,
+.edit-card,
+.empty-card {
+    padding: 18px;
+
+    background: white;
+    border-radius: 16px;
+
+    box-shadow:
+        0 2px 8px
+        rgba(0, 0, 0, 0.06);
+}
+
+.filter-form,
+.edit-card form {
+    display: grid;
+    gap: 14px;
+}
+
+.filter-form input,
+.filter-form select,
+.form-field input,
+.form-field textarea {
+    width: 100%;
+
+    padding: 12px 14px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+
+    background: white;
+
+    color: #111827;
+
+    font: inherit;
+}
+
+.filter-form input,
+.filter-form select,
+.form-field input {
+    min-height: 48px;
+}
+
+.form-field {
+    display: grid;
+    gap: 7px;
+}
+
+.form-field span {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.form-field textarea {
+    resize: vertical;
+}
+
+.filter-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.primary-button {
+    min-height: 50px;
+
+    border: 0;
+    border-radius: 11px;
+
+    background: #374151;
+    color: white;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.event-list-page {
+    display: grid;
+    gap: 12px;
+
+    margin-top: 20px;
+}
+
+.event-count {
+    padding: 0 4px;
+
+    color: #6b7280;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.event-card {
+    padding: 16px;
+
+    background: white;
+    border-radius: 16px;
+
+    box-shadow:
+        0 2px 8px
+        rgba(0, 0, 0, 0.06);
+}
+
+.event-card-inactive {
+    opacity: 0.6;
+}
+
+.event-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.event-card-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.event-card-icon {
+    font-size: 25px;
+}
+
+.event-card-time {
+    margin-top: 8px;
+
+    color: #6b7280;
+
+    font-size: 14px;
+}
+
+.event-card-detail {
+    margin-top: 8px;
+
+    font-size: 14px;
+}
+
+.event-card-notes {
+    margin-top: 10px;
+
+    padding: 10px 12px;
+
+    background: #f3f4f6;
+    border-radius: 9px;
+
+    font-size: 14px;
+}
+
+.inactive-badge {
+    padding: 5px 8px;
+
+    border-radius: 999px;
+
+    background: #e5e7eb;
+    color: #4b5563;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.event-card-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
+
+    margin-top: 15px;
+}
+
+.event-card-actions form {
+    margin: 0;
+}
+
+.edit-button,
+.deactivate-button,
+.activate-button {
+    width: 100%;
+    min-height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 8px 10px;
+
+    border: 0;
+    border-radius: 9px;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    cursor: pointer;
+}
+
+.edit-button {
+    background: #e5e7eb;
+    color: #1f2937;
+}
+
+.deactivate-button {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.activate-button {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.pagination {
+    margin-top: 22px;
+
+    min-height: 48px;
+
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagination a {
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.pagination a:last-child {
+    text-align: right;
+}
+
+.page-bottom {
+    margin-top: 26px;
+}
+
+.home-button {
+    min-height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 11px;
+
+    background: #374151;
+    color: white !important;
+
+    text-decoration: none;
+    font-weight: 700;
+}
+
+@media (max-width: 380px) {
+    .filter-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .event-card-actions {
+        grid-template-columns: 1fr;
+    }
+}

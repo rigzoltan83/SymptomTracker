@@ -12,7 +12,7 @@
 
     <link
         rel="stylesheet"
-        href="{{ url_for('static', filename='css/style.css') }}"
+        href="static/css/style.css"
     >
 </head>
 
@@ -25,38 +25,119 @@
             <p>Esemény rögzítése</p>
         </header>
 
+        <div
+            id="status"
+            class="status"
+            hidden
+        ></div>
+
         <section class="event-buttons">
 
-            <button class="event-button">
+            <button
+                id="cetirizine-button"
+                class="event-button"
+                type="button"
+            >
                 <span class="icon">💊</span>
-                <span>Cetirizin</span>
+
+                <span>
+                    Cetirizin
+                </span>
             </button>
 
-            <button class="event-button">
+            <button
+                class="event-button"
+                type="button"
+                disabled
+            >
                 <span class="icon">🍽️</span>
-                <span>Étel / ital</span>
+
+                <span>
+                    Étel / ital
+                </span>
             </button>
 
-            <button class="event-button">
+            <button
+                class="event-button"
+                type="button"
+                disabled
+            >
                 <span class="icon">🔴</span>
-                <span>Tünet</span>
+
+                <span>
+                    Tünet
+                </span>
             </button>
 
         </section>
 
         <nav class="bottom-actions">
 
-            <button>
-                Korábbi események
-            </button>
+<a
+    class="bottom-link"
+    href="events"
+>
+    Korábbi események
+</a>
 
-            <button>
+            <button
+                type="button"
+                disabled
+            >
                 Export
             </button>
 
         </nav>
 
+        <section class="recent-events">
+
+            <h2>Legutóbbi események</h2>
+
+            {% if recent_events %}
+
+                <div class="event-list">
+
+                    {% for event in recent_events %}
+
+                        <div class="event-row">
+
+                            <div class="event-time">
+                                {{ event.occurred_at | local_datetime }}
+                            </div>
+
+                            <div class="event-name">
+
+                                {% if event.event_type == "medication" %}
+                                    💊 Cetirizin
+                                {% elif event.event_type == "food" %}
+                                    🍽️ Étel / ital
+                                {% elif event.event_type == "symptom" %}
+                                    🔴 Tünet
+                                {% else %}
+                                    {{ event.event_type }}
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <p class="empty-message">
+                    Még nincs rögzített esemény.
+                </p>
+
+            {% endif %}
+
+        </section>
+
     </main>
+
+    <script src="static/js/index.js"></script>
 
 </body>
 </html>
