@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <title>Elemzés - SymptomTracker</title>
+
+    <link
+        rel="stylesheet"
+        href="/symptomtracker/static/css/style.css"
+    >
+</head>
+
+<body>
+
+<main class="container analysis-page">
+
+    <header class="header">
+
+        <h1>📊 Elemzés</h1>
+
+        <p>
+            Étkezések, rizikófaktorok és tünetek
+            időbeli összefüggései
+        </p>
+
+    </header>
+
+
+    <section class="analysis-filter-card">
+
+        <form
+            method="get"
+            class="analysis-filter-form"
+        >
+
+            <label>
+
+                <span>Időszak</span>
+
+                <select name="days">
+
+                    <option
+                        value="30"
+                        {% if selected_days == 30 %}
+                            selected
+                        {% endif %}
+                    >
+                        Utolsó 30 nap
+                    </option>
+
+                    <option
+                        value="90"
+                        {% if selected_days == 90 %}
+                            selected
+                        {% endif %}
+                    >
+                        Utolsó 90 nap
+                    </option>
+
+                    <option
+                        value="180"
+                        {% if selected_days == 180 %}
+                            selected
+                        {% endif %}
+                    >
+                        Utolsó 180 nap
+                    </option>
+
+                    <option
+                        value="365"
+                        {% if selected_days == 365 %}
+                            selected
+                        {% endif %}
+                    >
+                        Utolsó 1 év
+                    </option>
+
+                    <option
+                        value="0"
+                        {% if selected_days == 0 %}
+                            selected
+                        {% endif %}
+                    >
+                        Minden adat
+                    </option>
+
+                </select>
+
+            </label>
+
+
+            <label>
+
+                <span>Tünet</span>
+
+                <select name="symptom_type_id">
+
+                    <option value="">
+                        Minden tünet
+                    </option>
+
+                    {% for symptom_type
+                        in symptom_types
+                    %}
+
+                        <option
+                            value="{{ symptom_type.id }}"
+                            {% if
+                                selected_symptom_type_id
+                                == symptom_type.id
+                            %}
+                                selected
+                            {% endif %}
+                        >
+                            {{ symptom_type.name }}
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </label>
+
+
+            <label>
+
+                <span>Vizsgált időablak</span>
+
+                <select name="window">
+
+                    {% for hours in
+                        [3, 6, 12, 24, 48]
+                    %}
+
+                        <option
+                            value="{{ hours }}"
+                            {% if
+                                selected_window == hours
+                            %}
+                                selected
+                            {% endif %}
+                        >
+                            {{ hours }} óra
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </label>
+
+
+            <button
+                class="primary-button"
+                type="submit"
+            >
+                Elemzés frissítése
+            </button>
+
+        </form>
+
+    </section>
+
+
+    <section class="analysis-summary-grid">
+
+        <div class="analysis-summary-card">
+
+            <strong>
+                {{ analysis.summary.food_events }}
+            </strong>
+
+            <span>étkezés</span>
+
+        </div>
+
+
+        <div class="analysis-summary-card">
+
+            <strong>
+                {{ analysis.summary.symptom_events }}
+            </strong>
+
+            <span>tünet</span>
+
+        </div>
+
+
+        <div class="analysis-summary-card">
+
+            <strong>
+                {{ analysis.summary.risk_components }}
+            </strong>
+
+            <span>vizsgált faktor</span>
+
+        </div>
+
+
+        <div class="analysis-summary-card">
+
+            <strong>
+                {{
+                    analysis.summary
+                    .symptoms_with_prior_food
+                }}
+            </strong>
+
+            <span>
+                tünet étkezési előzménnyel
+            </span>
+
+        </div>
+
+    </section>
+
+
+    <section class="analysis-section">
+
+        <div class="analysis-section-heading">
+
+            <div>
+
+                <h2>
+                    ⚠️ Rizikófaktorok rangsora
+                </h2>
+
+                <p>
+                    Mi történt a faktorral járó
+                    étkezések után a kiválasztott
+                    időablakban?
+                </p>
+
+            </div>
+
+        </div>
+
+
+        {% if analysis.risk_stats %}
+
+            <div class="analysis-risk-list">
+
+                {% for row
+                    in analysis.risk_stats
+                %}
+
+                    <article class="analysis-risk-card">
+
+                        <div class="analysis-risk-header">
+
+                            <div>
+
+<a
+    class="analysis-risk-title-link"
+    href="/symptomtracker/analysis/risk/{{ row.risk_id }}?days={{ selected_days }}&window={{ selected_window }}{% if selected_symptom_type_id %}&symptom_type_id={{ selected_symptom_type_id }}{% endif %}"
+>
+    {{ row.name }}
+</a>
+
+                                <span>
+                                    {{ row.category }}
+                                </span>
+
+                            </div>
+
+                            <span
+                                class="
+                                    analysis-signal
+                                    {% if
+                                        row.signal
+                                        == 'Magasabb együttjárás'
+                                    %}
+                                        analysis-signal-high
+                                    {% elif
+                                        row.signal
+                                        == 'Mérsékelt együttjárás'
+                                    %}
+                                        analysis-signal-medium
+                                    {% elif
+                                        row.signal
+                                        == 'Kevés adat'
+                                    %}
+                                        analysis-signal-low-data
+                                    {% endif %}
+                                "
+                            >
+                                {{ row.signal }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="analysis-rate-grid">
+
+                            <div>
+
+                                <span>
+                                    Faktorral
+                                </span>
+
+                                <strong>
+                                    {{
+                                        (
+                                            row.exposed_rate
+                                            * 100
+                                        )
+                                        | round(1)
+                                    }}%
+                                </strong>
+
+                                <small>
+                                    {{ row.exposed_hits }}
+                                    /
+                                    {{ row.exposed_count }}
+                                    étkezés
+                                </small>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>
+                                    Kontroll
+                                </span>
+
+                                <strong>
+                                    {{
+                                        (
+                                            row.control_rate
+                                            * 100
+                                        )
+                                        | round(1)
+                                    }}%
+                                </strong>
+
+                                <small>
+                                    {{ row.control_hits }}
+                                    /
+                                    {{ row.control_count }}
+                                    étkezés
+                                </small>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>
+                                    Különbség
+                                </span>
+
+                                <strong>
+                                    {% if
+                                        row.rate_difference
+                                        >= 0
+                                    %}
+                                        +
+                                    {% endif %}
+                                    {{
+                                        (
+                                            row.rate_difference
+                                            * 100
+                                        )
+                                        | round(1)
+                                    }}
+                                    %
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="analysis-risk-details">
+
+                            {% if row.lift is not none %}
+
+                                <span>
+                                    Relatív arány:
+                                    <strong>
+                                        {{
+                                            row.lift
+                                            | round(2)
+                                        }}×
+                                    </strong>
+                                </span>
+
+                            {% endif %}
+
+
+                            {% if
+                                row.median_delay
+                                is not none
+                            %}
+
+                                <span>
+                                    Medián késés:
+                                    <strong>
+                                        {{
+                                            row.median_delay
+                                            | round(1)
+                                        }}
+                                        óra
+                                    </strong>
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        {% if row.top_symptoms %}
+
+                            <div class="analysis-top-symptoms">
+
+                                <span>
+                                    Gyakoribb követő tünetek:
+                                </span>
+
+                                <div>
+
+                                    {% for
+                                        symptom_name,
+                                        count
+                                        in row.top_symptoms
+                                    %}
+
+                                        <span
+                                            class="analysis-chip"
+                                        >
+                                            {{ symptom_name }}
+                                            · {{ count }}
+                                        </span>
+
+                                    {% endfor %}
+
+                                </div>
+
+                            </div>
+
+                        {% endif %}
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="empty-card">
+
+                Nincs még elegendő étkezési
+                és rizikófaktor-adat az elemzéshez.
+
+            </div>
+
+        {% endif %}
+
+    </section>
+
+<section class="analysis-section">
+
+    <div class="analysis-section-heading">
+
+        <div>
+
+            <h2>
+                🧩 Rizikófaktor-kombinációk
+            </h2>
+
+            <p>
+                Gyakoribb-e a tünet,
+                amikor két faktor együtt van jelen,
+                mint amikor csak az egyik?
+            </p>
+
+        </div>
+
+    </div>
+
+
+    {% if analysis.combination_stats %}
+
+        <div class="analysis-combination-list">
+
+            {% for row
+                in analysis.combination_stats
+            %}
+
+                <article
+                    class="analysis-combination-card"
+                >
+
+                    <div
+                        class="analysis-combination-header"
+                    >
+
+
+<a
+    class="analysis-combination-names analysis-combination-link"
+    href="/symptomtracker/analysis/combination/{{ row.first_risk_id }}/{{ row.second_risk_id }}?days={{ selected_days }}&window={{ selected_window }}{% if selected_symptom_type_id %}&symptom_type_id={{ selected_symptom_type_id }}{% endif %}"
+>
+
+    <span class="analysis-chip">
+        {{ row.first_name }}
+    </span>
+
+    <span class="analysis-combination-plus">
+        +
+    </span>
+
+    <span class="analysis-chip">
+        {{ row.second_name }}
+    </span>
+
+</a>
+
+                        <span
+                            class="
+                                analysis-signal
+                                {% if
+                                    row.signal
+                                    == 'Erős kombinációs jel'
+                                %}
+                                    analysis-signal-high
+                                {% elif
+                                    row.signal
+                                    == 'Mérsékelt kombinációs jel'
+                                %}
+                                    analysis-signal-medium
+                                {% elif
+                                    row.signal
+                                    == 'Kevés adat'
+                                %}
+                                    analysis-signal-low-data
+                                {% endif %}
+                            "
+                        >
+                            {{ row.signal }}
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        class="analysis-rate-grid"
+                    >
+
+                        <div>
+
+                            <span>
+                                Együtt
+                            </span>
+
+                            <strong>
+                                {{
+                                    (
+                                        row.pair_rate
+                                        * 100
+                                    )
+                                    | round(1)
+                                }}%
+                            </strong>
+
+                            <small>
+                                {{ row.pair_hits }}
+                                /
+                                {{ row.pair_count }}
+                                étkezés
+                            </small>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Csak egyik
+                            </span>
+
+                            <strong>
+                                {{
+                                    (
+                                        row.single_rate
+                                        * 100
+                                    )
+                                    | round(1)
+                                }}%
+                            </strong>
+
+                            <small>
+                                {{ row.single_hits }}
+                                /
+                                {{ row.single_count }}
+                                étkezés
+                            </small>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Többlet
+                            </span>
+
+                            <strong>
+                                {% if
+                                    row.rate_difference
+                                    >= 0
+                                %}
+                                    +
+                                {% endif %}
+
+                                {{
+                                    (
+                                        row.rate_difference
+                                        * 100
+                                    )
+                                    | round(1)
+                                }}
+                                %
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="analysis-risk-details"
+                    >
+
+                        {% if row.lift is not none %}
+
+                            <span>
+                                Relatív arány:
+                                <strong>
+                                    {{
+                                        row.lift
+                                        | round(2)
+                                    }}×
+                                </strong>
+                            </span>
+
+                        {% endif %}
+
+
+                        {% if
+                            row.median_delay
+                            is not none
+                        %}
+
+                            <span>
+                                Medián késés:
+                                <strong>
+                                    {{
+                                        row.median_delay
+                                        | round(1)
+                                    }}
+                                    óra
+                                </strong>
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+                </article>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty-card">
+
+            Még nincs elegendő olyan étkezés,
+            ahol több rizikófaktor együtt
+            vizsgálható.
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+    <section class="analysis-section">
+
+        <div class="analysis-section-heading">
+
+            <div>
+
+                <h2>
+                    🔴 Tünetből visszafelé
+                </h2>
+
+                <p>
+                    Milyen étkezések és faktorok
+                    előzték meg a tünetet
+                    {{ selected_window }} órán belül?
+                </p>
+
+            </div>
+
+        </div>
+
+
+        {% if analysis.symptom_backtrace %}
+
+            <div class="analysis-symptom-list">
+
+                {% for item
+                    in analysis.symptom_backtrace
+                %}
+
+                    <article
+                        class="analysis-symptom-card"
+                    >
+
+                        <div
+                            class="analysis-symptom-header"
+                        >
+
+                            <div>
+
+                                <strong>
+                                    {{ item.symptom_name }}
+                                </strong>
+
+                                <span>
+                                    {{
+                                        item.occurred_at
+                                        | local_datetime
+                                    }}
+                                </span>
+
+                            </div>
+
+
+                            {% if
+                                item.severity
+                                is not none
+                            %}
+
+                                <span
+                                    class="severity-badge"
+                                >
+                                    {{ item.severity }}/10
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        {% if item.risks %}
+
+                            <div
+                                class="analysis-risk-chips"
+                            >
+
+                                {% for risk
+                                    in item.risks
+                                %}
+
+                                    <span
+                                        class="analysis-chip"
+                                    >
+                                        {{ risk }}
+                                    </span>
+
+                                {% endfor %}
+
+                            </div>
+
+                        {% endif %}
+
+
+                        {% if item.foods %}
+
+                            <div
+                                class="analysis-preceding-foods"
+                            >
+
+                                {% for food
+                                    in item.foods
+                                %}
+
+                                    <div
+                                        class="analysis-food-row"
+                                    >
+
+                                        <div>
+
+                                            <strong>
+                                                {{ food.name }}
+                                            </strong>
+
+                                            {% if food.brand %}
+
+                                                <small>
+                                                    {{ food.brand }}
+                                                </small>
+
+                                            {% endif %}
+
+                                        </div>
+
+
+                                        <span>
+                                            {{
+                                                food.delay_hours
+                                                | round(1)
+                                            }}
+                                            órával előtte
+                                        </span>
+
+                                    </div>
+
+                                {% endfor %}
+
+                            </div>
+
+                        {% else %}
+
+                            <div
+                                class="analysis-no-preceding"
+                            >
+                                Nem volt rögzített étkezés
+                                a vizsgált időablakban.
+                            </div>
+
+                        {% endif %}
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="empty-card">
+                Nincs tünetesemény a kiválasztott
+                időszakban.
+            </div>
+
+        {% endif %}
+
+    </section>
+
+
+    <section class="analysis-warning">
+
+        <strong>
+            ℹ️ Az eredmények értelmezése
+        </strong>
+
+        <p>
+            Az oldal időbeli együttjárásokat mutat.
+            A magasabb százalék vagy relatív arány
+            önmagában nem bizonyít allergiát,
+            intoleranciát vagy ok-okozati kapcsolatot.
+            Kevés adatnál az eredmények különösen
+            bizonytalanok lehetnek.
+        </p>
+
+    </section>
+
+
+    <nav class="page-bottom">
+
+        <a
+            class="home-button"
+            href="/symptomtracker/"
+        >
+            ← Főoldal
+        </a>
+
+    </nav>
+
+
+    {% include "_top_back_button.html" %}
+
+</main>
+
+</body>
+</html>

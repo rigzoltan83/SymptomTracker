@@ -1925,3 +1925,701 @@ body {
     font-size: 10px;
     font-weight: 700;
 }
+
+.top-back-button {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    z-index: 1000;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 38px;
+
+    padding: 7px 12px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 999px;
+
+    background: rgba(
+        255,
+        255,
+        255,
+        0.96
+    );
+
+    box-shadow:
+        0 2px 8px
+        rgba(0, 0, 0, 0.10);
+
+    color: #374151;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    backdrop-filter: blur(5px);
+}
+
+.top-back-button:hover {
+    background: #f9fafb;
+}
+
+.top-back-button[hidden] {
+    display: none;
+}
+
+@media (max-width: 480px) {
+
+    .top-back-button {
+        top: 8px;
+        right: 8px;
+
+        min-height: 36px;
+
+        padding: 6px 10px;
+
+        font-size: 11px;
+    }
+}
+
+.analysis-filter-card,
+.analysis-section,
+.analysis-warning {
+    margin-bottom: 18px;
+}
+
+.analysis-filter-card {
+    padding: 14px;
+
+    border-radius: 14px;
+
+    background: white;
+
+    box-shadow:
+        0 1px 6px
+        rgba(0, 0, 0, 0.06);
+}
+
+.analysis-filter-form {
+    display: grid;
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr))
+        auto;
+    gap: 9px;
+    align-items: end;
+}
+
+.analysis-filter-form label {
+    display: grid;
+    gap: 5px;
+}
+
+.analysis-filter-form label > span {
+    color: #6b7280;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.analysis-filter-form select {
+    min-height: 44px;
+
+    padding: 8px 10px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+
+    background: white;
+
+    font: inherit;
+}
+
+.analysis-summary-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+    gap: 8px;
+
+    margin-bottom: 20px;
+}
+
+.analysis-summary-card {
+    display: grid;
+    gap: 2px;
+
+    padding: 13px;
+
+    border-radius: 13px;
+
+    background: white;
+
+    box-shadow:
+        0 1px 5px
+        rgba(0, 0, 0, 0.05);
+}
+
+.analysis-summary-card strong {
+    font-size: 22px;
+}
+
+.analysis-summary-card span {
+    color: #6b7280;
+
+    font-size: 11px;
+}
+
+.analysis-section-heading {
+    margin-bottom: 10px;
+}
+
+.analysis-section-heading h2 {
+    margin: 0 0 3px;
+
+    font-size: 18px;
+}
+
+.analysis-section-heading p {
+    margin: 0;
+
+    color: #6b7280;
+
+    font-size: 12px;
+}
+
+.analysis-risk-list,
+.analysis-symptom-list {
+    display: grid;
+    gap: 10px;
+}
+
+.analysis-risk-card,
+.analysis-symptom-card {
+    padding: 14px;
+
+    border-radius: 14px;
+
+    background: white;
+
+    box-shadow:
+        0 1px 6px
+        rgba(0, 0, 0, 0.06);
+}
+
+.analysis-risk-header,
+.analysis-symptom-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.analysis-risk-header > div,
+.analysis-symptom-header > div {
+    display: grid;
+    gap: 2px;
+}
+
+.analysis-risk-header strong,
+.analysis-symptom-header strong {
+    font-size: 15px;
+}
+
+.analysis-risk-header span,
+.analysis-symptom-header span {
+    color: #6b7280;
+
+    font-size: 11px;
+}
+
+.analysis-signal {
+    flex: 0 0 auto;
+
+    padding: 4px 8px;
+
+    border-radius: 999px;
+
+    background: #f3f4f6;
+    color: #4b5563;
+
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.analysis-signal-high {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.analysis-signal-medium {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.analysis-signal-low-data {
+    background: #f3f4f6;
+    color: #6b7280;
+}
+
+.analysis-rate-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+    gap: 7px;
+
+    margin-top: 12px;
+}
+
+.analysis-rate-grid > div {
+    display: grid;
+    gap: 2px;
+
+    padding: 9px;
+
+    border-radius: 10px;
+
+    background: #f9fafb;
+}
+
+.analysis-rate-grid span,
+.analysis-rate-grid small {
+    color: #6b7280;
+
+    font-size: 10px;
+}
+
+.analysis-rate-grid strong {
+    font-size: 16px;
+}
+
+.analysis-risk-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+
+    margin-top: 10px;
+
+    color: #4b5563;
+
+    font-size: 11px;
+}
+
+.analysis-top-symptoms {
+    display: grid;
+    gap: 6px;
+
+    margin-top: 11px;
+}
+
+.analysis-top-symptoms > span {
+    color: #6b7280;
+
+    font-size: 11px;
+}
+
+.analysis-top-symptoms > div,
+.analysis-risk-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.analysis-chip {
+    display: inline-flex;
+
+    padding: 3px 7px;
+
+    border-radius: 999px;
+
+    background: #f3f4f6;
+    color: #4b5563;
+
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.analysis-risk-chips {
+    margin-top: 10px;
+}
+
+.analysis-preceding-foods {
+    display: grid;
+    gap: 6px;
+
+    margin-top: 10px;
+}
+
+.analysis-food-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+    padding: 8px 10px;
+
+    border-radius: 9px;
+
+    background: #f9fafb;
+}
+
+.analysis-food-row > div {
+    display: grid;
+    gap: 1px;
+}
+
+.analysis-food-row strong {
+    font-size: 12px;
+}
+
+.analysis-food-row small,
+.analysis-food-row > span {
+    color: #6b7280;
+
+    font-size: 10px;
+}
+
+.analysis-no-preceding {
+    margin-top: 10px;
+
+    padding: 9px;
+
+    border-radius: 9px;
+
+    background: #f9fafb;
+    color: #6b7280;
+
+    font-size: 11px;
+}
+
+.analysis-warning {
+    padding: 13px;
+
+    border: 1px solid #dbeafe;
+    border-radius: 13px;
+
+    background: #eff6ff;
+}
+
+.analysis-warning strong {
+    font-size: 12px;
+}
+
+.analysis-warning p {
+    margin: 5px 0 0;
+
+    color: #475569;
+
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+@media (max-width: 720px) {
+
+    .analysis-filter-form {
+        grid-template-columns: 1fr;
+    }
+
+    .analysis-summary-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 420px) {
+
+    .analysis-rate-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .analysis-food-row {
+        align-items: flex-start;
+    }
+}
+
+.analysis-risk-title-link {
+    color: inherit;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    text-decoration: none;
+}
+
+.analysis-risk-title-link:hover {
+    text-decoration: underline;
+}
+
+.analysis-exposure-list {
+    display: grid;
+    gap: 10px;
+}
+
+.analysis-exposure-card {
+    padding: 14px;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+
+    background: white;
+
+    box-shadow:
+        0 1px 6px
+        rgba(0, 0, 0, 0.05);
+}
+
+.analysis-exposure-hit {
+    border-color: #fecaca;
+}
+
+.analysis-exposure-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.analysis-exposure-header > div {
+    display: grid;
+    gap: 2px;
+}
+
+.analysis-exposure-header strong {
+    font-size: 14px;
+}
+
+.analysis-exposure-header small,
+.analysis-exposure-header > span {
+    color: #6b7280;
+
+    font-size: 10px;
+}
+
+.analysis-exposure-amount {
+    margin-top: 7px;
+
+    color: #6b7280;
+
+    font-size: 11px;
+}
+
+.analysis-following-symptoms {
+    display: grid;
+    gap: 7px;
+
+    margin-top: 10px;
+}
+
+.analysis-following-symptom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+    padding: 9px 10px;
+
+    border-radius: 10px;
+
+    background: #fef2f2;
+}
+
+.analysis-following-symptom > div {
+    display: grid;
+    gap: 2px;
+}
+
+.analysis-following-symptom strong {
+    font-size: 12px;
+}
+
+.analysis-following-symptom span {
+    color: #6b7280;
+
+    font-size: 10px;
+}
+
+.analysis-duration {
+    display: block;
+
+    padding: 0 10px 4px;
+
+    color: #6b7280;
+
+    font-size: 10px;
+}
+
+.analysis-no-symptom {
+    margin-top: 10px;
+
+    padding: 9px 10px;
+
+    border-radius: 10px;
+
+    background: #f0fdf4;
+    color: #166534;
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+@media (max-width: 420px) {
+
+    .analysis-exposure-header {
+        display: grid;
+    }
+}
+
+.analysis-food-stat-list {
+    display: grid;
+    gap: 9px;
+}
+
+.analysis-food-stat-card {
+    padding: 13px;
+
+    border-radius: 13px;
+
+    background: white;
+
+    box-shadow:
+        0 1px 6px
+        rgba(0, 0, 0, 0.05);
+}
+
+.analysis-food-stat-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.analysis-food-stat-header > div {
+    display: grid;
+    gap: 2px;
+}
+
+.analysis-food-stat-header strong {
+    font-size: 14px;
+}
+
+.analysis-food-stat-header small {
+    color: #6b7280;
+
+    font-size: 10px;
+}
+
+.analysis-food-hit-rate {
+    flex: 0 0 auto;
+
+    font-size: 18px;
+}
+
+.analysis-food-stat-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+    gap: 7px;
+
+    margin-top: 10px;
+}
+
+.analysis-food-stat-grid > div {
+    display: grid;
+    gap: 2px;
+
+    padding: 8px;
+
+    border-radius: 9px;
+
+    background: #f9fafb;
+}
+
+.analysis-food-stat-grid span {
+    color: #6b7280;
+
+    font-size: 9px;
+}
+
+.analysis-food-stat-grid strong {
+    font-size: 14px;
+}
+
+.analysis-food-stat-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+
+    margin-top: 9px;
+
+    color: #6b7280;
+
+    font-size: 10px;
+}
+
+.analysis-food-stat-details strong {
+    color: #374151;
+}
+
+@media (max-width: 420px) {
+
+    .analysis-food-stat-grid {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+    }
+}
+
+.analysis-combination-list {
+    display: grid;
+    gap: 10px;
+}
+
+.analysis-combination-card {
+    padding: 14px;
+
+    border-radius: 14px;
+
+    background: white;
+
+    box-shadow:
+        0 1px 6px
+        rgba(0, 0, 0, 0.06);
+}
+
+.analysis-combination-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.analysis-combination-names {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 5px;
+}
+
+.analysis-combination-plus {
+    color: #9ca3af;
+
+    font-size: 13px;
+    font-weight: 800;
+}
+
+@media (max-width: 420px) {
+
+    .analysis-combination-header {
+        display: grid;
+    }
+}
+.analysis-combination-link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.analysis-combination-link:hover
+.analysis-chip {
+    text-decoration: underline;
+}

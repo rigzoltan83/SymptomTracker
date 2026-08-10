@@ -9,6 +9,7 @@ from zoneinfo import ZoneInfo
 from openpyxl import Workbook
 
 from flask import (
+    abort,
     Response,
     send_file,
     Blueprint,
@@ -323,6 +324,281 @@ def parse_local_datetime(value):
     )
 
     return local_value.astimezone(timezone.utc)
+
+
+@main.route("/analysis")
+def analysis_page():
+    from app.analysis import build_analysis
+
+    allowed_windows = (
+        3,
+        6,
+        12,
+        24,
+        48,
+    )
+
+    allowed_days = (
+        30,
+        90,
+        180,
+        365,
+        0,
+    )
+
+    window_hours = request.args.get(
+        "window",
+        12,
+        type=int,
+    )
+
+    days = request.args.get(
+        "days",
+        90,
+        type=int,
+    )
+
+    symptom_type_id = request.args.get(
+        "symptom_type_id",
+        type=int,
+    )
+
+    if window_hours not in allowed_windows:
+        window_hours = 12
+
+    if days not in allowed_days:
+        days = 90
+
+    if symptom_type_id is not None:
+        symptom_type = db.session.get(
+            SymptomType,
+            symptom_type_id,
+        )
+
+        if symptom_type is None:
+            symptom_type_id = None
+
+    analysis = build_analysis(
+        window_hours=window_hours,
+        days=days,
+        symptom_type_id=symptom_type_id,
+    )
+
+    symptom_types = (
+        SymptomType.query
+        .filter(
+            SymptomType.active.is_(True)
+        )
+        .order_by(
+            SymptomType.name
+        )
+        .all()
+    )
+
+    return render_template(
+        "analysis.html",
+        analysis=analysis,
+        symptom_types=symptom_types,
+        selected_window=window_hours,
+        selected_days=days,
+        selected_symptom_type_id=(
+            symptom_type_id
+        ),
+    )
+
+
+@main.route(
+    "/analysis/risk/<int:risk_component_id>"
+)
+def analysis_risk_detail(
+    risk_component_id
+):
+    from app.analysis import (
+        build_risk_detail
+    )
+
+    risk_component = db.get_or_404(
+        RiskComponent,
+        risk_component_id,
+    )
+
+    allowed_windows = (
+        3,
+        6,
+        12,
+        24,
+        48,
+    )
+
+    allowed_days = (
+        30,
+        90,
+        180,
+        365,
+        0,
+    )
+
+    window_hours = request.args.get(
+        "window",
+        12,
+        type=int,
+    )
+
+    days = request.args.get(
+        "days",
+        90,
+        type=int,
+    )
+
+    symptom_type_id = request.args.get(
+        "symptom_type_id",
+        type=int,
+    )
+
+    if window_hours not in allowed_windows:
+        window_hours = 12
+
+    if days not in allowed_days:
+        days = 90
+
+    if symptom_type_id is not None:
+        symptom_type = db.session.get(
+            SymptomType,
+            symptom_type_id,
+        )
+
+        if symptom_type is None:
+            symptom_type_id = None
+
+    detail = build_risk_detail(
+        risk_component_id=(
+            risk_component.id
+        ),
+        window_hours=window_hours,
+        days=days,
+        symptom_type_id=(
+            symptom_type_id
+        ),
+    )
+
+    symptom_types = (
+        SymptomType.query
+        .filter(
+            SymptomType.active.is_(True)
+        )
+        .order_by(
+            SymptomType.name
+        )
+        .all()
+    )
+
+    return render_template(
+        "analysis_risk_detail.html",
+        detail=detail,
+        symptom_types=symptom_types,
+        selected_window=window_hours,
+        selected_days=days,
+        selected_symptom_type_id=(
+            symptom_type_id
+        ),
+    )
+
+
+@main.route(
+    "/analysis/combination/"
+    "<int:first_risk_id>/"
+    "<int:second_risk_id>"
+)
+def analysis_combination_detail(
+    first_risk_id,
+    second_risk_id,
+):
+    from app.analysis import (
+        build_combination_detail
+    )
+
+    allowed_windows = (
+        3,
+        6,
+        12,
+        24,
+        48,
+    )
+
+    allowed_days = (
+        30,
+        90,
+        180,
+        365,
+        0,
+    )
+
+    window_hours = request.args.get(
+        "window",
+        12,
+        type=int,
+    )
+
+    days = request.args.get(
+        "days",
+        90,
+        type=int,
+    )
+
+    symptom_type_id = request.args.get(
+        "symptom_type_id",
+        type=int,
+    )
+
+    if window_hours not in allowed_windows:
+        window_hours = 12
+
+    if days not in allowed_days:
+        days = 90
+
+    if symptom_type_id is not None:
+        symptom_type = db.session.get(
+            SymptomType,
+            symptom_type_id,
+        )
+
+        if symptom_type is None:
+            symptom_type_id = None
+
+    detail = build_combination_detail(
+        first_risk_id=first_risk_id,
+        second_risk_id=second_risk_id,
+        window_hours=window_hours,
+        days=days,
+        symptom_type_id=(
+            symptom_type_id
+        ),
+    )
+
+    if detail is None:
+        abort(404)
+
+    symptom_types = (
+        SymptomType.query
+        .filter(
+            SymptomType.active.is_(True)
+        )
+        .order_by(
+            SymptomType.name
+        )
+        .all()
+    )
+
+    return render_template(
+        "analysis_combination_detail.html",
+        detail=detail,
+        symptom_types=symptom_types,
+        selected_window=window_hours,
+        selected_days=days,
+        selected_symptom_type_id=(
+            symptom_type_id
+        ),
+    )
 
 
 @main.route("/export")
