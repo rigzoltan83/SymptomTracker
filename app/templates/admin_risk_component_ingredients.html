@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <title>
+        {{ risk_component.name }} - Összetevők
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="/symptomtracker/static/css/style.css"
+    >
+</head>
+
+<body>
+
+<main class="container">
+
+<header class="header">
+
+    <h1>
+        ⚠️ {{ risk_component.name }}
+    </h1>
+
+    <p>
+        {{ links|length }} kapcsolódó összetevő
+    </p>
+
+</header>
+
+<section class="ingredient-admin-list">
+
+    {% if links %}
+
+        {% for link in links %}
+
+            <div class="risk-admin-card">
+
+                <a
+                    class="risk-admin-main-link"
+                    href="/symptomtracker/admin/ingredients/{{ link.ingredient.id }}/edit"
+                >
+
+                    <div class="ingredient-admin-main">
+
+                        <strong>
+                            {{ link.ingredient.name }}
+                        </strong>
+
+                        <div class="risk-admin-meta">
+
+                            <span>
+                                {% if link.confidence == "certain" %}
+                                    Biztos
+                                {% elif link.confidence == "typical" %}
+                                    Tipikus
+                                {% elif link.confidence == "product_dependent" %}
+                                    Termékfüggő
+                                {% else %}
+                                    {{ link.confidence }}
+                                {% endif %}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <span class="admin-arrow">
+                        ›
+                    </span>
+
+                </a>
+
+            </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="empty-card">
+            Ehhez a rizikófaktorhoz még nincs
+            összetevő kapcsolva.
+        </div>
+
+    {% endif %}
+
+</section>
+
+    <nav class="page-bottom">
+
+        <a
+            class="home-button"
+            href="/symptomtracker/admin/risk-components"
+        >
+            ← Rizikófaktorok
+        </a>
+
+    </nav>
+
+</main>
+
+</body>
+</html>

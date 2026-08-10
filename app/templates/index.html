@@ -34,14 +34,18 @@
         <section class="event-buttons">
 
             <button
-                id="cetirizine-button"
+                id="medication-button"                
                 class="event-button"
                 type="button"
             >
                 <span class="icon">💊</span>
 
                 <span>
-                    Cetirizin
+{% if default_medication %}
+    {{ default_medication.name }}
+{% else %}
+    Gyógyszer
+{% endif %}
                 </span>
             </button>
 
@@ -113,7 +117,14 @@
                             <div class="event-name">
 
                                 {% if event.event_type == "medication" %}
-                                    💊 Cetirizin
+
+💊
+{% if event.medication_event %}
+    {{ event.medication_event.medication.name }}
+{% else %}
+    Gyógyszer
+{% endif %}
+
 {% elif event.event_type == "food" %}
 
     🍽️

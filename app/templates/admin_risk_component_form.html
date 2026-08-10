@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <title>Rizikófaktor</title>
+
+    <link
+        rel="stylesheet"
+        href="/symptomtracker/static/css/style.css"
+    >
+</head>
+
+<body>
+
+<main class="container">
+
+    <header class="header">
+
+        {% if risk_component %}
+
+            <h1>⚠️ Rizikófaktor</h1>
+
+            <p>
+                {{ risk_component.name }}
+            </p>
+
+        {% else %}
+
+            <h1>⚠️ Új rizikófaktor</h1>
+
+        {% endif %}
+
+    </header>
+
+
+    {% if error %}
+
+        <div class="status status-error">
+            {{ error }}
+        </div>
+
+    {% endif %}
+
+
+    <section class="edit-card">
+
+        <form method="post">
+
+            <label class="form-field">
+
+                <span>Név *</span>
+
+                <input
+                    type="text"
+                    name="name"
+                    value="{{
+                        form.get(
+                            'name',
+                            risk_component.name
+                            if risk_component
+                            else ''
+                        )
+                    }}"
+                    required
+                >
+
+            </label>
+
+
+            <label class="form-field">
+
+                <span>Kategória *</span>
+
+                {% set current_category =
+                    form.get(
+                        'category',
+                        risk_component.category
+                        if risk_component
+                        else ''
+                    )
+                %}
+
+                <select
+                    name="category"
+                    required
+                >
+
+                    <option value="">
+                        -- válassz --
+                    </option>
+
+                    <option
+                        value="allergen"
+                        {% if current_category == "allergen" %}
+                            selected
+                        {% endif %}
+                    >
+                        Allergén
+                    </option>
+
+                    <option
+                        value="fodmap"
+                        {% if current_category == "fodmap" %}
+                            selected
+                        {% endif %}
+                    >
+                        FODMAP
+                    </option>
+
+                    <option
+                        value="intolerance"
+                        {% if current_category == "intolerance" %}
+                            selected
+                        {% endif %}
+                    >
+                        Intolerancia
+                    </option>
+
+                    <option
+                        value="biogenic_amine"
+                        {% if current_category == "biogenic_amine" %}
+                            selected
+                        {% endif %}
+                    >
+                        Biogén amin
+                    </option>
+
+                    <option
+                        value="other"
+                        {% if current_category == "other" %}
+                            selected
+                        {% endif %}
+                    >
+                        Egyéb
+                    </option>
+
+                </select>
+
+            </label>
+
+
+            <label class="form-field">
+
+                <span>Leírás</span>
+
+                <textarea
+                    name="description"
+                    rows="5"
+                    placeholder="Opcionális..."
+                >{{
+                    form.get(
+                        'description',
+                        risk_component.description
+                        if risk_component
+                        and risk_component.description
+                        else ''
+                    )
+                }}</textarea>
+
+            </label>
+
+
+            <button
+                class="primary-button"
+                type="submit"
+            >
+                Mentés
+            </button>
+
+        </form>
+
+    </section>
+
+
+    {% if risk_component %}
+
+        <section class="edit-card">
+
+            <form
+                method="post"
+                action="/symptomtracker/admin/risk-components/{{ risk_component.id }}/toggle"
+            >
+
+                <button
+                    class="{% if risk_component.active %}deactivate-button{% else %}activate-button{% endif %}"
+                    type="submit"
+                >
+
+                    {% if risk_component.active %}
+                        ⛔ Inaktiválás
+                    {% else %}
+                        ✅ Aktiválás
+                    {% endif %}
+
+                </button>
+
+            </form>
+
+        </section>
+
+    {% endif %}
+
+
+    <nav class="page-bottom">
+
+        <a
+            class="home-button"
+            href="/symptomtracker/admin/risk-components"
+        >
+            ← Rizikófaktorok
+        </a>
+
+    </nav>
+
+</main>
+
+</body>
+</html>

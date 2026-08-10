@@ -530,12 +530,699 @@ def admin():
     )
 
 
+@main.route("/admin/symptom-types")
+def admin_symptom_types():
+    search = request.args.get(
+        "q",
+        "",
+    ).strip()
+
+    status = request.args.get(
+        "status",
+        "active",
+    ).strip()
+
+    query = SymptomType.query
+
+    if status == "active":
+        query = query.filter(
+            SymptomType.active.is_(True)
+        )
+
+    elif status == "inactive":
+        query = query.filter(
+            SymptomType.active.is_(False)
+        )
+
+    if search:
+        pattern = f"%{search}%"
+
+        query = query.filter(
+            SymptomType.name.ilike(pattern)
+        )
+
+    symptom_types = (
+        query
+        .order_by(SymptomType.name)
+        .all()
+    )
+
+    return render_template(
+        "admin_symptom_types.html",
+        symptom_types=symptom_types,
+        search=search,
+        selected_status=status,
+    )
+
+
+@main.route("/admin/body-parts")
+def admin_body_parts():
+    search = request.args.get(
+        "q",
+        "",
+    ).strip()
+
+    status = request.args.get(
+        "status",
+        "active",
+    ).strip()
+
+    query = BodyPart.query
+
+    if status == "active":
+        query = query.filter(
+            BodyPart.active.is_(True)
+        )
+
+    elif status == "inactive":
+        query = query.filter(
+            BodyPart.active.is_(False)
+        )
+
+    if search:
+        pattern = f"%{search}%"
+
+        query = query.filter(
+            BodyPart.name.ilike(pattern)
+        )
+
+    body_parts = (
+        query
+        .order_by(BodyPart.name)
+        .all()
+    )
+
+    return render_template(
+        "admin_body_parts.html",
+        body_parts=body_parts,
+        search=search,
+        selected_status=status,
+    )
+
+
+@main.route(
+    "/admin/body-parts/new",
+    methods=["GET", "POST"],
+)
+def admin_new_body_part():
+    if request.method == "POST":
+        name = " ".join(
+            request.form.get(
+                "name",
+                "",
+            ).split()
+        )
+
+        if not name:
+            return render_template(
+                "admin_body_part_form.html",
+                body_part=None,
+                form=request.form,
+                error="A név kötelező.",
+            )
+
+        duplicate = (
+            BodyPart.query
+            .filter(
+                db.func.lower(
+                    BodyPart.name
+                ) == name.lower()
+            )
+            .first()
+        )
+
+        if duplicate is not None:
+            return render_template(
+                "admin_body_part_form.html",
+                body_part=None,
+                form=request.form,
+                error=(
+                    "Már létezik ilyen testrész."
+                ),
+            )
+
+        body_part = BodyPart(
+            name=name,
+            active=True,
+        )
+
+        db.session.add(body_part)
+        db.session.commit()
+
+        return redirect(
+            "/symptomtracker/admin/body-parts"
+        )
+
+    return render_template(
+        "admin_body_part_form.html",
+        body_part=None,
+        form={},
+        error=None,
+    )
+
+
+@main.route(
+    "/admin/body-parts/<int:body_part_id>/edit",
+    methods=["GET", "POST"],
+)
+def admin_edit_body_part(
+    body_part_id
+):
+    body_part = db.get_or_404(
+        BodyPart,
+        body_part_id,
+    )
+
+    if request.method == "POST":
+        name = " ".join(
+            request.form.get(
+                "name",
+                "",
+            ).split()
+        )
+
+        if not name:
+            return render_template(
+                "admin_body_part_form.html",
+                body_part=body_part,
+                form=request.form,
+                error="A név kötelező.",
+            )
+
+        duplicate = (
+            BodyPart.query
+            .filter(
+                db.func.lower(
+                    BodyPart.name
+                ) == name.lower()
+            )
+            .filter(
+                BodyPart.id != body_part.id
+            )
+            .first()
+        )
+
+        if duplicate is not None:
+            return render_template(
+                "admin_body_part_form.html",
+                body_part=body_part,
+                form=request.form,
+                error=(
+                    "Már létezik ilyen testrész."
+                ),
+            )
+
+        body_part.name = name
+
+        db.session.commit()
+
+        return redirect(
+            f"/symptomtracker/admin/"
+            f"body-parts/"
+            f"{body_part.id}/edit"
+        )
+
+    return render_template(
+        "admin_body_part_form.html",
+        body_part=body_part,
+        form={},
+        error=None,
+    )
+
+
+@main.route(
+    "/admin/body-parts/<int:body_part_id>/toggle",
+    methods=["POST"],
+)
+def admin_toggle_body_part(
+    body_part_id
+):
+    body_part = db.get_or_404(
+        BodyPart,
+        body_part_id,
+    )
+
+    body_part.active = (
+        not body_part.active
+    )
+
+    db.session.commit()
+
+    return redirect(
+        f"/symptomtracker/admin/"
+        f"body-parts/"
+        f"{body_part.id}/edit"
+    )
+
+
+@main.route(
+    "/admin/symptom-types/new",
+    methods=["GET", "POST"],
+)
+def admin_new_symptom_type():
+    if request.method == "POST":
+        name = " ".join(
+            request.form.get(
+                "name",
+                "",
+            ).split()
+        )
+
+        if not name:
+            return render_template(
+                "admin_symptom_type_form.html",
+                symptom_type=None,
+                form=request.form,
+                error="A név kötelező.",
+            )
+
+        duplicate = (
+            SymptomType.query
+            .filter(
+                db.func.lower(
+                    SymptomType.name
+                ) == name.lower()
+            )
+            .first()
+        )
+
+        if duplicate is not None:
+            return render_template(
+                "admin_symptom_type_form.html",
+                symptom_type=None,
+                form=request.form,
+                error=(
+                    "Már létezik ilyen tünettípus."
+                ),
+            )
+
+        symptom_type = SymptomType(
+            name=name,
+            active=True,
+        )
+
+        db.session.add(symptom_type)
+        db.session.commit()
+
+        return redirect(
+            "/symptomtracker/admin/symptom-types"
+        )
+
+    return render_template(
+        "admin_symptom_type_form.html",
+        symptom_type=None,
+        form={},
+        error=None,
+    )
+
+
+@main.route(
+    "/admin/symptom-types/<int:symptom_type_id>/edit",
+    methods=["GET", "POST"],
+)
+def admin_edit_symptom_type(
+    symptom_type_id
+):
+    symptom_type = db.get_or_404(
+        SymptomType,
+        symptom_type_id,
+    )
+
+    if request.method == "POST":
+        name = " ".join(
+            request.form.get(
+                "name",
+                "",
+            ).split()
+        )
+
+        if not name:
+            return render_template(
+                "admin_symptom_type_form.html",
+                symptom_type=symptom_type,
+                form=request.form,
+                error="A név kötelező.",
+            )
+
+        duplicate = (
+            SymptomType.query
+            .filter(
+                db.func.lower(
+                    SymptomType.name
+                ) == name.lower()
+            )
+            .filter(
+                SymptomType.id
+                != symptom_type.id
+            )
+            .first()
+        )
+
+        if duplicate is not None:
+            return render_template(
+                "admin_symptom_type_form.html",
+                symptom_type=symptom_type,
+                form=request.form,
+                error=(
+                    "Már létezik ilyen tünettípus."
+                ),
+            )
+
+        symptom_type.name = name
+
+        db.session.commit()
+
+        return redirect(
+            f"/symptomtracker/admin/"
+            f"symptom-types/"
+            f"{symptom_type.id}/edit"
+        )
+
+    return render_template(
+        "admin_symptom_type_form.html",
+        symptom_type=symptom_type,
+        form={},
+        error=None,
+    )
+
+
+@main.route(
+    "/admin/symptom-types/<int:symptom_type_id>/toggle",
+    methods=["POST"],
+)
+def admin_toggle_symptom_type(
+    symptom_type_id
+):
+    symptom_type = db.get_or_404(
+        SymptomType,
+        symptom_type_id,
+    )
+
+    symptom_type.active = (
+        not symptom_type.active
+    )
+
+    db.session.commit()
+
+    return redirect(
+        f"/symptomtracker/admin/"
+        f"symptom-types/"
+        f"{symptom_type.id}/edit"
+    )
+
+
+@main.route("/admin/risk-components")
+def admin_risk_components():
+    search = request.args.get(
+        "q",
+        "",
+    ).strip()
+
+    status = request.args.get(
+        "status",
+        "active",
+    ).strip()
+
+    query = RiskComponent.query
+
+    if status == "active":
+        query = query.filter(
+            RiskComponent.active.is_(True)
+        )
+
+    elif status == "inactive":
+        query = query.filter(
+            RiskComponent.active.is_(False)
+        )
+
+    if search:
+        pattern = f"%{search}%"
+
+        query = query.filter(
+            or_(
+                RiskComponent.name.ilike(pattern),
+                RiskComponent.category.ilike(pattern),
+                RiskComponent.description.ilike(pattern),
+            )
+        )
+
+    risk_components = (
+        query
+        .order_by(
+            RiskComponent.category,
+            RiskComponent.name,
+        )
+        .all()
+    )
+
+    ingredient_counts = {
+        risk.id: len(risk.ingredients)
+        for risk in risk_components
+    }
+
+    return render_template(
+        "admin_risk_components.html",
+        risk_components=risk_components,
+        ingredient_counts=ingredient_counts,
+        search=search,
+        selected_status=status,
+    )
+
+
+@main.route(
+    "/admin/risk-components/<int:risk_component_id>/ingredients"
+)
+def admin_risk_component_ingredients(
+    risk_component_id
+):
+    risk_component = db.get_or_404(
+        RiskComponent,
+        risk_component_id,
+    )
+
+    links = (
+        IngredientRiskComponent.query
+        .filter_by(
+            risk_component_id=risk_component.id
+        )
+        .join(Ingredient)
+        .order_by(Ingredient.name)
+        .all()
+    )
+
+    return render_template(
+        "admin_risk_component_ingredients.html",
+        risk_component=risk_component,
+        links=links,
+    )
+
+
+@main.route(
+    "/admin/risk-components/new",
+    methods=["GET", "POST"],
+)
+def admin_new_risk_component():
+    if request.method == "POST":
+        name = " ".join(
+            request.form.get(
+                "name",
+                "",
+            ).split()
+        )
+
+        category = request.form.get(
+            "category",
+            "",
+        ).strip()
+
+        description = request.form.get(
+            "description",
+            "",
+        ).strip()
+
+        if not name or not category:
+            return render_template(
+                "admin_risk_component_form.html",
+                risk_component=None,
+                form=request.form,
+                error=(
+                    "A név és a kategória kötelező."
+                ),
+            )
+
+        duplicate = (
+            RiskComponent.query
+            .filter(
+                db.func.lower(
+                    RiskComponent.name
+                ) == name.lower()
+            )
+            .first()
+        )
+
+        if duplicate is not None:
+            return render_template(
+                "admin_risk_component_form.html",
+                risk_component=None,
+                form=request.form,
+                error=(
+                    "Már létezik ilyen nevű "
+                    "rizikófaktor."
+                ),
+            )
+
+        risk_component = RiskComponent(
+            name=name,
+            category=category,
+            description=description or None,
+            active=True,
+        )
+
+        db.session.add(risk_component)
+        db.session.commit()
+
+        return redirect(
+            "/symptomtracker/admin/risk-components"
+        )
+
+    return render_template(
+        "admin_risk_component_form.html",
+        risk_component=None,
+        form={},
+        error=None,
+    )
+
+
+@main.route(
+    "/admin/risk-components/<int:risk_component_id>/edit",
+    methods=["GET", "POST"],
+)
+def admin_edit_risk_component(
+    risk_component_id
+):
+    risk_component = db.get_or_404(
+        RiskComponent,
+        risk_component_id,
+    )
+
+    if request.method == "POST":
+        name = " ".join(
+            request.form.get(
+                "name",
+                "",
+            ).split()
+        )
+
+        category = request.form.get(
+            "category",
+            "",
+        ).strip()
+
+        description = request.form.get(
+            "description",
+            "",
+        ).strip()
+
+        if not name or not category:
+            return render_template(
+                "admin_risk_component_form.html",
+                risk_component=risk_component,
+                form=request.form,
+                error=(
+                    "A név és a kategória kötelező."
+                ),
+            )
+
+        duplicate = (
+            RiskComponent.query
+            .filter(
+                db.func.lower(
+                    RiskComponent.name
+                ) == name.lower()
+            )
+            .filter(
+                RiskComponent.id
+                != risk_component.id
+            )
+            .first()
+        )
+
+        if duplicate is not None:
+            return render_template(
+                "admin_risk_component_form.html",
+                risk_component=risk_component,
+                form=request.form,
+                error=(
+                    "Már létezik ilyen nevű "
+                    "rizikófaktor."
+                ),
+            )
+
+        risk_component.name = name
+        risk_component.category = category
+        risk_component.description = (
+            description or None
+        )
+
+        db.session.commit()
+
+        return redirect(
+            f"/symptomtracker/admin/"
+            f"risk-components/"
+            f"{risk_component.id}/edit"
+        )
+
+    return render_template(
+        "admin_risk_component_form.html",
+        risk_component=risk_component,
+        form={},
+        error=None,
+    )
+
+
+@main.route(
+    "/admin/risk-components/<int:risk_component_id>/toggle",
+    methods=["POST"],
+)
+def admin_toggle_risk_component(
+    risk_component_id
+):
+    risk_component = db.get_or_404(
+        RiskComponent,
+        risk_component_id,
+    )
+
+    risk_component.active = (
+        not risk_component.active
+    )
+
+    db.session.commit()
+
+    return redirect(
+        f"/symptomtracker/admin/"
+        f"risk-components/"
+        f"{risk_component.id}/edit"
+    )
+
+
 @main.route("/admin/ingredients")
 def admin_ingredients():
     search = request.args.get(
         "q",
         "",
     ).strip()
+
+    risk_status = request.args.get(
+        "risk_status",
+        "all",
+    ).strip()
+
+    if risk_status not in (
+        "all",
+        "with",
+        "without",
+    ):
+        risk_status = "all"
 
     query = Ingredient.query
 
@@ -544,6 +1231,16 @@ def admin_ingredients():
 
         query = query.filter(
             Ingredient.name.ilike(pattern)
+        )
+
+    if risk_status == "with":
+        query = query.filter(
+            Ingredient.risk_components.any()
+        )
+
+    elif risk_status == "without":
+        query = query.filter(
+            ~Ingredient.risk_components.any()
         )
 
     ingredients = (
@@ -556,6 +1253,7 @@ def admin_ingredients():
         "admin_ingredients.html",
         ingredients=ingredients,
         search=search,
+        selected_risk_status=risk_status,
     )
 
 
@@ -683,8 +1381,264 @@ def admin_edit_ingredient(ingredient_id):
     )
 
 
+@main.route("/admin/medications")
+def admin_medications():
+    search = request.args.get(
+        "q",
+        "",
+    ).strip()
+
+    status = request.args.get(
+        "status",
+        "active",
+    ).strip()
+
+    query = Medication.query
+
+    if status == "active":
+        query = query.filter(
+            Medication.active.is_(True)
+        )
+
+    elif status == "inactive":
+        query = query.filter(
+            Medication.active.is_(False)
+        )
+
+    if search:
+        pattern = f"%{search}%"
+
+        query = query.filter(
+            Medication.name.ilike(pattern)
+        )
+
+    medications = (
+        query
+        .order_by(Medication.name)
+        .all()
+    )
+
+    return render_template(
+        "admin_medications.html",
+        medications=medications,
+        search=search,
+        selected_status=status,
+    )
+
+
+@main.route(
+    "/admin/medications/new",
+    methods=["GET", "POST"],
+)
+def admin_new_medication():
+    if request.method == "POST":
+        name = " ".join(
+            request.form.get(
+                "name",
+                "",
+            ).split()
+        )
+
+        if not name:
+            return render_template(
+                "admin_medication_form.html",
+                medication=None,
+                form=request.form,
+                error="A név kötelező.",
+            )
+
+        duplicate = (
+            Medication.query
+            .filter(
+                db.func.lower(
+                    Medication.name
+                ) == name.lower()
+            )
+            .first()
+        )
+
+        if duplicate is not None:
+            return render_template(
+                "admin_medication_form.html",
+                medication=None,
+                form=request.form,
+                error=(
+                    "Már létezik ilyen gyógyszer."
+                ),
+            )
+
+        medication = Medication(
+            name=name,
+            active=True,
+        )
+
+        db.session.add(medication)
+        db.session.commit()
+
+        return redirect(
+            "/symptomtracker/admin/medications"
+        )
+
+    return render_template(
+        "admin_medication_form.html",
+        medication=None,
+        form={},
+        error=None,
+    )
+
+
+@main.route(
+    "/admin/medications/<int:medication_id>/edit",
+    methods=["GET", "POST"],
+)
+def admin_edit_medication(
+    medication_id
+):
+    medication = db.get_or_404(
+        Medication,
+        medication_id,
+    )
+
+    if request.method == "POST":
+        name = " ".join(
+            request.form.get(
+                "name",
+                "",
+            ).split()
+        )
+
+        if not name:
+            return render_template(
+                "admin_medication_form.html",
+                medication=medication,
+                form=request.form,
+                error="A név kötelező.",
+            )
+
+        duplicate = (
+            Medication.query
+            .filter(
+                db.func.lower(
+                    Medication.name
+                ) == name.lower()
+            )
+            .filter(
+                Medication.id != medication.id
+            )
+            .first()
+        )
+
+        if duplicate is not None:
+            return render_template(
+                "admin_medication_form.html",
+                medication=medication,
+                form=request.form,
+                error=(
+                    "Már létezik ilyen gyógyszer."
+                ),
+            )
+
+        medication.name = name
+
+        db.session.commit()
+
+        return redirect(
+            f"/symptomtracker/admin/"
+            f"medications/"
+            f"{medication.id}/edit"
+        )
+
+    return render_template(
+        "admin_medication_form.html",
+        medication=medication,
+        form={},
+        error=None,
+    )
+
+
+@main.route(
+    "/admin/medications/<int:medication_id>/toggle",
+    methods=["POST"],
+)
+def admin_toggle_medication(
+    medication_id
+):
+    medication = db.get_or_404(
+        Medication,
+        medication_id,
+    )
+
+    if (
+        medication.is_default
+        and medication.active
+    ):
+        return redirect(
+            f"/symptomtracker/admin/"
+            f"medications/"
+            f"{medication.id}/edit"
+        )
+
+    medication.active = (
+        not medication.active
+    )
+
+    db.session.commit()
+
+    return redirect(
+        f"/symptomtracker/admin/"
+        f"medications/"
+        f"{medication.id}/edit"
+    )
+
+
+@main.route(
+    "/admin/medications/<int:medication_id>/default",
+    methods=["POST"],
+)
+def admin_set_default_medication(
+    medication_id
+):
+    medication = db.get_or_404(
+        Medication,
+        medication_id,
+    )
+
+    if not medication.active:
+        return redirect(
+            f"/symptomtracker/admin/"
+            f"medications/"
+            f"{medication.id}/edit"
+        )
+
+    Medication.query.update(
+        {
+            Medication.is_default: False
+        },
+        synchronize_session=False,
+    )
+
+    medication.is_default = True
+
+    db.session.commit()
+
+    return redirect(
+        f"/symptomtracker/admin/"
+        f"medications/"
+        f"{medication.id}/edit"
+    )
+
+
 @main.route("/")
 def index():
+    default_medication = (
+        Medication.query
+        .filter(
+            Medication.active.is_(True),
+            Medication.is_default.is_(True),
+        )
+        .first()
+    )
+
     recent_events = (
         Event.query
         .filter(Event.active.is_(True))
@@ -696,6 +1650,7 @@ def index():
     return render_template(
         "index.html",
         recent_events=recent_events,
+        default_medication=default_medication,
     )
 
 
@@ -2231,33 +3186,44 @@ def food_image(filename):
 
 
 @main.route(
-    "/api/events/cetirizine",
+    "/api/events/default-medication",
     methods=["POST"],
 )
-def add_cetirizine():
-    medication = Medication.query.filter_by(
-        name="Cetirizin"
-    ).first()
+def add_default_medication():
+    medication = (
+        Medication.query
+        .filter(
+            Medication.active.is_(True),
+            Medication.is_default.is_(True),
+        )
+        .first()
+    )
 
     if medication is None:
         return jsonify(
             {
                 "ok": False,
-                "message":
-                    "A Cetirizin nincs a törzsadatok között.",
+                "message": (
+                    "Nincs aktív alapértelmezett "
+                    "gyógyszer beállítva."
+                ),
             }
         ), 500
 
     event = Event(
         event_type="medication",
-        occurred_at=datetime.now(timezone.utc),
+        occurred_at=datetime.now(
+            timezone.utc
+        ),
     )
 
     medication_event = MedicationEvent(
         medication=medication,
     )
 
-    event.medication_event = medication_event
+    event.medication_event = (
+        medication_event
+    )
 
     db.session.add(event)
     db.session.commit()
@@ -2266,6 +3232,8 @@ def add_cetirizine():
         {
             "ok": True,
             "event_id": event.id,
-            "message": "Cetirizin rögzítve.",
+            "message": (
+                f"{medication.name} rögzítve."
+            ),
         }
     )

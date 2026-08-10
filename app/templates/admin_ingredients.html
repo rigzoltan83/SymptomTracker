@@ -29,27 +29,63 @@
     </header>
 
 
-    <form
-        method="get"
-        class="ingredient-admin-search"
+<form
+    method="get"
+    class="ingredient-admin-search"
+>
+
+    <input
+        type="search"
+        name="q"
+        value="{{ search }}"
+        placeholder="🔎 Összetevő keresése..."
+        autocomplete="off"
     >
 
-        <input
-            type="search"
-            name="q"
-            value="{{ search }}"
-            placeholder="🔎 Összetevő keresése..."
-            autocomplete="off"
-        >
 
-        <button
-            class="primary-button"
-            type="submit"
-        >
-            Keresés
-        </button>
+    <select
+        name="risk_status"
+        class="ingredient-risk-filter"
+    >
 
-    </form>
+        <option
+            value="all"
+            {% if selected_risk_status == "all" %}
+                selected
+            {% endif %}
+        >
+            Mind
+        </option>
+
+        <option
+            value="with"
+            {% if selected_risk_status == "with" %}
+                selected
+            {% endif %}
+        >
+            Van rizikófaktor
+        </option>
+
+        <option
+            value="without"
+            {% if selected_risk_status == "without" %}
+                selected
+            {% endif %}
+        >
+            Nincs rizikófaktor
+        </option>
+
+    </select>
+
+
+    <button
+        class="primary-button"
+        type="submit"
+    >
+        Szűrés
+    </button>
+
+</form>
 
 
     <section class="ingredient-admin-list">
@@ -58,39 +94,59 @@
 
             {% for ingredient in ingredients %}
 
-                <a
-                    class="ingredient-admin-card"
-                    href="/symptomtracker/admin/ingredients/{{ ingredient.id }}/edit"
-                >
+<div class="risk-admin-card">
 
-                    <div class="ingredient-admin-main">
+    <a
+        class="risk-admin-main-link"
+        href="/symptomtracker/admin/ingredients/{{ ingredient.id }}/edit"
+    >
 
-                        <strong>
-                            {{ ingredient.name }}
-                        </strong>
+        <div class="ingredient-admin-main">
 
-                        {% if ingredient.risk_components %}
+            <strong>
+                {{ ingredient.name }}
+            </strong>
 
-                            <small>
-                                {{ ingredient.risk_components|length }}
-                                rizikófaktor
-                            </small>
+            {% if ingredient.risk_components %}
 
-                        {% else %}
+                <div class="ingredient-risk-preview">
 
-                            <small class="risk-missing">
-                                Nincs rizikófaktor megadva
-                            </small>
+                    {% for link in ingredient.risk_components %}
 
-                        {% endif %}
+                        <span class="ingredient-risk-chip">
+                            {{ link.risk_component.name }}
+                        </span>
 
-                    </div>
+                    {% endfor %}
 
-                    <span class="admin-arrow">
-                        ›
+                </div>
+
+                <div class="risk-admin-meta">
+
+                    <span>
+                        {{ ingredient.risk_components|length }}
+                        rizikófaktor
                     </span>
 
-                </a>
+                </div>
+
+            {% else %}
+
+                <small class="risk-missing">
+                    Nincs rizikófaktor megadva
+                </small>
+
+            {% endif %}
+
+        </div>
+
+        <span class="admin-arrow">
+            ›
+        </span>
+
+    </a>
+
+</div>
 
             {% endfor %}
 

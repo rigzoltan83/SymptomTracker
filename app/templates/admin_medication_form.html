@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <title>Gyógyszer</title>
+
+    <link
+        rel="stylesheet"
+        href="/symptomtracker/static/css/style.css"
+    >
+</head>
+
+<body>
+
+<main class="container">
+
+    <header class="header">
+
+        {% if medication %}
+
+            <h1>💊 Gyógyszer</h1>
+
+            <p>
+                {{ medication.name }}
+            </p>
+
+        {% else %}
+
+            <h1>💊 Új gyógyszer</h1>
+
+        {% endif %}
+
+    </header>
+
+
+    {% if error %}
+
+        <div class="status status-error">
+            {{ error }}
+        </div>
+
+    {% endif %}
+
+
+    <section class="edit-card">
+
+        <form method="post">
+
+            <label class="form-field">
+
+                <span>Név *</span>
+
+                <input
+                    type="text"
+                    name="name"
+                    value="{{
+                        form.get(
+                            'name',
+                            medication.name
+                            if medication
+                            else ''
+                        )
+                    }}"
+                    required
+                >
+
+            </label>
+
+
+            <button
+                class="primary-button"
+                type="submit"
+            >
+                Mentés
+            </button>
+
+        </form>
+
+    </section>
+
+{% if medication and not medication.is_default %}
+
+    <section class="edit-card">
+
+        <form
+            method="post"
+            action="/symptomtracker/admin/medications/{{ medication.id }}/default"
+        >
+
+            <button
+                class="primary-button"
+                type="submit"
+            >
+                ★ Legyen alapértelmezett
+            </button>
+
+        </form>
+
+    </section>
+
+{% endif %}
+
+    {% if medication %}
+
+        <section class="edit-card">
+
+            <form
+                method="post"
+                action="/symptomtracker/admin/medications/{{ medication.id }}/toggle"
+            >
+
+                <button
+                    class="{% if medication.active %}deactivate-button{% else %}activate-button{% endif %}"
+                    type="submit"
+{% if medication.is_default %}
+    disabled
+{% endif %}
+                >
+
+{% if medication.is_default %}
+
+    ★ Alapértelmezett gyógyszer
+
+{% elif medication.active %}
+
+    ⛔ Inaktiválás
+
+{% else %}
+
+    ✅ Aktiválás
+
+{% endif %}
+
+                </button>
+
+            </form>
+
+        </section>
+
+    {% endif %}
+
+
+    <nav class="page-bottom">
+
+        <a
+            class="home-button"
+            href="/symptomtracker/admin/medications"
+        >
+            ← Gyógyszerek
+        </a>
+
+    </nav>
+
+</main>
+
+</body>
+</html>

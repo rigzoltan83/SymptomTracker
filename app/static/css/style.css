@@ -1544,7 +1544,7 @@ body {
 
 .ingredient-admin-search {
     display: grid;
-    grid-template-columns: 1fr auto;
+    grid-template-columns: minmax(0, 1fr) auto auto;
     gap: 8px;
 
     margin-bottom: 18px;
@@ -1802,4 +1802,126 @@ body {
     .food-risk-toggle input:not(:checked)
 ) .food-risk-name {
     text-decoration: line-through;
+}
+
+.risk-admin-card {
+    overflow: hidden;
+
+    border-radius: 13px;
+
+    background: white;
+
+    box-shadow:
+        0 1px 5px
+        rgba(0, 0, 0, 0.05);
+}
+
+.risk-admin-main-link {
+    position: relative;
+
+    min-height: 64px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 12px 42px 12px 15px;
+
+    color: #1f2937;
+
+    text-decoration: none;
+}
+
+.risk-admin-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+
+    color: #6b7280;
+
+    font-size: 12px;
+}
+
+.risk-admin-ingredients-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 9px 15px;
+
+    border-top: 1px solid #f3f4f6;
+
+    color: #6b7280;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+.risk-admin-ingredients-link::after {
+    content: "›";
+
+    font-size: 18px;
+    color: #9ca3af;
+}
+
+.risk-admin-ingredients-link:hover {
+    background: #f9fafb;
+}
+
+.ingredient-risk-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+
+    margin-top: 5px;
+    margin-bottom: 4px;
+}
+
+.ingredient-risk-chip {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 3px 7px;
+
+    border-radius: 999px;
+
+    background: #f3f4f6;
+    color: #4b5563;
+
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.ingredient-risk-filter {
+    min-height: 48px;
+
+    padding: 10px 12px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 11px;
+
+    background: white;
+    color: #374151;
+
+    font: inherit;
+    font-size: 13px;
+}
+
+.default-medication-badge {
+    display: inline-flex;
+    align-items: center;
+
+    width: fit-content;
+
+    margin-top: 4px;
+    padding: 3px 7px;
+
+    border-radius: 999px;
+
+    background: #fffbeb;
+    color: #92400e;
+
+    font-size: 10px;
+    font-weight: 700;
 }

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <title>Tünettípusok</title>
+
+    <link
+        rel="stylesheet"
+        href="/symptomtracker/static/css/style.css"
+    >
+</head>
+
+<body>
+
+<main class="container">
+
+    <header class="header">
+        <h1>🔴 Tünettípusok</h1>
+
+        <p>
+            A tünetfelvitel során választható típusok
+        </p>
+    </header>
+
+
+    <form
+        method="get"
+        class="ingredient-admin-search"
+    >
+
+        <input
+            type="search"
+            name="q"
+            value="{{ search }}"
+            placeholder="🔎 Keresés..."
+        >
+
+        <select name="status">
+
+            <option
+                value="active"
+                {% if selected_status == "active" %}
+                    selected
+                {% endif %}
+            >
+                Aktív
+            </option>
+
+            <option
+                value="inactive"
+                {% if selected_status == "inactive" %}
+                    selected
+                {% endif %}
+            >
+                Inaktív
+            </option>
+
+            <option
+                value="all"
+                {% if selected_status == "all" %}
+                    selected
+                {% endif %}
+            >
+                Mind
+            </option>
+
+        </select>
+
+        <button
+            class="primary-button"
+            type="submit"
+        >
+            Szűrés
+        </button>
+
+    </form>
+
+
+    <a
+        class="new-food-button"
+        href="/symptomtracker/admin/symptom-types/new"
+    >
+        ＋ Új tünettípus
+    </a>
+
+
+    <section class="ingredient-admin-list">
+
+        {% if symptom_types %}
+
+            {% for symptom_type in symptom_types %}
+
+                <div class="risk-admin-card">
+
+                    <a
+                        class="risk-admin-main-link"
+                        href="/symptomtracker/admin/symptom-types/{{ symptom_type.id }}/edit"
+                    >
+
+                        <div class="ingredient-admin-main">
+
+                            <strong>
+                                {{ symptom_type.name }}
+                            </strong>
+
+                            {% if not symptom_type.active %}
+
+                                <small class="risk-missing">
+                                    Inaktív
+                                </small>
+
+                            {% endif %}
+
+                        </div>
+
+                        <span class="admin-arrow">
+                            ›
+                        </span>
+
+                    </a>
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="empty-card">
+                Nincs találat.
+            </div>
+
+        {% endif %}
+
+    </section>
+
+
+    <nav class="page-bottom">
+
+        <a
+            class="home-button"
+            href="/symptomtracker/admin"
+        >
+            ← Kezelés
+        </a>
+
+    </nav>
+
+</main>
+
+</body>
+</html>

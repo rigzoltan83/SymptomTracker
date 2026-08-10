@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <title>Tünettípus</title>
+
+    <link
+        rel="stylesheet"
+        href="/symptomtracker/static/css/style.css"
+    >
+</head>
+
+<body>
+
+<main class="container">
+
+    <header class="header">
+
+        {% if symptom_type %}
+
+            <h1>🔴 Tünettípus</h1>
+
+            <p>
+                {{ symptom_type.name }}
+            </p>
+
+        {% else %}
+
+            <h1>🔴 Új tünettípus</h1>
+
+        {% endif %}
+
+    </header>
+
+
+    {% if error %}
+
+        <div class="status status-error">
+            {{ error }}
+        </div>
+
+    {% endif %}
+
+
+    <section class="edit-card">
+
+        <form method="post">
+
+            <label class="form-field">
+
+                <span>Név *</span>
+
+                <input
+                    type="text"
+                    name="name"
+                    value="{{
+                        form.get(
+                            'name',
+                            symptom_type.name
+                            if symptom_type
+                            else ''
+                        )
+                    }}"
+                    required
+                >
+
+            </label>
+
+
+            <button
+                class="primary-button"
+                type="submit"
+            >
+                Mentés
+            </button>
+
+        </form>
+
+    </section>
+
+
+    {% if symptom_type %}
+
+        <section class="edit-card">
+
+            <form
+                method="post"
+                action="/symptomtracker/admin/symptom-types/{{ symptom_type.id }}/toggle"
+            >
+
+                <button
+                    class="{% if symptom_type.active %}deactivate-button{% else %}activate-button{% endif %}"
+                    type="submit"
+                >
+
+                    {% if symptom_type.active %}
+                        ⛔ Inaktiválás
+                    {% else %}
+                        ✅ Aktiválás
+                    {% endif %}
+
+                </button>
+
+            </form>
+
+        </section>
+
+    {% endif %}
+
+
+    <nav class="page-bottom">
+
+        <a
+            class="home-button"
+            href="/symptomtracker/admin/symptom-types"
+        >
+            ← Tünettípusok
+        </a>
+
+    </nav>
+
+</main>
+
+</body>
+</html>

@@ -1,5 +1,5 @@
-const cetirizineButton =
-    document.getElementById("cetirizine-button");
+const medicationButton =
+    document.getElementById("medication-button");
 
 const statusBox =
     document.getElementById("status");
@@ -17,8 +17,8 @@ function showStatus(message, success = true) {
 }
 
 
-async function addCetirizine() {
-    cetirizineButton.disabled = true;
+async function addDefaultMedication() {
+    medicationButton.disabled = true;
 
     showStatus(
         "Mentés...",
@@ -27,7 +27,7 @@ async function addCetirizine() {
 
     try {
         const response = await fetch(
-            "api/events/cetirizine",
+            "api/events/default-medication",
             {
                 method: "POST",
             }
@@ -61,12 +61,12 @@ async function addCetirizine() {
             false
         );
 
-        cetirizineButton.disabled = false;
+        medicationButton.disabled = false;
     }
 }
 
 
-cetirizineButton.addEventListener(
+medicationButton.addEventListener(
     "click",
-    addCetirizine
+    addDefaultMedication
 );

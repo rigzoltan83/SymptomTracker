@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <title>Testrész</title>
+
+    <link
+        rel="stylesheet"
+        href="/symptomtracker/static/css/style.css"
+    >
+</head>
+
+<body>
+
+<main class="container">
+
+    <header class="header">
+
+        {% if body_part %}
+
+            <h1>🧍 Testrész</h1>
+
+            <p>
+                {{ body_part.name }}
+            </p>
+
+        {% else %}
+
+            <h1>🧍 Új testrész</h1>
+
+        {% endif %}
+
+    </header>
+
+
+    {% if error %}
+
+        <div class="status status-error">
+            {{ error }}
+        </div>
+
+    {% endif %}
+
+
+    <section class="edit-card">
+
+        <form method="post">
+
+            <label class="form-field">
+
+                <span>Név *</span>
+
+                <input
+                    type="text"
+                    name="name"
+                    value="{{
+                        form.get(
+                            'name',
+                            body_part.name
+                            if body_part
+                            else ''
+                        )
+                    }}"
+                    required
+                >
+
+            </label>
+
+
+            <button
+                class="primary-button"
+                type="submit"
+            >
+                Mentés
+            </button>
+
+        </form>
+
+    </section>
+
+
+    {% if body_part %}
+
+        <section class="edit-card">
+
+            <form
+                method="post"
+                action="/symptomtracker/admin/body-parts/{{ body_part.id }}/toggle"
+            >
+
+                <button
+                    class="{% if body_part.active %}deactivate-button{% else %}activate-button{% endif %}"
+                    type="submit"
+                >
+
+                    {% if body_part.active %}
+                        ⛔ Inaktiválás
+                    {% else %}
+                        ✅ Aktiválás
+                    {% endif %}
+
+                </button>
+
+            </form>
+
+        </section>
+
+    {% endif %}
+
+
+    <nav class="page-bottom">
+
+        <a
+            class="home-button"
+            href="/symptomtracker/admin/body-parts"
+        >
+            ← Testrészek
+        </a>
+
+    </nav>
+
+</main>
+
+</body>
+</html>

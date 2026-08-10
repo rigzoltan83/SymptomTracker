@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <title>Gyógyszerek</title>
+
+    <link
+        rel="stylesheet"
+        href="/symptomtracker/static/css/style.css"
+    >
+</head>
+
+<body>
+
+<main class="container">
+
+    <header class="header">
+        <h1>💊 Gyógyszerek</h1>
+
+        <p>
+            A gyógyszeres eseményekhez használható törzs
+        </p>
+    </header>
+
+
+    <form
+        method="get"
+        class="ingredient-admin-search"
+    >
+
+        <input
+            type="search"
+            name="q"
+            value="{{ search }}"
+            placeholder="🔎 Gyógyszer keresése..."
+        >
+
+        <select name="status">
+
+            <option
+                value="active"
+                {% if selected_status == "active" %}
+                    selected
+                {% endif %}
+            >
+                Aktív
+            </option>
+
+            <option
+                value="inactive"
+                {% if selected_status == "inactive" %}
+                    selected
+                {% endif %}
+            >
+                Inaktív
+            </option>
+
+            <option
+                value="all"
+                {% if selected_status == "all" %}
+                    selected
+                {% endif %}
+            >
+                Mind
+            </option>
+
+        </select>
+
+        <button
+            class="primary-button"
+            type="submit"
+        >
+            Szűrés
+        </button>
+
+    </form>
+
+
+    <a
+        class="new-food-button"
+        href="/symptomtracker/admin/medications/new"
+    >
+        ＋ Új gyógyszer
+    </a>
+
+
+    <section class="ingredient-admin-list">
+
+        {% if medications %}
+
+            {% for medication in medications %}
+
+                <div class="risk-admin-card">
+
+                    <a
+                        class="risk-admin-main-link"
+                        href="/symptomtracker/admin/medications/{{ medication.id }}/edit"
+                    >
+
+                        <div class="ingredient-admin-main">
+
+                            <strong>
+                                {{ medication.name }}
+                            </strong>
+
+{% if medication.is_default %}
+
+    <small class="default-medication-badge">
+        ★ Alapértelmezett
+    </small>
+
+{% endif %}
+
+                            {% if not medication.active %}
+
+                                <small class="risk-missing">
+                                    Inaktív
+                                </small>
+
+                            {% endif %}
+
+                        </div>
+
+                        <span class="admin-arrow">
+                            ›
+                        </span>
+
+                    </a>
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="empty-card">
+                Nincs találat.
+            </div>
+
+        {% endif %}
+
+    </section>
+
+
+    <nav class="page-bottom">
+
+        <a
+            class="home-button"
+            href="/symptomtracker/admin"
+        >
+            ← Kezelés
+        </a>
+
+    </nav>
+
+</main>
+
+</body>
+</html>

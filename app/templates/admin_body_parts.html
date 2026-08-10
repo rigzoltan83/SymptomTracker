@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <title>Testrészek</title>
+
+    <link
+        rel="stylesheet"
+        href="/symptomtracker/static/css/style.css"
+    >
+</head>
+
+<body>
+
+<main class="container">
+
+    <header class="header">
+        <h1>🧍 Testrészek</h1>
+
+        <p>
+            A tünetekhez választható testrészek
+        </p>
+    </header>
+
+
+    <form
+        method="get"
+        class="ingredient-admin-search"
+    >
+
+        <input
+            type="search"
+            name="q"
+            value="{{ search }}"
+            placeholder="🔎 Keresés..."
+        >
+
+        <select name="status">
+
+            <option
+                value="active"
+                {% if selected_status == "active" %}
+                    selected
+                {% endif %}
+            >
+                Aktív
+            </option>
+
+            <option
+                value="inactive"
+                {% if selected_status == "inactive" %}
+                    selected
+                {% endif %}
+            >
+                Inaktív
+            </option>
+
+            <option
+                value="all"
+                {% if selected_status == "all" %}
+                    selected
+                {% endif %}
+            >
+                Mind
+            </option>
+
+        </select>
+
+        <button
+            class="primary-button"
+            type="submit"
+        >
+            Szűrés
+        </button>
+
+    </form>
+
+
+    <a
+        class="new-food-button"
+        href="/symptomtracker/admin/body-parts/new"
+    >
+        ＋ Új testrész
+    </a>
+
+
+    <section class="ingredient-admin-list">
+
+        {% if body_parts %}
+
+            {% for body_part in body_parts %}
+
+                <div class="risk-admin-card">
+
+                    <a
+                        class="risk-admin-main-link"
+                        href="/symptomtracker/admin/body-parts/{{ body_part.id }}/edit"
+                    >
+
+                        <div class="ingredient-admin-main">
+
+                            <strong>
+                                {{ body_part.name }}
+                            </strong>
+
+                            {% if not body_part.active %}
+
+                                <small class="risk-missing">
+                                    Inaktív
+                                </small>
+
+                            {% endif %}
+
+                        </div>
+
+                        <span class="admin-arrow">
+                            ›
+                        </span>
+
+                    </a>
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="empty-card">
+                Nincs találat.
+            </div>
+
+        {% endif %}
+
+    </section>
+
+
+    <nav class="page-bottom">
+
+        <a
+            class="home-button"
+            href="/symptomtracker/admin"
+        >
+            ← Kezelés
+        </a>
+
+    </nav>
+
+</main>
+
+</body>
+</html>

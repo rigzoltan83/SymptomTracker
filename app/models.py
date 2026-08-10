@@ -86,10 +86,28 @@ class Medication(db.Model):
         default=True,
     )
 
+    is_default = db.Column(
+        db.Boolean,
+        nullable=False,
+        default=False,
+        server_default=db.false(),
+    )
+
     created_at = db.Column(
         db.DateTime(timezone=True),
         nullable=False,
         default=lambda: datetime.now(timezone.utc),
+    )
+
+    __table_args__ = (
+        db.Index(
+            "uq_medications_one_default",
+            "is_default",
+            unique=True,
+            postgresql_where=db.text(
+                "is_default = true"
+            ),
+        ),
     )
 
 

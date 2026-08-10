@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <title>Rizikófaktorok</title>
+
+    <link
+        rel="stylesheet"
+        href="/symptomtracker/static/css/style.css"
+    >
+</head>
+
+<body>
+
+<main class="container">
+
+    <header class="header">
+        <h1>⚠️ Rizikófaktorok</h1>
+
+        <p>
+            Allergének, FODMAP és egyéb faktorok
+        </p>
+    </header>
+
+
+    <form
+        method="get"
+        class="ingredient-admin-search"
+    >
+
+        <input
+            type="search"
+            name="q"
+            value="{{ search }}"
+            placeholder="🔎 Keresés..."
+        >
+
+        <select name="status">
+
+            <option
+                value="active"
+                {% if selected_status == "active" %}
+                    selected
+                {% endif %}
+            >
+                Aktív
+            </option>
+
+            <option
+                value="inactive"
+                {% if selected_status == "inactive" %}
+                    selected
+                {% endif %}
+            >
+                Inaktív
+            </option>
+
+            <option
+                value="all"
+                {% if selected_status == "all" %}
+                    selected
+                {% endif %}
+            >
+                Mind
+            </option>
+
+        </select>
+
+        <button
+            class="primary-button"
+            type="submit"
+        >
+            Szűrés
+        </button>
+
+    </form>
+
+
+    <a
+        class="new-food-button"
+        href="/symptomtracker/admin/risk-components/new"
+    >
+        ＋ Új rizikófaktor
+    </a>
+
+
+    <section class="ingredient-admin-list">
+
+        {% if risk_components %}
+
+            {% for risk in risk_components %}
+
+<div class="risk-admin-card">
+
+    <a
+        class="risk-admin-main-link"
+        href="/symptomtracker/admin/risk-components/{{ risk.id }}/edit"
+    >
+
+        <div class="ingredient-admin-main">
+
+            <strong>
+                {{ risk.name }}
+            </strong>
+
+            <div class="risk-admin-meta">
+
+                <span>
+                    {{ risk.category }}
+                </span>
+
+                <span>
+                    ·
+                </span>
+
+                <span>
+                    {{ ingredient_counts.get(risk.id, 0) }}
+                    összetevő
+                </span>
+
+            </div>
+
+            {% if not risk.active %}
+
+                <small class="risk-missing">
+                    Inaktív
+                </small>
+
+            {% endif %}
+
+        </div>
+
+        <span class="admin-arrow">
+            ›
+        </span>
+
+    </a>
+
+
+    <a
+        class="risk-admin-ingredients-link"
+        href="/symptomtracker/admin/risk-components/{{ risk.id }}/ingredients"
+    >
+        Kapcsolódó összetevők
+    </a>
+
+</div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="empty-card">
+                Nincs találat.
+            </div>
+
+        {% endif %}
+
+    </section>
+
+
+    <nav class="page-bottom">
+
+        <a
+            class="home-button"
+            href="/symptomtracker/admin"
+        >
+            ← Kezelés
+        </a>
+
+    </nav>
+
+</main>
+
+</body>
+</html>
