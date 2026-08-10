@@ -42,6 +42,12 @@
     enctype="multipart/form-data"
 >
 
+<input
+    type="hidden"
+    name="return_to"
+    value="{{ return_to }}"
+>
+
             <label class="form-field">
 
                 <span>Név *</span>
@@ -203,16 +209,16 @@
     </section>
 
 
-    <nav class="page-bottom">
+<nav class="page-bottom">
 
-        <a
-            class="home-button"
-            href="/symptomtracker/foods"
-        >
-            ← Vissza
-        </a>
+    <a
+        class="home-button"
+        href="{% if return_to == 'admin' %}/symptomtracker/admin/foods{% else %}/symptomtracker/foods{% endif %}"
+    >
+        ← Vissza
+    </a>
 
-    </nav>
+</nav>
 
 </main>
 

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <title>Export - SymptomTracker</title>
+
+    <link
+        rel="stylesheet"
+        href="/symptomtracker/static/css/style.css"
+    >
+</head>
+
+<body>
+
+<main class="container">
+
+    <header class="header">
+        <h1>Export</h1>
+
+        <p>
+            Események mentése
+        </p>
+    </header>
+
+
+    <section class="edit-card">
+
+        <form
+            id="export-form"
+        >
+
+            <label class="form-field">
+
+                <span>Kezdő dátum</span>
+
+                <input
+                    type="date"
+                    name="date_from"
+                >
+
+            </label>
+
+
+            <label class="form-field">
+
+                <span>Záró dátum</span>
+
+                <input
+                    type="date"
+                    name="date_to"
+                >
+
+            </label>
+
+
+            <label class="form-field">
+
+                <span>Állapot</span>
+
+                <select name="status">
+
+                    <option value="active">
+                        Csak aktív
+                    </option>
+
+                    <option value="all">
+                        Aktív + inaktív
+                    </option>
+
+                    <option value="inactive">
+                        Csak inaktív
+                    </option>
+
+                </select>
+
+            </label>
+
+
+            <button
+                class="primary-button"
+                type="button"
+                onclick="downloadExport('xlsx')"
+            >
+                📊 XLSX export
+            </button>
+
+
+            <button
+                class="secondary-export-button"
+                type="button"
+                onclick="downloadExport('csv')"
+            >
+                📄 CSV export
+            </button>
+
+        </form>
+
+    </section>
+
+
+    <nav class="page-bottom">
+
+        <a
+            class="home-button"
+            href="/symptomtracker/"
+        >
+            ← Főoldal
+        </a>
+
+    </nav>
+
+</main>
+
+
+<script>
+    function downloadExport(format) {
+        const form =
+            document.getElementById(
+                "export-form"
+            );
+
+        const params =
+            new URLSearchParams(
+                new FormData(form)
+            );
+
+        window.location.href =
+            `/symptomtracker/export/${format}?`
+            + params.toString();
+    }
+</script>
+
+</body>
+</html>

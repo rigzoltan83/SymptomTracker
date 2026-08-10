@@ -79,11 +79,11 @@
 
     </form>
 
+<a
+    class="new-food-button"
+    href="/symptomtracker/foods/new{% if admin_mode %}?return_to=admin{% endif %}"
+>
 
-    <a
-        class="new-food-button"
-        href="/symptomtracker/foods/new"
-    >
         ＋ Új étel / ital felvétele
     </a>
 
@@ -96,7 +96,7 @@
 
                 <a
                     class="food-card"
-href="{% if food.active %}/symptomtracker/foods/{{ food.id }}/log{% else %}/symptomtracker/foods/{{ food.id }}/edit{% endif %}"                    
+href="{% if admin_mode %}/symptomtracker/foods/{{ food.id }}/edit{% else %}/symptomtracker/foods/{{ food.id }}/log{% endif %}"
                 >
 
                     <div class="food-card-main">
@@ -178,16 +178,20 @@ href="{% if food.active %}/symptomtracker/foods/{{ food.id }}/log{% else %}/symp
     </section>
 
 
-    <nav class="page-bottom">
+<nav class="page-bottom">
 
-        <a
-            class="home-button"
-            href="/symptomtracker/"
-        >
+    <a
+        class="home-button"
+        href="{% if admin_mode %}/symptomtracker/admin{% else %}/symptomtracker/{% endif %}"
+    >
+        {% if admin_mode %}
+            ← Kezelés
+        {% else %}
             ← Főoldal
-        </a>
+        {% endif %}
+    </a>
 
-    </nav>
+</nav>
 
 </main>
 

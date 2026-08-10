@@ -162,12 +162,6 @@
     </label>
 
 
-    <a
-        class="secondary-link"
-        href="/symptomtracker/foods/{{ event.food_event.food_id }}/edit"
-    >
-        🍽️ Étel adatainak szerkesztése
-    </a>
 
 {% endif %}
 
@@ -228,6 +222,26 @@
 
     </label>
 
+<label class="form-field">
+
+    <span>Megszűnés ideje</span>
+
+    <input
+        type="datetime-local"
+        name="ended_at"
+        value="{{
+            event.symptom_event.ended_at
+            | local_datetime_input
+            if event.symptom_event.ended_at
+            else ''
+        }}"
+    >
+
+    <small class="field-help">
+        Hagyd üresen, ha a tünet még tart.
+    </small>
+
+</label>
 
     <div class="form-field">
 

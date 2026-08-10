@@ -60,6 +60,21 @@
 
             </label>
 
+<label class="form-field">
+
+    <span>Megszűnés ideje</span>
+
+    <input
+        type="datetime-local"
+        name="ended_at"
+        value="{{ form.get('ended_at', '') }}"
+    >
+
+    <small class="field-help">
+        Hagyd üresen, ha a tünet még tart.
+    </small>
+
+</label>
 
             <label class="form-field">
 

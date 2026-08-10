@@ -45,6 +45,26 @@ def create_app():
             "%Y-%m-%d %H:%M"
         )
 
+    @app.template_filter("local_datetime_input")
+    def local_datetime_input(value):
+        if value is None:
+            return ""
+
+        if value.tzinfo is None:
+            value = value.replace(
+                tzinfo=timezone.utc
+            )
+
+        local_tz = ZoneInfo(
+            app.config["TIMEZONE"]
+        )
+
+        return (
+            value
+            .astimezone(local_tz)
+            .strftime("%Y-%m-%dT%H:%M")
+        )
+
     from app.routes import main
 
     app.register_blueprint(main)

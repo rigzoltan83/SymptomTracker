@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <title>Összetevő szerkesztése</title>
+
+    <link
+        rel="stylesheet"
+        href="/symptomtracker/static/css/style.css"
+    >
+</head>
+
+<body>
+
+<main class="container">
+
+    <header class="header">
+        <h1>🥕 Összetevő</h1>
+
+        <p>
+            {{ ingredient.name }}
+        </p>
+    </header>
+
+
+    {% if error %}
+
+        <div class="status status-error">
+            {{ error }}
+        </div>
+
+    {% endif %}
+
+
+    <section class="edit-card">
+
+        <form method="post">
+
+            <label class="form-field">
+
+                <span>Név</span>
+
+                <input
+                    type="text"
+                    name="name"
+                    value="{{ ingredient.name }}"
+                    required
+                >
+
+            </label>
+
+
+            <div class="form-field">
+
+                <span>Rizikófaktorok</span>
+
+                <small class="field-help">
+                    Jelöld azokat, amelyek ehhez az
+                    összetevőhöz kapcsolódhatnak.
+                </small>
+
+            </div>
+
+
+            <div class="risk-component-list">
+
+                {% for risk in risk_components %}
+
+                    <div class="risk-component-row">
+
+                        <label class="risk-component-check">
+
+                            <input
+                                type="checkbox"
+                                name="risk_component_ids"
+                                value="{{ risk.id }}"
+                                {% if risk.id in selected_risks %}
+                                    checked
+                                {% endif %}
+                            >
+
+                            <span>
+
+                                <strong>
+                                    {{ risk.name }}
+                                </strong>
+
+                                <small>
+                                    {{ risk.category }}
+                                </small>
+
+                            </span>
+
+                        </label>
+
+
+                        <select
+                            name="confidence_{{ risk.id }}"
+                            class="risk-confidence"
+                        >
+
+                            <option
+                                value="certain"
+                                {% if
+                                    selected_risks.get(risk.id)
+                                    == "certain"
+                                %}
+                                    selected
+                                {% endif %}
+                            >
+                                Biztos
+                            </option>
+
+                            <option
+                                value="typical"
+                                {% if
+                                    selected_risks.get(risk.id)
+                                    == "typical"
+                                %}
+                                    selected
+                                {% endif %}
+                            >
+                                Tipikus
+                            </option>
+
+                            <option
+                                value="product_dependent"
+                                {% if
+                                    selected_risks.get(risk.id)
+                                    == "product_dependent"
+                                %}
+                                    selected
+                                {% endif %}
+                            >
+                                Termékfüggő
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+
+            <button
+                class="primary-button"
+                type="submit"
+            >
+                Mentés
+            </button>
+
+        </form>
+
+    </section>
+
+
+    <nav class="page-bottom">
+
+        <a
+            class="home-button"
+            href="/symptomtracker/admin/ingredients"
+        >
+            ← Összetevők
+        </a>
+
+    </nav>
+
+</main>
+
+</body>
+</html>

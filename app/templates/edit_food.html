@@ -103,6 +103,84 @@
 
             </div>
 
+            {% if risk_details %}
+
+                <div class="form-field">
+
+                    <span>
+                        ⚠️ Felismert rizikófaktorok
+                    </span>
+
+<small class="field-help">
+    Az összetevők alapján automatikusan
+    felismert faktorok. Kapcsold ki azt,
+    amely az adott termékre biztosan
+    nem vonatkozik.
+</small>
+
+                    <div class="food-risk-detail-list">
+
+                        {% for detail in risk_details %}
+
+
+<div class="food-risk-detail-card">
+
+    <input
+        type="hidden"
+        name="presented_risk_component_ids"
+        value="{{ detail.risk.id }}"
+    >
+
+    <label class="food-risk-toggle">
+
+        <input
+            type="checkbox"
+            name="risk_component_ids"
+            value="{{ detail.risk.id }}"
+            {% if
+                detail.risk.id
+                in selected_food_risk_ids
+            %}
+                checked
+            {% endif %}
+        >
+
+        <strong class="food-risk-name">
+            {{ detail.risk.name }}
+        </strong>
+
+    </label>
+
+
+    <div class="food-risk-sources">
+
+                                    {% for source in detail.sources %}
+
+                                        <div class="food-risk-source">
+
+                                            <span>
+                                                ← {{ source.ingredient }}
+                                            </span>
+
+                                            <small>
+                                                {{ source.confidence }}
+                                            </small>
+
+                                        </div>
+
+                                    {% endfor %}
+
+                                </div>
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+            {% endif %}
 
             <div class="form-field">
 
@@ -267,12 +345,12 @@
 
     <nav class="page-bottom">
 
-        <a
-            class="home-button"
-            href="/symptomtracker/foods/{{ food.id }}/log"
-        >
-            ← Vissza az ételhez
-        </a>
+<a
+    class="home-button"
+    href="/symptomtracker/admin/foods"
+>
+    ← Ételek / italok
+</a>
 
     </nav>
 

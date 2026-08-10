@@ -1,10 +1,16 @@
+import csv
+from io import BytesIO, StringIO
+
 from pathlib import Path
 from uuid import uuid4
 from werkzeug.utils import secure_filename
 from datetime import datetime, timezone
 from zoneinfo import ZoneInfo
+from openpyxl import Workbook
 
 from flask import (
+    Response,
+    send_file,
     Blueprint,
     jsonify,
     redirect,
@@ -23,9 +29,12 @@ from app.models import (
     FoodEvent,
     FoodImage,
     FoodIngredient,
+    FoodRiskComponent,
     Ingredient,
+    IngredientRiskComponent,
     Medication,
     MedicationEvent,
+    RiskComponent,
     SymptomEvent,
     SymptomImage,
     SymptomType,
@@ -34,6 +43,174 @@ from app.models import (
 main = Blueprint("main", __name__)
 
 LOCAL_TIMEZONE = ZoneInfo("Europe/Budapest")
+
+def event_export_row(event):
+    medication = ""
+    dose = ""
+
+    food_name = ""
+    food_brand = ""
+    food_amount = ""
+    ingredients = ""
+
+    symptom_type = ""
+    severity = ""
+    body_parts = ""
+
+    if (
+        event.event_type == "medication"
+        and event.medication_event
+    ):
+        medication = (
+            event.medication_event.medication.name
+        )
+
+        dose = (
+            event.medication_event.dose
+            or ""
+        )
+
+    if (
+        event.event_type == "food"
+        and event.food_event
+    ):
+        food = event.food_event.food
+
+        food_name = food.name
+        food_brand = food.brand or ""
+        food_amount = (
+            event.food_event.amount
+            or ""
+        )
+
+        ingredients = ", ".join(
+            item.ingredient.name
+            for item in food.ingredients
+        )
+
+    if (
+        event.event_type == "symptom"
+        and event.symptom_event
+    ):
+        symptom_type = (
+            event.symptom_event
+            .symptom_type
+            .name
+        )
+
+        if event.symptom_event.severity is not None:
+            severity = (
+                event.symptom_event.severity
+            )
+
+        body_parts = ", ".join(
+            body_part.name
+            for body_part
+            in event.symptom_event.body_parts
+        )
+
+    return {
+        "id": event.id,
+
+        "date_time": local_datetime_value(
+            event.occurred_at
+        ).replace("T", " "),
+
+        "event_type": event.event_type,
+
+        "active": (
+            "Igen"
+            if event.active
+            else "Nem"
+        ),
+
+        "medication": medication,
+        "dose": dose,
+
+        "food": food_name,
+        "brand": food_brand,
+        "amount": food_amount,
+        "ingredients": ingredients,
+
+        "symptom": symptom_type,
+        "severity": severity,
+        "body_parts": body_parts,
+
+        "notes": event.notes or "",
+    }
+
+def build_export_query():
+    query = Event.query
+
+    status = request.args.get(
+        "status",
+        "active",
+    ).strip()
+
+    date_from = request.args.get(
+        "date_from",
+        "",
+    ).strip()
+
+    date_to = request.args.get(
+        "date_to",
+        "",
+    ).strip()
+
+    if status == "active":
+        query = query.filter(
+            Event.active.is_(True)
+        )
+
+    elif status == "inactive":
+        query = query.filter(
+            Event.active.is_(False)
+        )
+
+    if date_from:
+        try:
+            start_local = datetime.strptime(
+                date_from,
+                "%Y-%m-%d",
+            ).replace(
+                tzinfo=LOCAL_TIMEZONE
+            )
+
+            query = query.filter(
+                Event.occurred_at
+                >= start_local.astimezone(
+                    timezone.utc
+                )
+            )
+
+        except ValueError:
+            pass
+
+    if date_to:
+        try:
+            end_local = datetime.strptime(
+                date_to,
+                "%Y-%m-%d",
+            ).replace(
+                hour=23,
+                minute=59,
+                second=59,
+                tzinfo=LOCAL_TIMEZONE,
+            )
+
+            query = query.filter(
+                Event.occurred_at
+                <= end_local.astimezone(
+                    timezone.utc
+                )
+            )
+
+        except ValueError:
+            pass
+
+    return query.order_by(
+        Event.occurred_at
+    )
 
 ALLOWED_IMAGE_EXTENSIONS = {
     ".jpg",
@@ -146,6 +323,352 @@ def parse_local_datetime(value):
     )
 
     return local_value.astimezone(timezone.utc)
+
+
+@main.route("/export")
+def export_page():
+    return render_template(
+        "export.html"
+    )
+
+
+@main.route("/export/csv")
+def export_csv():
+    events = (
+        build_export_query()
+        .all()
+    )
+
+    output = StringIO()
+
+    writer = csv.writer(
+        output,
+        delimiter=";",
+        lineterminator="\n",
+    )
+
+    writer.writerow(
+        [
+            "ID",
+            "Dátum és idő",
+            "Eseménytípus",
+            "Aktív",
+            "Gyógyszer",
+            "Adag",
+            "Étel / ital",
+            "Márka",
+            "Mennyiség",
+            "Összetevők",
+            "Tünet",
+            "Erősség",
+            "Testrészek",
+            "Megjegyzés",
+        ]
+    )
+
+    for event in events:
+        row = event_export_row(
+            event
+        )
+
+        writer.writerow(
+            [
+                row["id"],
+                row["date_time"],
+                row["event_type"],
+                row["active"],
+                row["medication"],
+                row["dose"],
+                row["food"],
+                row["brand"],
+                row["amount"],
+                row["ingredients"],
+                row["symptom"],
+                row["severity"],
+                row["body_parts"],
+                row["notes"],
+            ]
+        )
+
+    csv_data = (
+        "\ufeff"
+        + output.getvalue()
+    )
+
+    return Response(
+        csv_data,
+        mimetype=(
+            "text/csv; charset=utf-8"
+        ),
+        headers={
+            "Content-Disposition":
+                "attachment; "
+                "filename=symptomtracker.csv"
+        },
+    )
+
+
+@main.route("/export/xlsx")
+def export_xlsx():
+    events = (
+        build_export_query()
+        .all()
+    )
+
+    workbook = Workbook()
+
+    sheet = workbook.active
+    sheet.title = "Események"
+
+    headers = [
+        "ID",
+        "Dátum és idő",
+        "Eseménytípus",
+        "Aktív",
+        "Gyógyszer",
+        "Adag",
+        "Étel / ital",
+        "Márka",
+        "Mennyiség",
+        "Összetevők",
+        "Tünet",
+        "Erősség",
+        "Testrészek",
+        "Megjegyzés",
+    ]
+
+    sheet.append(headers)
+
+    for event in events:
+        row = event_export_row(
+            event
+        )
+
+        sheet.append(
+            [
+                row["id"],
+                row["date_time"],
+                row["event_type"],
+                row["active"],
+                row["medication"],
+                row["dose"],
+                row["food"],
+                row["brand"],
+                row["amount"],
+                row["ingredients"],
+                row["symptom"],
+                row["severity"],
+                row["body_parts"],
+                row["notes"],
+            ]
+        )
+
+    sheet.freeze_panes = "A2"
+    sheet.auto_filter.ref = (
+        sheet.dimensions
+    )
+
+    widths = {
+        "A": 8,
+        "B": 20,
+        "C": 16,
+        "D": 10,
+        "E": 18,
+        "F": 12,
+        "G": 28,
+        "H": 20,
+        "I": 16,
+        "J": 45,
+        "K": 22,
+        "L": 12,
+        "M": 35,
+        "N": 45,
+    }
+
+    for column, width in widths.items():
+        sheet.column_dimensions[
+            column
+        ].width = width
+
+    output = BytesIO()
+
+    workbook.save(output)
+
+    output.seek(0)
+
+    return send_file(
+        output,
+        as_attachment=True,
+        download_name=(
+            "symptomtracker.xlsx"
+        ),
+        mimetype=(
+            "application/"
+            "vnd.openxmlformats-"
+            "officedocument."
+            "spreadsheetml.sheet"
+        ),
+    )
+
+
+@main.route("/admin")
+def admin():
+    return render_template(
+        "admin.html"
+    )
+
+
+@main.route("/admin/ingredients")
+def admin_ingredients():
+    search = request.args.get(
+        "q",
+        "",
+    ).strip()
+
+    query = Ingredient.query
+
+    if search:
+        pattern = f"%{search}%"
+
+        query = query.filter(
+            Ingredient.name.ilike(pattern)
+        )
+
+    ingredients = (
+        query
+        .order_by(Ingredient.name)
+        .all()
+    )
+
+    return render_template(
+        "admin_ingredients.html",
+        ingredients=ingredients,
+        search=search,
+    )
+
+
+@main.route(
+    "/admin/ingredients/<int:ingredient_id>/edit",
+    methods=["GET", "POST"],
+)
+def admin_edit_ingredient(ingredient_id):
+    ingredient = db.get_or_404(
+        Ingredient,
+        ingredient_id,
+    )
+
+    risk_components = (
+        RiskComponent.query
+        .filter(RiskComponent.active.is_(True))
+        .order_by(
+            RiskComponent.category,
+            RiskComponent.name,
+        )
+        .all()
+    )
+
+    if request.method == "POST":
+        name = request.form.get(
+            "name",
+            "",
+        ).strip()
+
+        if not name:
+            return render_template(
+                "admin_edit_ingredient.html",
+                ingredient=ingredient,
+                risk_components=risk_components,
+                selected_risks={},
+                error="Az összetevő neve kötelező.",
+            )
+
+        duplicate = (
+            Ingredient.query
+            .filter(
+                db.func.lower(
+                    Ingredient.name
+                ) == name.lower()
+            )
+            .filter(
+                Ingredient.id != ingredient.id
+            )
+            .first()
+        )
+
+        if duplicate is not None:
+            return render_template(
+                "admin_edit_ingredient.html",
+                ingredient=ingredient,
+                risk_components=risk_components,
+                selected_risks={
+                    item.risk_component_id:
+                        item.confidence
+                    for item
+                    in ingredient.risk_components
+                },
+                error=(
+                    "Már létezik ilyen nevű összetevő."
+                ),
+            )
+
+        ingredient.name = name
+
+        selected_ids = request.form.getlist(
+            "risk_component_ids",
+            type=int,
+        )
+
+        ingredient.risk_components.clear()
+
+        for risk_component_id in selected_ids:
+            risk_component = db.session.get(
+                RiskComponent,
+                risk_component_id,
+            )
+
+            if risk_component is None:
+                continue
+
+            confidence = request.form.get(
+                f"confidence_{risk_component_id}",
+                "certain",
+            )
+
+            if confidence not in {
+                "certain",
+                "typical",
+                "product_dependent",
+            }:
+                confidence = "certain"
+
+            ingredient.risk_components.append(
+                IngredientRiskComponent(
+                    risk_component=risk_component,
+                    confidence=confidence,
+                )
+            )
+
+        db.session.commit()
+
+        return redirect(
+            f"/symptomtracker/admin/"
+            f"ingredients/{ingredient.id}/edit"
+        )
+
+    selected_risks = {
+        item.risk_component_id:
+            item.confidence
+        for item
+        in ingredient.risk_components
+    }
+
+    return render_template(
+        "admin_edit_ingredient.html",
+        ingredient=ingredient,
+        risk_components=risk_components,
+        selected_risks=selected_risks,
+        error=None,
+    )
 
 
 @main.route("/")
@@ -392,6 +915,11 @@ def edit_event(event_id):
                 type=int,
             )
 
+            ended_at = request.form.get(
+                "ended_at",
+                "",
+            ).strip()
+
             selected_body_part_ids = request.form.getlist(
                 "body_part_ids",
                 type=int,
@@ -463,11 +991,81 @@ def edit_event(event_id):
                     ),
                 )
 
+            ended_at_utc = None
+
+            if ended_at:
+                try:
+                    ended_at_utc = parse_local_datetime(
+                        ended_at
+                    )
+                except ValueError:
+                    return render_template(
+                        "edit_event.html",
+                        event=event,
+                        local_occurred_at=occurred_at,
+                        symptom_types=(
+                            SymptomType.query
+                            .filter(
+                                SymptomType.active.is_(True)
+                            )
+                            .order_by(SymptomType.name)
+                            .all()
+                        ),
+                        body_parts=(
+                            BodyPart.query
+                            .filter(
+                                BodyPart.active.is_(True)
+                            )
+                            .order_by(BodyPart.name)
+                            .all()
+                        ),
+                        selected_body_part_ids=(
+                            selected_body_part_ids
+                        ),
+                        error=(
+                            "Érvénytelen megszűnési időpont."
+                        ),
+                    )
+
+                if ended_at_utc < event.occurred_at:
+                    return render_template(
+                        "edit_event.html",
+                        event=event,
+                        local_occurred_at=occurred_at,
+                        symptom_types=(
+                            SymptomType.query
+                            .filter(
+                                SymptomType.active.is_(True)
+                            )
+                            .order_by(SymptomType.name)
+                            .all()
+                        ),
+                        body_parts=(
+                            BodyPart.query
+                            .filter(
+                                BodyPart.active.is_(True)
+                            )
+                            .order_by(BodyPart.name)
+                            .all()
+                        ),
+                        selected_body_part_ids=(
+                            selected_body_part_ids
+                        ),
+                        error=(
+                            "A megszűnés ideje nem lehet "
+                            "korábbi a tünet kezdeténél."
+                        ),
+                    )
+
             event.symptom_event.symptom_type = (
                 symptom_type
             )
 
             event.symptom_event.severity = severity
+
+            event.symptom_event.ended_at = (
+                ended_at_utc
+            )
 
             event.symptom_event.body_parts = (
                 BodyPart.query
@@ -623,6 +1221,60 @@ def foods():
         foods=food_list,
         search=search,
         selected_status=status,
+        admin_mode=False,
+    )
+
+
+@main.route("/admin/foods")
+def admin_foods():
+    search = request.args.get(
+        "q",
+        "",
+    ).strip()
+
+    status = request.args.get(
+        "status",
+        "active",
+    ).strip()
+
+    query = Food.query
+
+    if status == "active":
+        query = query.filter(
+            Food.active.is_(True)
+        )
+
+    elif status == "inactive":
+        query = query.filter(
+            Food.active.is_(False)
+        )
+
+    if search:
+        pattern = f"%{search}%"
+
+        query = query.filter(
+            or_(
+                Food.name.ilike(pattern),
+                Food.brand.ilike(pattern),
+            )
+        )
+
+    food_list = (
+        query
+        .order_by(
+            Food.name,
+            Food.brand,
+        )
+        .limit(100)
+        .all()
+    )
+
+    return render_template(
+        "foods.html",
+        foods=food_list,
+        search=search,
+        selected_status=status,
+        admin_mode=True,
     )
 
 
@@ -631,6 +1283,17 @@ def foods():
     methods=["GET", "POST"],
 )
 def new_food():
+    return_to = request.values.get(
+        "return_to",
+        "log",
+    ).strip()
+
+    if return_to not in (
+        "log",
+        "admin",
+    ):
+        return_to = "log"
+
     ingredients = (
         Ingredient.query
         .order_by(Ingredient.name)
@@ -640,10 +1303,12 @@ def new_food():
     selected_ingredient_ids = []
 
     if request.method == "POST":
-        name = request.form.get(
-            "name",
-            "",
-        ).strip()
+        name = " ".join(
+            request.form.get(
+                "name",
+                "",
+            ).split()
+        )
 
         brand = request.form.get(
             "brand",
@@ -679,6 +1344,7 @@ def new_food():
                     selected_ingredient_ids
                 ),
                 form=request.form,
+                return_to=return_to,
                 error="Az étel neve kötelező.",
             )
 
@@ -714,6 +1380,7 @@ def new_food():
                     selected_ingredient_ids
                 ),
                 form=request.form,
+                return_to=return_to,
                 error=(
                     "Ez az étel már szerepel a listában. "
                     "Válaszd ki a meglévő ételt."
@@ -804,6 +1471,36 @@ def new_food():
 
             position += 1
 
+        db.session.flush()
+
+        risk_component_ids = set()
+
+        if used_ingredient_ids:
+            ingredient_risks = (
+                IngredientRiskComponent.query
+                .filter(
+                    IngredientRiskComponent.ingredient_id.in_(
+                        used_ingredient_ids
+                    )
+                )
+                .all()
+            )
+
+            risk_component_ids = {
+                item.risk_component_id
+                for item in ingredient_risks
+            }
+
+        for risk_component_id in sorted(
+            risk_component_ids
+        ):
+            food.risk_components.append(
+                FoodRiskComponent(
+                    risk_component_id=risk_component_id,
+                    source="automatic",
+                )
+            )
+
         uploaded_files = request.files.getlist(
             "images"
         )
@@ -823,6 +1520,11 @@ def new_food():
         db.session.add(food)
         db.session.commit()
 
+        if return_to == "admin":
+            return redirect(
+                "/symptomtracker/admin/foods"
+            )
+
         return redirect(
             f"/symptomtracker/foods/"
             f"{food.id}/log"
@@ -833,6 +1535,7 @@ def new_food():
         ingredients=ingredients,
         selected_ingredient_ids=[],
         form={},
+        return_to=return_to,
         error=None,
     )
 
@@ -854,10 +1557,12 @@ def edit_food(food_id):
     )
 
     if request.method == "POST":
-        name = request.form.get(
-            "name",
-            "",
-        ).strip()
+        name = " ".join(
+            request.form.get(
+                "name",
+                "",
+            ).split()
+        )
 
         brand = request.form.get(
             "brand",
@@ -872,6 +1577,20 @@ def edit_food(food_id):
         selected_ingredient_ids = (
             request.form.getlist(
                 "ingredient_ids",
+                type=int,
+            )
+        )
+
+        selected_risk_component_ids = set(
+            request.form.getlist(
+                "risk_component_ids",
+                type=int,
+            )
+        )
+
+        presented_risk_component_ids = set(
+            request.form.getlist(
+                "presented_risk_component_ids",
                 type=int,
             )
         )
@@ -982,6 +1701,72 @@ def edit_food(food_id):
 
             position += 1
 
+        existing_risks = {
+            item.risk_component_id: item
+            for item in food.risk_components
+        }
+
+        db.session.flush()
+
+        suggested_risk_component_ids = set()
+
+        if used_ingredient_ids:
+            ingredient_risks = (
+                IngredientRiskComponent.query
+                .filter(
+                    IngredientRiskComponent.ingredient_id.in_(
+                        used_ingredient_ids
+                    )
+                )
+                .all()
+            )
+
+            suggested_risk_component_ids = {
+                item.risk_component_id
+                for item in ingredient_risks
+            }
+
+        for risk_component_id in sorted(
+            suggested_risk_component_ids
+        ):
+            existing_risk = existing_risks.get(
+                risk_component_id
+            )
+
+            if existing_risk is not None:
+                if (
+                    risk_component_id
+                    in presented_risk_component_ids
+                ):
+                    existing_risk.enabled = (
+                        risk_component_id
+                        in selected_risk_component_ids
+                    )
+
+                continue
+
+            food.risk_components.append(
+                FoodRiskComponent(
+                    risk_component_id=risk_component_id,
+                    source="automatic",
+                    enabled=(
+                        risk_component_id
+                        not in presented_risk_component_ids
+                        or risk_component_id
+                        in selected_risk_component_ids
+                    ),
+                )
+            )
+
+        for risk_component_id, existing_risk in (
+            existing_risks.items()
+        ):
+            if (
+                risk_component_id
+                not in suggested_risk_component_ids
+            ):
+                db.session.delete(existing_risk)
+
         uploaded_files = request.files.getlist(
             "images"
         )
@@ -1010,12 +1795,57 @@ def edit_food(food_id):
         for item in food.ingredients
     ]
 
+    selected_food_risk_ids = {
+        item.risk_component_id
+        for item in food.risk_components
+        if item.enabled
+    }
+
+    risk_details_by_id = {}
+
+    confidence_labels = {
+        "certain": "Biztos",
+        "typical": "Tipikus",
+        "product_dependent": "Termékfüggő",
+    }
+
+    for food_ingredient in food.ingredients:
+        ingredient = food_ingredient.ingredient
+
+        for ingredient_risk in ingredient.risk_components:
+            risk = ingredient_risk.risk_component
+
+            if risk.id not in risk_details_by_id:
+                risk_details_by_id[risk.id] = {
+                    "risk": risk,
+                    "sources": [],
+                }
+
+            risk_details_by_id[risk.id]["sources"].append(
+                {
+                    "ingredient": ingredient.name,
+                    "confidence": confidence_labels.get(
+                        ingredient_risk.confidence,
+                        ingredient_risk.confidence,
+                    ),
+                }
+            )
+
+    risk_details = sorted(
+        risk_details_by_id.values(),
+        key=lambda item: item["risk"].name.lower(),
+    )
+
     return render_template(
         "edit_food.html",
         food=food,
         ingredients=ingredients,
         selected_ingredient_ids=(
             selected_ingredient_ids
+        ),
+        risk_details=risk_details,
+        selected_food_risk_ids=(
+            selected_food_risk_ids
         ),
         error=None,
     )
@@ -1165,6 +1995,11 @@ def add_symptom():
             type=int,
         )
 
+        ended_at = request.form.get(
+            "ended_at",
+            "",
+        ).strip()
+
         selected_body_part_ids = request.form.getlist(
             "body_part_ids",
             type=int,
@@ -1214,6 +2049,17 @@ def add_symptom():
             occurred_at_utc = parse_local_datetime(
                 occurred_at
             )
+
+            ended_at_utc = None
+
+            if ended_at:
+                ended_at_utc = parse_local_datetime(
+                    ended_at
+                )
+
+                if ended_at_utc < occurred_at_utc:
+                    raise ValueError
+
         except ValueError:
             return render_template(
                 "symptom_form.html",
@@ -1221,7 +2067,11 @@ def add_symptom():
                 body_parts=body_parts,
                 form=request.form,
                 selected_body_part_ids=selected_body_part_ids,
-                error="Érvénytelen dátum vagy időpont.",
+                error=(
+                    "Érvénytelen dátum vagy időpont, "
+                    "illetve a megszűnés nem lehet "
+                    "korábbi a kezdetnél."
+                ),
             )
 
         event = Event(
@@ -1233,6 +2083,7 @@ def add_symptom():
         symptom_event = SymptomEvent(
             symptom_type=symptom_type,
             severity=severity,
+            ended_at=ended_at_utc,
         )
 
         if selected_body_part_ids:

@@ -1410,3 +1410,396 @@ body {
 
     object-fit: cover;
 }
+
+.secondary-export-button {
+    min-height: 50px;
+
+    border: 0;
+    border-radius: 11px;
+
+    background: #e5e7eb;
+    color: #1f2937;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.duration-badge {
+    flex: 0 0 auto;
+
+    padding: 5px 8px;
+
+    border-radius: 999px;
+
+    background: #e5e7eb;
+    color: #374151;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.duration-open {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.manage-link {
+    min-height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 12px;
+
+    border-radius: 12px;
+
+    background: white;
+    color: #374151;
+
+    box-shadow:
+        0 1px 5px
+        rgba(0, 0, 0, 0.06);
+
+    font-size: 15px;
+    font-weight: 700;
+
+    text-decoration: none;
+}
+
+.admin-grid {
+    display: grid;
+    gap: 10px;
+}
+
+.admin-card {
+    position: relative;
+
+    min-height: 76px;
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    padding: 13px 42px 13px 15px;
+
+    border-radius: 14px;
+
+    background: white;
+    color: #1f2937;
+
+    box-shadow:
+        0 1px 5px
+        rgba(0, 0, 0, 0.05);
+
+    text-decoration: none;
+}
+
+.admin-icon {
+    flex: 0 0 auto;
+
+    width: 38px;
+
+    font-size: 28px;
+    text-align: center;
+}
+
+.admin-content {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.admin-content strong {
+    font-size: 16px;
+}
+
+.admin-content small {
+    color: #6b7280;
+
+    font-size: 12px;
+    line-height: 1.3;
+}
+
+.admin-arrow {
+    position: absolute;
+
+    right: 16px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #9ca3af;
+
+    font-size: 28px;
+}
+
+.admin-card-disabled {
+    opacity: 0.45;
+}
+
+.ingredient-admin-search {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 8px;
+
+    margin-bottom: 18px;
+}
+
+.ingredient-admin-search input {
+    min-width: 0;
+    min-height: 48px;
+
+    padding: 11px 13px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 11px;
+
+    background: white;
+
+    font: inherit;
+}
+
+.ingredient-admin-search .primary-button {
+    padding: 0 15px;
+}
+
+.ingredient-admin-list {
+    display: grid;
+    gap: 9px;
+}
+
+.ingredient-admin-card {
+    position: relative;
+
+    min-height: 64px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 12px 42px 12px 15px;
+
+    border-radius: 13px;
+
+    background: white;
+    color: #1f2937;
+
+    box-shadow:
+        0 1px 5px
+        rgba(0, 0, 0, 0.05);
+
+    text-decoration: none;
+}
+
+.ingredient-admin-main {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.ingredient-admin-main strong {
+    font-size: 15px;
+}
+
+.ingredient-admin-main small {
+    color: #6b7280;
+    font-size: 12px;
+}
+
+.ingredient-admin-main .risk-missing {
+    color: #b45309;
+}
+
+.risk-component-list {
+    display: grid;
+    gap: 9px;
+
+    margin-bottom: 18px;
+}
+
+.risk-component-row {
+    display: grid;
+    grid-template-columns: 1fr 125px;
+    gap: 8px;
+
+    padding: 10px;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 11px;
+
+    background: #f9fafb;
+}
+
+.risk-component-check {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    cursor: pointer;
+}
+
+.risk-component-check input {
+    width: 20px;
+    height: 20px;
+
+    flex: 0 0 auto;
+}
+
+.risk-component-check span {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.risk-component-check strong {
+    font-size: 14px;
+}
+
+.risk-component-check small {
+    color: #6b7280;
+    font-size: 10px;
+}
+
+.risk-confidence {
+    width: 100%;
+
+    padding: 7px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+
+    background: white;
+
+    font-size: 12px;
+}
+
+@media (max-width: 420px) {
+
+    .ingredient-admin-search {
+        grid-template-columns: 1fr;
+    }
+
+    .risk-component-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+.food-risk-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+
+    margin-top: 8px;
+    margin-bottom: 6px;
+}
+
+.food-risk-badge {
+    display: inline-flex;
+    align-items: center;
+
+    min-height: 32px;
+
+    padding: 5px 10px;
+
+    border: 1px solid #f59e0b;
+    border-radius: 999px;
+
+    background: #fffbeb;
+    color: #92400e;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.food-risk-detail-list {
+    display: grid;
+    gap: 8px;
+
+    margin-top: 10px;
+}
+
+.food-risk-detail-card {
+    padding: 10px 12px;
+
+    border: 1px solid #f59e0b;
+    border-radius: 11px;
+
+    background: #fffbeb;
+}
+
+.food-risk-name {
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: #92400e;
+
+    font-size: 14px;
+}
+
+.food-risk-sources {
+    display: grid;
+    gap: 4px;
+}
+
+.food-risk-source {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+    color: #4b5563;
+
+    font-size: 12px;
+}
+
+.food-risk-source small {
+    flex: 0 0 auto;
+
+    padding: 3px 7px;
+
+    border-radius: 999px;
+
+    background: white;
+    color: #6b7280;
+
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.food-risk-toggle {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    margin-bottom: 7px;
+
+    cursor: pointer;
+}
+
+.food-risk-toggle input {
+    width: 20px;
+    height: 20px;
+
+    flex: 0 0 auto;
+}
+
+.food-risk-toggle .food-risk-name {
+    margin: 0;
+}
+
+.food-risk-detail-card:has(
+    .food-risk-toggle input:not(:checked)
+) {
+    opacity: 0.55;
+}
+
+.food-risk-detail-card:has(
+    .food-risk-toggle input:not(:checked)
+) .food-risk-name {
+    text-decoration: line-through;
+}

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <title>Összetevők - SymptomTracker</title>
+
+    <link
+        rel="stylesheet"
+        href="/symptomtracker/static/css/style.css"
+    >
+</head>
+
+<body>
+
+<main class="container">
+
+    <header class="header">
+        <h1>🥕 Összetevők</h1>
+
+        <p>
+            Rizikófaktorok hozzárendelése
+        </p>
+    </header>
+
+
+    <form
+        method="get"
+        class="ingredient-admin-search"
+    >
+
+        <input
+            type="search"
+            name="q"
+            value="{{ search }}"
+            placeholder="🔎 Összetevő keresése..."
+            autocomplete="off"
+        >
+
+        <button
+            class="primary-button"
+            type="submit"
+        >
+            Keresés
+        </button>
+
+    </form>
+
+
+    <section class="ingredient-admin-list">
+
+        {% if ingredients %}
+
+            {% for ingredient in ingredients %}
+
+                <a
+                    class="ingredient-admin-card"
+                    href="/symptomtracker/admin/ingredients/{{ ingredient.id }}/edit"
+                >
+
+                    <div class="ingredient-admin-main">
+
+                        <strong>
+                            {{ ingredient.name }}
+                        </strong>
+
+                        {% if ingredient.risk_components %}
+
+                            <small>
+                                {{ ingredient.risk_components|length }}
+                                rizikófaktor
+                            </small>
+
+                        {% else %}
+
+                            <small class="risk-missing">
+                                Nincs rizikófaktor megadva
+                            </small>
+
+                        {% endif %}
+
+                    </div>
+
+                    <span class="admin-arrow">
+                        ›
+                    </span>
+
+                </a>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="empty-card">
+                Nincs találat.
+            </div>
+
+        {% endif %}
+
+    </section>
+
+
+    <nav class="page-bottom">
+
+        <a
+            class="home-button"
+            href="/symptomtracker/admin"
+        >
+            ← Kezelés
+        </a>
+
+    </nav>
+
+</main>
+
+</body>
+</html>

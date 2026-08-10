@@ -256,6 +256,50 @@ placeholder="🔎 Étel, összetevő, tünet..."
             {{ event.symptom_event.severity }}/10
         </span>
 
+        {% if event.symptom_event.ended_at %}
+
+            {% set duration_minutes = (
+                (
+                    event.symptom_event.ended_at
+                    - event.occurred_at
+                ).total_seconds()
+                / 60
+            ) | int %}
+
+            <span class="duration-badge">
+
+                {% if duration_minutes < 60 %}
+
+                    {{ duration_minutes }} perc
+
+                {% else %}
+
+                    {% set duration_hours =
+                        duration_minutes // 60
+                    %}
+
+                    {% set remaining_minutes =
+                        duration_minutes % 60
+                    %}
+
+                    {{ duration_hours }} óra
+
+                    {% if remaining_minutes > 0 %}
+                        {{ remaining_minutes }} perc
+                    {% endif %}
+
+                {% endif %}
+
+            </span>
+
+        {% else %}
+
+            <span class="duration-badge duration-open">
+                még tart
+            </span>
+
+        {% endif %}
+
         {% if event.symptom_event.body_parts %}
 
             <span class="body-parts-summary">

@@ -186,6 +186,13 @@ class Food(db.Model):
     )
 
 
+    risk_components = db.relationship(
+        "FoodRiskComponent",
+        back_populates="food",
+        cascade="all, delete-orphan",
+    )
+
+
 class Ingredient(db.Model):
     __tablename__ = "ingredients"
 
@@ -202,6 +209,210 @@ class Ingredient(db.Model):
         db.DateTime(timezone=True),
         nullable=False,
         default=lambda: datetime.now(timezone.utc),
+    )
+
+    risk_components = db.relationship(
+        "IngredientRiskComponent",
+        back_populates="ingredient",
+        cascade="all, delete-orphan",
+    )
+
+
+class RiskComponent(db.Model):
+    __tablename__ = "risk_components"
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True,
+    )
+
+    name = db.Column(
+        db.String(200),
+        nullable=False,
+        unique=True,
+        index=True,
+    )
+
+    category = db.Column(
+        db.String(50),
+        nullable=False,
+        index=True,
+    )
+
+    description = db.Column(
+        db.Text,
+        nullable=True,
+    )
+
+    active = db.Column(
+        db.Boolean,
+        nullable=False,
+        default=True,
+        server_default=db.true(),
+    )
+
+    created_at = db.Column(
+        db.DateTime(timezone=True),
+        nullable=False,
+        default=lambda: datetime.now(timezone.utc),
+    )
+
+    ingredients = db.relationship(
+        "IngredientRiskComponent",
+        back_populates="risk_component",
+        cascade="all, delete-orphan",
+    )
+
+    foods = db.relationship(
+        "FoodRiskComponent",
+        back_populates="risk_component",
+        cascade="all, delete-orphan",
+    )
+
+
+class IngredientRiskComponent(db.Model):
+    __tablename__ = "ingredient_risk_components"
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True,
+    )
+
+    ingredient_id = db.Column(
+        db.Integer,
+        db.ForeignKey(
+            "ingredients.id",
+            ondelete="CASCADE",
+        ),
+        nullable=False,
+        index=True,
+    )
+
+    risk_component_id = db.Column(
+        db.Integer,
+        db.ForeignKey(
+            "risk_components.id",
+            ondelete="CASCADE",
+        ),
+        nullable=False,
+        index=True,
+    )
+
+    confidence = db.Column(
+        db.String(30),
+        nullable=False,
+        default="certain",
+        server_default="certain",
+    )
+
+    notes = db.Column(
+        db.Text,
+        nullable=True,
+    )
+
+    ingredient = db.relationship(
+        "Ingredient",
+        back_populates="risk_components",
+    )
+
+    risk_component = db.relationship(
+        "RiskComponent",
+        back_populates="ingredients",
+    )
+
+    __table_args__ = (
+        db.UniqueConstraint(
+            "ingredient_id",
+            "risk_component_id",
+            name="uq_ingredient_risk_component",
+        ),
+        db.CheckConstraint(
+            "confidence IN "
+            "('certain', 'typical', 'product_dependent')",
+            name="ck_ingredient_risk_confidence",
+        ),
+    )
+
+
+class FoodRiskComponent(db.Model):
+    __tablename__ = "food_risk_components"
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True,
+    )
+
+    food_id = db.Column(
+        db.Integer,
+        db.ForeignKey(
+            "foods.id",
+            ondelete="CASCADE",
+        ),
+        nullable=False,
+        index=True,
+    )
+
+    risk_component_id = db.Column(
+        db.Integer,
+        db.ForeignKey(
+            "risk_components.id",
+            ondelete="RESTRICT",
+        ),
+        nullable=False,
+        index=True,
+    )
+
+    source = db.Column(
+        db.String(20),
+        nullable=False,
+        default="automatic",
+        server_default="automatic",
+    )
+
+    source = db.Column(
+        db.String(20),
+        nullable=False,
+        default="automatic",
+        server_default="automatic",
+    )
+
+    enabled = db.Column(
+        db.Boolean,
+        nullable=False,
+        default=True,
+        server_default=db.true(),
+    )
+
+    notes = db.Column(
+        db.Text,
+        nullable=True,
+    )
+
+    notes = db.Column(
+        db.Text,
+        nullable=True,
+    )
+
+    food = db.relationship(
+        "Food",
+        back_populates="risk_components",
+    )
+
+    risk_component = db.relationship(
+        "RiskComponent",
+        back_populates="foods",
+    )
+
+    __table_args__ = (
+        db.UniqueConstraint(
+            "food_id",
+            "risk_component_id",
+            name="uq_food_risk_component",
+        ),
+        db.CheckConstraint(
+            "source IN ('automatic', 'manual')",
+            name="ck_food_risk_source",
+        ),
     )
 
 
@@ -458,6 +669,12 @@ class SymptomEvent(db.Model):
     severity = db.Column(
         db.Integer,
         nullable=True,
+    )
+
+    ended_at = db.Column(
+        db.DateTime(timezone=True),
+        nullable=True,
+        index=True,
     )
 
     event = db.relationship(
