@@ -327,8 +327,20 @@ def parse_local_datetime(value):
 
 @main.route("/export")
 def export_page():
+    return_to = request.args.get(
+        "return_to",
+        "dashboard",
+    ).strip()
+
+    if return_to not in (
+        "dashboard",
+        "admin",
+    ):
+        return_to = "dashboard"
+
     return render_template(
-        "export.html"
+        "export.html",
+        return_to=return_to,
     )
 
 

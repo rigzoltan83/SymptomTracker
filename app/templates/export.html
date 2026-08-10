@@ -106,12 +106,16 @@
 
     <nav class="page-bottom">
 
-        <a
-            class="home-button"
-            href="/symptomtracker/"
-        >
-            ← Főoldal
-        </a>
+<a
+    class="home-button"
+    href="{% if return_to == 'admin' %}/symptomtracker/admin{% else %}/symptomtracker/{% endif %}"
+>
+    {% if return_to == "admin" %}
+        ← Kezelés
+    {% else %}
+        ← Főoldal
+    {% endif %}
+</a>
 
     </nav>
 
