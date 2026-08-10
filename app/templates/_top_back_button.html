@@ -1,0 +1,41 @@
+<a
+    id="top-back-button"
+    class="top-back-button"
+    href="/symptomtracker/"
+    hidden
+>
+    ← Vissza
+</a>
+
+<script>
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+        const bottomBackButton =
+            document.querySelector(
+                ".page-bottom .home-button"
+            );
+
+        const topBackButton =
+            document.getElementById(
+                "top-back-button"
+            );
+
+        if (
+            !bottomBackButton
+            || !topBackButton
+        ) {
+            return;
+        }
+
+        topBackButton.href =
+            bottomBackButton.href;
+
+        topBackButton.textContent =
+            bottomBackButton.textContent
+                .trim();
+
+        topBackButton.hidden = false;
+    }
+);
+</script>

@@ -96,58 +96,45 @@
 
             {% for risk in risk_components %}
 
-<div class="risk-admin-card">
+<div class="compact-risk-row">
 
     <a
-        class="risk-admin-main-link"
+        class="compact-risk-main"
         href="/symptomtracker/admin/risk-components/{{ risk.id }}/edit"
     >
 
-        <div class="ingredient-admin-main">
+        <strong>
+            {{ risk.name }}
+        </strong>
 
-            <strong>
-                {{ risk.name }}
-            </strong>
+        <span class="compact-risk-meta">
 
-            <div class="risk-admin-meta">
-
-                <span>
-                    {{ risk.category }}
-                </span>
-
-                <span>
-                    ·
-                </span>
-
-                <span>
-                    {{ ingredient_counts.get(risk.id, 0) }}
-                    összetevő
-                </span>
-
-            </div>
+            {{ risk.category }}
 
             {% if not risk.active %}
-
-                <small class="risk-missing">
-                    Inaktív
-                </small>
-
+                · Inaktív
             {% endif %}
 
-        </div>
-
-        <span class="admin-arrow">
-            ›
         </span>
 
     </a>
 
 
     <a
-        class="risk-admin-ingredients-link"
+        class="compact-risk-count"
         href="/symptomtracker/admin/risk-components/{{ risk.id }}/ingredients"
     >
-        Kapcsolódó összetevők
+        {{ ingredient_counts.get(risk.id, 0) }}
+        össz.
+    </a>
+
+
+    <a
+        class="compact-risk-edit"
+        href="/symptomtracker/admin/risk-components/{{ risk.id }}/edit"
+        aria-label="{{ risk.name }} szerkesztése"
+    >
+        ›
     </a>
 
 </div>
@@ -175,6 +162,9 @@
         </a>
 
     </nav>
+
+
+    {% include "_top_back_button.html" %}
 
 </main>
 

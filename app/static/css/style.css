@@ -2623,3 +2623,330 @@ body {
 .analysis-chip {
     text-decoration: underline;
 }
+
+
+/* =========================================================
+   Kompakt admin törzsadat-listák
+   ========================================================= */
+
+.ingredient-admin-list {
+    gap: 4px;
+}
+
+
+/* Összetevő / rizikófaktor sor */
+
+.risk-admin-card {
+    border-radius: 9px;
+}
+
+.risk-admin-main-link {
+    min-height: 42px;
+
+    padding:
+        7px
+        34px
+        7px
+        11px;
+}
+
+.ingredient-admin-main {
+    gap: 1px;
+}
+
+.ingredient-admin-main strong {
+    font-size: 14px;
+    line-height: 1.2;
+}
+
+
+/* Jobb oldali nyíl */
+
+.risk-admin-main-link .admin-arrow {
+    right: 11px;
+
+    font-size: 22px;
+}
+
+
+/* Metaadat */
+
+.risk-admin-meta {
+    gap: 3px;
+
+    font-size: 11px;
+    line-height: 1.2;
+}
+
+
+/* Összetevő rizikófaktor-chipjei */
+
+.ingredient-risk-preview {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 3px;
+
+    margin-top: 2px;
+}
+
+.ingredient-risk-chip {
+    padding: 2px 6px;
+
+    border-radius: 999px;
+
+    font-size: 10px;
+    line-height: 1.2;
+}
+
+
+/* Rizikófaktor -> kapcsolódó összetevők */
+
+.risk-admin-ingredients-link {
+    padding:
+        5px
+        11px;
+
+    font-size: 11px;
+}
+
+
+/* Inaktív / hiányzó jelzés */
+
+.ingredient-admin-main .risk-missing {
+    font-size: 10px;
+    line-height: 1.2;
+}
+
+
+/* Kereső is legyen kompaktabb */
+
+.ingredient-admin-search {
+    gap: 6px;
+
+    margin-bottom: 10px;
+}
+
+.ingredient-admin-search input {
+    min-height: 40px;
+
+    padding:
+        8px
+        10px;
+
+    border-radius: 9px;
+}
+
+.ingredient-admin-search select {
+    min-height: 40px;
+
+    padding:
+        6px
+        9px;
+}
+
+.ingredient-admin-search .primary-button {
+    min-height: 40px;
+
+    padding:
+        0
+        11px;
+}
+
+
+/* Mobilon se nőjenek vissza óriásira */
+
+@media (max-width: 420px) {
+
+    .risk-admin-main-link {
+        min-height: 40px;
+
+        padding:
+            6px
+            32px
+            6px
+            10px;
+    }
+
+    .ingredient-admin-main strong {
+        font-size: 13px;
+    }
+
+    .ingredient-risk-chip {
+        font-size: 9px;
+    }
+
+    .risk-admin-ingredients-link {
+        padding:
+            5px
+            10px;
+    }
+}
+
+/* =========================================================
+   Kompakt rizikófaktor lista
+   ========================================================= */
+
+.compact-risk-row {
+    min-height: 42px;
+
+    display: grid;
+    grid-template-columns:
+        minmax(0, 1fr)
+        auto
+        24px;
+    align-items: center;
+    gap: 6px;
+
+    padding:
+        5px
+        8px
+        5px
+        11px;
+
+    border-radius: 9px;
+
+    background: white;
+
+    box-shadow:
+        0 1px 5px
+        rgba(0, 0, 0, 0.05);
+}
+
+.compact-risk-main {
+    min-width: 0;
+
+    display: grid;
+    gap: 1px;
+
+    color: #1f2937;
+    text-decoration: none;
+}
+
+.compact-risk-main strong {
+    overflow: hidden;
+
+    font-size: 13px;
+    line-height: 1.2;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.compact-risk-meta {
+    overflow: hidden;
+
+    color: #6b7280;
+
+    font-size: 10px;
+    line-height: 1.2;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.compact-risk-count {
+    padding: 4px 7px;
+
+    border-radius: 999px;
+
+    background: #f3f4f6;
+    color: #4b5563;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    white-space: nowrap;
+}
+
+.compact-risk-count:hover {
+    background: #e5e7eb;
+}
+
+.compact-risk-edit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #9ca3af;
+
+    font-size: 22px;
+
+    text-decoration: none;
+}
+
+@media (max-width: 420px) {
+
+    .compact-risk-row {
+        min-height: 40px;
+
+        gap: 4px;
+
+        padding:
+            4px
+            7px
+            4px
+            9px;
+    }
+
+    .compact-risk-main strong {
+        font-size: 12px;
+    }
+
+    .compact-risk-count {
+        padding: 3px 6px;
+
+        font-size: 9px;
+    }
+}
+
+/* =========================================================
+   Főoldal alsó navigáció
+   ========================================================= */
+
+.home-export-row {
+    display: flex;
+    justify-content: center;
+
+    margin-top: 10px;
+}
+
+.home-export-link {
+    width: 70%;
+    min-height: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 8px 16px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 11px;
+
+    background: white;
+    color: #4b5563;
+
+    box-shadow:
+        0 1px 4px
+        rgba(0, 0, 0, 0.04);
+
+    font-size: 14px;
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+.home-export-link:hover {
+    background: #f9fafb;
+    color: #1f2937;
+}
+
+@media (max-width: 480px) {
+
+    .home-export-link {
+        width: 82%;
+    }
+}
