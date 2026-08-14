@@ -400,10 +400,7 @@ echo "$MSG_START"
 # ROOT ELLENŐRZÉS
 # ---------------------------------------------------------
 
-if [
-    "$(id -u)"
-    -ne 0
-]; then
+if [ "$(id -u)" -ne 0 ]; then
     echo "$MSG_ROOT" >&2
     exit 1
 fi
@@ -438,10 +435,7 @@ echo "$MSG_COPY_FILES"
 mkdir -p \
     "$INSTALL_DIR"
 
-if [
-    "$PROJECT_DIR"
-    != "$INSTALL_DIR"
-]; then
+if [ "$PROJECT_DIR" != "$INSTALL_DIR" ]; then
     tar \
         --exclude='.git' \
         --exclude='.env' \
