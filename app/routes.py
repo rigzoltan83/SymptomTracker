@@ -18,6 +18,7 @@ from flask import (
     render_template,
     request,
     send_from_directory,
+    url_for,
 )
 
 from sqlalchemy import or_
@@ -44,6 +45,54 @@ from app.models import (
 main = Blueprint("main", __name__)
 
 LOCAL_TIMEZONE = ZoneInfo("Europe/Budapest")
+
+from app.i18n import (
+    SUPPORTED_LANGUAGES,
+    set_current_language,
+    translate,
+)
+
+
+from app.reference_i18n import (
+    apply_reference_name_join,
+    create_reference_translations,
+    find_reference_by_name,
+    get_reference_description,
+    get_reference_name,
+    order_reference_query,
+    reference_description_matches,
+    reference_name_matches,
+    update_current_reference_translation,
+)
+
+
+@main.get("/language/<language_code>")
+def change_language(language_code):
+    if language_code not in SUPPORTED_LANGUAGES:
+        abort(404)
+
+    set_current_language(
+        language_code
+    )
+
+    next_url = request.args.get(
+        "next",
+        "",
+    ).strip()
+
+    if (
+        not next_url
+        or not next_url.startswith("/")
+        or next_url.startswith("//")
+    ):
+        next_url = url_for(
+            "main.index"
+        )
+
+    return redirect(
+        next_url
+    )
+
 
 def event_export_row(event):
     medication = ""
@@ -85,7 +134,9 @@ def event_export_row(event):
         )
 
         ingredients = ", ".join(
-            item.ingredient.name
+            get_reference_name(
+                item.ingredient
+            )
             for item in food.ingredients
         )
 
@@ -94,9 +145,9 @@ def event_export_row(event):
         and event.symptom_event
     ):
         symptom_type = (
-            event.symptom_event
-            .symptom_type
-            .name
+            get_reference_name(
+                event.symptom_event.symptom_type
+            )
         )
 
         if event.symptom_event.severity is not None:
@@ -105,7 +156,9 @@ def event_export_row(event):
             )
 
         body_parts = ", ".join(
-            body_part.name
+            get_reference_name(
+                body_part
+            )
             for body_part
             in event.symptom_event.body_parts
         )
@@ -117,12 +170,15 @@ def event_export_row(event):
             event.occurred_at
         ).replace("T", " "),
 
-        "event_type": event.event_type,
+        "event_type": translate(
+            "export.event_type."
+            + event.event_type
+        ),
 
         "active": (
-            "Igen"
+            translate("common.yes")
             if event.active
-            else "Nem"
+            else translate("common.no")
         ),
 
         "medication": medication,
@@ -385,12 +441,12 @@ def analysis_page():
     )
 
     symptom_types = (
-        SymptomType.query
-        .filter(
-            SymptomType.active.is_(True)
-        )
-        .order_by(
-            SymptomType.name
+        order_reference_query(
+            SymptomType.query
+            .filter(
+                SymptomType.active.is_(True)
+            ),
+            SymptomType,
         )
         .all()
     )
@@ -482,12 +538,12 @@ def analysis_risk_detail(
     )
 
     symptom_types = (
-        SymptomType.query
-        .filter(
-            SymptomType.active.is_(True)
-        )
-        .order_by(
-            SymptomType.name
+        order_reference_query(
+            SymptomType.query
+            .filter(
+                SymptomType.active.is_(True)
+            ),
+            SymptomType,
         )
         .all()
     )
@@ -579,12 +635,12 @@ def analysis_combination_detail(
         abort(404)
 
     symptom_types = (
-        SymptomType.query
-        .filter(
-            SymptomType.active.is_(True)
-        )
-        .order_by(
-            SymptomType.name
+        order_reference_query(
+            SymptomType.query
+            .filter(
+                SymptomType.active.is_(True)
+            ),
+            SymptomType,
         )
         .all()
     )
@@ -638,19 +694,19 @@ def export_csv():
     writer.writerow(
         [
             "ID",
-            "Dátum és idő",
-            "Eseménytípus",
-            "Aktív",
-            "Gyógyszer",
-            "Adag",
-            "Étel / ital",
-            "Márka",
-            "Mennyiség",
-            "Összetevők",
-            "Tünet",
-            "Erősség",
-            "Testrészek",
-            "Megjegyzés",
+            translate("export.column.date_time"),
+            translate("export.column.event_type"),
+            translate("export.column.active"),
+            translate("export.column.medication"),
+            translate("export.column.dose"),
+            translate("export.column.food"),
+            translate("export.column.brand"),
+            translate("export.column.amount"),
+            translate("export.column.ingredients"),
+            translate("export.column.symptom"),
+            translate("export.column.severity"),
+            translate("export.column.body_parts"),
+            translate("export.column.notes"),
         ]
     )
 
@@ -706,23 +762,25 @@ def export_xlsx():
     workbook = Workbook()
 
     sheet = workbook.active
-    sheet.title = "Események"
+    sheet.title = translate(
+        "export.sheet_name"
+    )
 
     headers = [
         "ID",
-        "Dátum és idő",
-        "Eseménytípus",
-        "Aktív",
-        "Gyógyszer",
-        "Adag",
-        "Étel / ital",
-        "Márka",
-        "Mennyiség",
-        "Összetevők",
-        "Tünet",
-        "Erősség",
-        "Testrészek",
-        "Megjegyzés",
+        translate("export.column.date_time"),
+        translate("export.column.event_type"),
+        translate("export.column.active"),
+        translate("export.column.medication"),
+        translate("export.column.dose"),
+        translate("export.column.food"),
+        translate("export.column.brand"),
+        translate("export.column.amount"),
+        translate("export.column.ingredients"),
+        translate("export.column.symptom"),
+        translate("export.column.severity"),
+        translate("export.column.body_parts"),
+        translate("export.column.notes"),
     ]
 
     sheet.append(headers)
@@ -818,7 +876,12 @@ def admin_symptom_types():
         "active",
     ).strip()
 
-    query = SymptomType.query
+    query, display_name = (
+        apply_reference_name_join(
+            SymptomType.query,
+            SymptomType,
+        )
+    )
 
     if status == "active":
         query = query.filter(
@@ -834,12 +897,12 @@ def admin_symptom_types():
         pattern = f"%{search}%"
 
         query = query.filter(
-            SymptomType.name.ilike(pattern)
+            display_name.ilike(pattern)
         )
 
     symptom_types = (
         query
-        .order_by(SymptomType.name)
+        .order_by(display_name)
         .all()
     )
 
@@ -863,7 +926,12 @@ def admin_body_parts():
         "active",
     ).strip()
 
-    query = BodyPart.query
+    query, display_name = (
+        apply_reference_name_join(
+            BodyPart.query,
+            BodyPart,
+        )
+    )
 
     if status == "active":
         query = query.filter(
@@ -879,12 +947,12 @@ def admin_body_parts():
         pattern = f"%{search}%"
 
         query = query.filter(
-            BodyPart.name.ilike(pattern)
+            display_name.ilike(pattern)
         )
 
     body_parts = (
         query
-        .order_by(BodyPart.name)
+        .order_by(display_name)
         .all()
     )
 
@@ -914,17 +982,12 @@ def admin_new_body_part():
                 "admin_body_part_form.html",
                 body_part=None,
                 form=request.form,
-                error="A név kötelező.",
+                error=translate("error.name_required"),
             )
 
-        duplicate = (
-            BodyPart.query
-            .filter(
-                db.func.lower(
-                    BodyPart.name
-                ) == name.lower()
-            )
-            .first()
+        duplicate = find_reference_by_name(
+            BodyPart,
+            name,
         )
 
         if duplicate is not None:
@@ -932,8 +995,8 @@ def admin_new_body_part():
                 "admin_body_part_form.html",
                 body_part=None,
                 form=request.form,
-                error=(
-                    "Már létezik ilyen testrész."
+                error=translate(
+                    "error.duplicate_body_part"
                 ),
             )
 
@@ -943,6 +1006,13 @@ def admin_new_body_part():
         )
 
         db.session.add(body_part)
+        db.session.flush()
+
+        create_reference_translations(
+            body_part,
+            name=body_part.name,
+        )
+
         db.session.commit()
 
         return redirect(
@@ -981,34 +1051,36 @@ def admin_edit_body_part(
             return render_template(
                 "admin_body_part_form.html",
                 body_part=body_part,
+                body_part_display_name=(
+                    get_reference_name(body_part)
+                ),
                 form=request.form,
-                error="A név kötelező.",
+                error=translate("error.name_required"),
             )
 
-        duplicate = (
-            BodyPart.query
-            .filter(
-                db.func.lower(
-                    BodyPart.name
-                ) == name.lower()
-            )
-            .filter(
-                BodyPart.id != body_part.id
-            )
-            .first()
+        duplicate = find_reference_by_name(
+            BodyPart,
+            name,
+            exclude_id=body_part.id,
         )
 
         if duplicate is not None:
             return render_template(
                 "admin_body_part_form.html",
                 body_part=body_part,
+                body_part_display_name=(
+                    get_reference_name(body_part)
+                ),
                 form=request.form,
-                error=(
-                    "Már létezik ilyen testrész."
+                error=translate(
+                    "error.duplicate_body_part"
                 ),
             )
 
-        body_part.name = name
+        update_current_reference_translation(
+            body_part,
+            name=name,
+        )
 
         db.session.commit()
 
@@ -1021,6 +1093,9 @@ def admin_edit_body_part(
     return render_template(
         "admin_body_part_form.html",
         body_part=body_part,
+        body_part_display_name=(
+            get_reference_name(body_part)
+        ),
         form={},
         error=None,
     )
@@ -1069,17 +1144,12 @@ def admin_new_symptom_type():
                 "admin_symptom_type_form.html",
                 symptom_type=None,
                 form=request.form,
-                error="A név kötelező.",
+                error=translate("error.name_required"),
             )
 
-        duplicate = (
-            SymptomType.query
-            .filter(
-                db.func.lower(
-                    SymptomType.name
-                ) == name.lower()
-            )
-            .first()
+        duplicate = find_reference_by_name(
+            SymptomType,
+            name,
         )
 
         if duplicate is not None:
@@ -1087,8 +1157,8 @@ def admin_new_symptom_type():
                 "admin_symptom_type_form.html",
                 symptom_type=None,
                 form=request.form,
-                error=(
-                    "Már létezik ilyen tünettípus."
+                error=translate(
+                    "error.duplicate_symptom_type"
                 ),
             )
 
@@ -1098,6 +1168,13 @@ def admin_new_symptom_type():
         )
 
         db.session.add(symptom_type)
+        db.session.flush()
+
+        create_reference_translations(
+            symptom_type,
+            name=symptom_type.name,
+        )
+
         db.session.commit()
 
         return redirect(
@@ -1136,35 +1213,36 @@ def admin_edit_symptom_type(
             return render_template(
                 "admin_symptom_type_form.html",
                 symptom_type=symptom_type,
+                symptom_type_display_name=(
+                    get_reference_name(symptom_type)
+                ),
                 form=request.form,
-                error="A név kötelező.",
+                error=translate("error.name_required"),
             )
 
-        duplicate = (
-            SymptomType.query
-            .filter(
-                db.func.lower(
-                    SymptomType.name
-                ) == name.lower()
-            )
-            .filter(
-                SymptomType.id
-                != symptom_type.id
-            )
-            .first()
+        duplicate = find_reference_by_name(
+            SymptomType,
+            name,
+            exclude_id=symptom_type.id,
         )
 
         if duplicate is not None:
             return render_template(
                 "admin_symptom_type_form.html",
                 symptom_type=symptom_type,
+                symptom_type_display_name=(
+                    get_reference_name(symptom_type)
+                ),
                 form=request.form,
-                error=(
-                    "Már létezik ilyen tünettípus."
+                error=translate(
+                    "error.duplicate_symptom_type"
                 ),
             )
 
-        symptom_type.name = name
+        update_current_reference_translation(
+            symptom_type,
+            name=name,
+        )
 
         db.session.commit()
 
@@ -1177,6 +1255,9 @@ def admin_edit_symptom_type(
     return render_template(
         "admin_symptom_type_form.html",
         symptom_type=symptom_type,
+        symptom_type_display_name=(
+            get_reference_name(symptom_type)
+        ),
         form={},
         error=None,
     )
@@ -1219,7 +1300,12 @@ def admin_risk_components():
         "active",
     ).strip()
 
-    query = RiskComponent.query
+    query, display_name = (
+        apply_reference_name_join(
+            RiskComponent.query,
+            RiskComponent,
+        )
+    )
 
     if status == "active":
         query = query.filter(
@@ -1236,9 +1322,12 @@ def admin_risk_components():
 
         query = query.filter(
             or_(
-                RiskComponent.name.ilike(pattern),
+                display_name.ilike(pattern),
                 RiskComponent.category.ilike(pattern),
-                RiskComponent.description.ilike(pattern),
+                reference_description_matches(
+                    RiskComponent,
+                    pattern,
+                )
             )
         )
 
@@ -1246,7 +1335,7 @@ def admin_risk_components():
         query
         .order_by(
             RiskComponent.category,
-            RiskComponent.name,
+            display_name,
         )
         .all()
     )
@@ -1396,8 +1485,9 @@ def admin_risk_component_ingredients(
         pattern = f"%{search}%"
 
         query = query.filter(
-            Ingredient.name.ilike(
-                pattern
+            reference_name_matches(
+                Ingredient,
+                pattern,
             )
         )
 
@@ -1420,14 +1510,6 @@ def admin_risk_component_ingredients(
                     existing_links.keys()
                 )
             )
-
-    ingredients = (
-        query
-        .order_by(
-            Ingredient.name
-        )
-        .all()
-    )
 
     selected_confidences = {
         ingredient_id:
@@ -1481,19 +1563,14 @@ def admin_new_risk_component():
                 "admin_risk_component_form.html",
                 risk_component=None,
                 form=request.form,
-                error=(
-                    "A név és a kategória kötelező."
+                error=translate(
+                    "error.risk_required"
                 ),
             )
 
-        duplicate = (
-            RiskComponent.query
-            .filter(
-                db.func.lower(
-                    RiskComponent.name
-                ) == name.lower()
-            )
-            .first()
+        duplicate = find_reference_by_name(
+            RiskComponent,
+            name,
         )
 
         if duplicate is not None:
@@ -1501,9 +1578,8 @@ def admin_new_risk_component():
                 "admin_risk_component_form.html",
                 risk_component=None,
                 form=request.form,
-                error=(
-                    "Már létezik ilyen nevű "
-                    "rizikófaktor."
+                error=translate(
+                    "error.duplicate_risk"
                 ),
             )
 
@@ -1515,6 +1591,14 @@ def admin_new_risk_component():
         )
 
         db.session.add(risk_component)
+        db.session.flush()
+
+        create_reference_translations(
+            risk_component,
+            name=risk_component.name,
+            description=risk_component.description,
+        )
+
         db.session.commit()
 
         return redirect(
@@ -1563,42 +1647,55 @@ def admin_edit_risk_component(
             return render_template(
                 "admin_risk_component_form.html",
                 risk_component=risk_component,
+                risk_component_display_name=(
+                    get_reference_name(
+                        risk_component
+                    )
+                ),
+                risk_component_display_description=(
+                    get_reference_description(
+                        risk_component
+                    )
+                ),
                 form=request.form,
-                error=(
-                    "A név és a kategória kötelező."
+                error=translate(
+                    "error.risk_required"
                 ),
             )
 
-        duplicate = (
-            RiskComponent.query
-            .filter(
-                db.func.lower(
-                    RiskComponent.name
-                ) == name.lower()
-            )
-            .filter(
-                RiskComponent.id
-                != risk_component.id
-            )
-            .first()
+        duplicate = find_reference_by_name(
+            RiskComponent,
+            name,
+            exclude_id=risk_component.id,
         )
 
         if duplicate is not None:
             return render_template(
                 "admin_risk_component_form.html",
                 risk_component=risk_component,
+                risk_component_display_name=(
+                    get_reference_name(
+                        risk_component
+                    )
+                ),
+                risk_component_display_description=(
+                    get_reference_description(
+                        risk_component
+                    )
+                ),
                 form=request.form,
-                error=(
-                    "Már létezik ilyen nevű "
-                    "rizikófaktor."
+                error=translate(
+                    "error.duplicate_risk"
                 ),
             )
 
-        risk_component.name = name
-        risk_component.category = category
-        risk_component.description = (
-            description or None
+        update_current_reference_translation(
+            risk_component,
+            name=name,
+            description=description or None,
         )
+
+        risk_component.category = category
 
         db.session.commit()
 
@@ -1611,6 +1708,16 @@ def admin_edit_risk_component(
     return render_template(
         "admin_risk_component_form.html",
         risk_component=risk_component,
+        risk_component_display_name=(
+            get_reference_name(
+                risk_component
+            )
+        ),
+        risk_component_display_description=(
+            get_reference_description(
+                risk_component
+            )
+        ),
         form={},
         error=None,
     )
@@ -1660,13 +1767,18 @@ def admin_ingredients():
     ):
         risk_status = "all"
 
-    query = Ingredient.query
+    query, display_name = (
+        apply_reference_name_join(
+            Ingredient.query,
+            Ingredient,
+        )
+    )
 
     if search:
         pattern = f"%{search}%"
 
         query = query.filter(
-            Ingredient.name.ilike(pattern)
+            display_name.ilike(pattern)
         )
 
     if risk_status == "with":
@@ -1681,7 +1793,7 @@ def admin_ingredients():
 
     ingredients = (
         query
-        .order_by(Ingredient.name)
+        .order_by(display_name)
         .all()
     )
 
@@ -1703,12 +1815,21 @@ def admin_edit_ingredient(ingredient_id):
         ingredient_id,
     )
 
+    risk_query, risk_display_name = (
+        apply_reference_name_join(
+            RiskComponent.query
+            .filter(
+                RiskComponent.active.is_(True)
+            ),
+            RiskComponent,
+        )
+    )
+
     risk_components = (
-        RiskComponent.query
-        .filter(RiskComponent.active.is_(True))
+        risk_query
         .order_by(
             RiskComponent.category,
-            RiskComponent.name,
+            risk_display_name,
         )
         .all()
     )
@@ -1723,28 +1844,27 @@ def admin_edit_ingredient(ingredient_id):
             return render_template(
                 "admin_edit_ingredient.html",
                 ingredient=ingredient,
+                ingredient_display_name=(
+                    get_reference_name(ingredient)
+                ),
                 risk_components=risk_components,
                 selected_risks={},
-                error="Az összetevő neve kötelező.",
+                error=translate("error.ingredient_name_required"),
             )
 
-        duplicate = (
-            Ingredient.query
-            .filter(
-                db.func.lower(
-                    Ingredient.name
-                ) == name.lower()
-            )
-            .filter(
-                Ingredient.id != ingredient.id
-            )
-            .first()
+        duplicate = find_reference_by_name(
+            Ingredient,
+            name,
+            exclude_id=ingredient.id,
         )
 
         if duplicate is not None:
             return render_template(
                 "admin_edit_ingredient.html",
                 ingredient=ingredient,
+                ingredient_display_name=(
+                    get_reference_name(ingredient)
+                ),
                 risk_components=risk_components,
                 selected_risks={
                     item.risk_component_id:
@@ -1752,12 +1872,15 @@ def admin_edit_ingredient(ingredient_id):
                     for item
                     in ingredient.risk_components
                 },
-                error=(
-                    "Már létezik ilyen nevű összetevő."
+                error=translate(
+                    "error.duplicate_ingredient"
                 ),
             )
 
-        ingredient.name = name
+        update_current_reference_translation(
+            ingredient,
+            name=name,
+        )
 
         selected_ids = set(
             request.form.getlist(
@@ -1842,6 +1965,9 @@ def admin_edit_ingredient(ingredient_id):
     return render_template(
         "admin_edit_ingredient.html",
         ingredient=ingredient,
+        ingredient_display_name=(
+            get_reference_name(ingredient)
+        ),
         risk_components=risk_components,
         selected_risks=selected_risks,
         error=None,
@@ -1911,7 +2037,7 @@ def admin_new_medication():
                 "admin_medication_form.html",
                 medication=None,
                 form=request.form,
-                error="A név kötelező.",
+                error=translate("error.name_required"),
             )
 
         duplicate = (
@@ -1929,8 +2055,8 @@ def admin_new_medication():
                 "admin_medication_form.html",
                 medication=None,
                 form=request.form,
-                error=(
-                    "Már létezik ilyen gyógyszer."
+                error=translate(
+                    "error.duplicate_medication"
                 ),
             )
 
@@ -1979,7 +2105,7 @@ def admin_edit_medication(
                 "admin_medication_form.html",
                 medication=medication,
                 form=request.form,
-                error="A név kötelező.",
+                error=translate("error.name_required"),
             )
 
         duplicate = (
@@ -2000,8 +2126,8 @@ def admin_edit_medication(
                 "admin_medication_form.html",
                 medication=medication,
                 form=request.form,
-                error=(
-                    "Már létezik ilyen gyógyszer."
+                error=translate(
+                    "error.duplicate_medication"
                 ),
             )
 
@@ -2183,11 +2309,11 @@ def events():
                         or_(
                             Food.name.ilike(pattern),
                             Food.brand.ilike(pattern),
-
                             Food.ingredients.any(
                                 FoodIngredient.ingredient.has(
-                                    Ingredient.name.ilike(
-                                        pattern
+                                    reference_name_matches(
+                                        Ingredient,
+                                        pattern,
                                     )
                                 )
                             ),
@@ -2198,14 +2324,16 @@ def events():
                 Event.symptom_event.has(
                     or_(
                         SymptomEvent.symptom_type.has(
-                            SymptomType.name.ilike(
-                                pattern
+                            reference_name_matches(
+                                SymptomType,
+                                pattern,
                             )
                         ),
 
                         SymptomEvent.body_parts.any(
-                            BodyPart.name.ilike(
-                                pattern
+                            reference_name_matches(
+                                BodyPart,
+                                pattern,
                             )
                         ),
                     )
@@ -2261,7 +2389,7 @@ def edit_event(event_id):
                 local_occurred_at=local_datetime_value(
                     event.occurred_at
                 ),
-                error="Az időpont megadása kötelező.",
+                error=translate("error.datetime_required"),
             )
 
         try:
@@ -2274,7 +2402,7 @@ def edit_event(event_id):
                 "edit_event.html",
                 event=event,
                 local_occurred_at=occurred_at,
-                error="Érvénytelen dátum vagy időpont.",
+                error=translate("error.invalid_datetime"),
             )
 
         event.notes = notes or None
@@ -2327,7 +2455,7 @@ def edit_event(event_id):
                     symptom_types=[],
                     body_parts=[],
                     selected_body_part_ids=[],
-                    error="Érvénytelen étel / ital.",
+                    error=translate("error.invalid_food"),
                 )
 
             event.food_event.food = food
@@ -2370,25 +2498,29 @@ def edit_event(event_id):
                     event=event,
                     local_occurred_at=occurred_at,
                     symptom_types=(
+                        order_reference_query(
                         SymptomType.query
                         .filter(
                             SymptomType.active.is_(True)
-                        )
-                        .order_by(SymptomType.name)
+                        ),
+                        SymptomType,
+                    )
                         .all()
                     ),
                     body_parts=(
+                        order_reference_query(
                         BodyPart.query
                         .filter(
                             BodyPart.active.is_(True)
-                        )
-                        .order_by(BodyPart.name)
+                        ),
+                        BodyPart,
+                    )
                         .all()
                     ),
                     selected_body_part_ids=(
                         selected_body_part_ids
                     ),
-                    error="Érvénytelen tünettípus.",
+                    error=translate("error.invalid_symptom_type"),
                 )
 
             if (
@@ -2401,27 +2533,30 @@ def edit_event(event_id):
                     event=event,
                     local_occurred_at=occurred_at,
                     symptom_types=(
+                        order_reference_query(
                         SymptomType.query
                         .filter(
                             SymptomType.active.is_(True)
-                        )
-                        .order_by(SymptomType.name)
+                        ),
+                        SymptomType,
+                    )
                         .all()
                     ),
                     body_parts=(
+                        order_reference_query(
                         BodyPart.query
                         .filter(
                             BodyPart.active.is_(True)
-                        )
-                        .order_by(BodyPart.name)
+                        ),
+                        BodyPart,
+                    )
                         .all()
                     ),
                     selected_body_part_ids=(
                         selected_body_part_ids
                     ),
-                    error=(
-                        "Az erősség 0 és 10 közötti "
-                        "érték legyen."
+                    error=translate(
+                        "error.severity"
                     ),
                 )
 
@@ -2438,26 +2573,30 @@ def edit_event(event_id):
                         event=event,
                         local_occurred_at=occurred_at,
                         symptom_types=(
+                            order_reference_query(
                             SymptomType.query
                             .filter(
                                 SymptomType.active.is_(True)
-                            )
-                            .order_by(SymptomType.name)
-                            .all()
+                            ),
+                            SymptomType,
+                        )
+                        .all()
                         ),
                         body_parts=(
+                            order_reference_query(
                             BodyPart.query
                             .filter(
                                 BodyPart.active.is_(True)
-                            )
-                            .order_by(BodyPart.name)
-                            .all()
+                            ),
+                            BodyPart,
+                        )
+                        .all()
                         ),
                         selected_body_part_ids=(
                             selected_body_part_ids
                         ),
-                        error=(
-                            "Érvénytelen megszűnési időpont."
+                        error=translate(
+                            "error.invalid_end_time"
                         ),
                     )
 
@@ -2467,27 +2606,30 @@ def edit_event(event_id):
                         event=event,
                         local_occurred_at=occurred_at,
                         symptom_types=(
+                            order_reference_query(
                             SymptomType.query
                             .filter(
                                 SymptomType.active.is_(True)
-                            )
-                            .order_by(SymptomType.name)
-                            .all()
+                            ),
+                            SymptomType,
+                        )
+                        .all()
                         ),
                         body_parts=(
+                            order_reference_query(
                             BodyPart.query
                             .filter(
                                 BodyPart.active.is_(True)
-                            )
-                            .order_by(BodyPart.name)
-                            .all()
+                            ),
+                            BodyPart,
+                        )
+                        .all()
                         ),
                         selected_body_part_ids=(
                             selected_body_part_ids
                         ),
-                        error=(
-                            "A megszűnés ideje nem lehet "
-                            "korábbi a tünet kezdeténél."
+                        error=translate(
+                            "error.end_before_start"
                         ),
                     )
 
@@ -2553,16 +2695,20 @@ def edit_event(event_id):
         and event.symptom_event
     ):
         symptom_types = (
+            order_reference_query(
             SymptomType.query
-            .filter(SymptomType.active.is_(True))
-            .order_by(SymptomType.name)
+            .filter(SymptomType.active.is_(True)),
+            SymptomType,
+        )
             .all()
         )
 
         body_parts = (
+            order_reference_query(
             BodyPart.query
-            .filter(BodyPart.active.is_(True))
-            .order_by(BodyPart.name)
+            .filter(BodyPart.active.is_(True)),
+            BodyPart,
+        )
             .all()
         )
 
@@ -2729,8 +2875,10 @@ def new_food():
         return_to = "log"
 
     ingredients = (
-        Ingredient.query
-        .order_by(Ingredient.name)
+        order_reference_query(
+        Ingredient.query,
+        Ingredient,
+    )
         .all()
     )
 
@@ -2779,7 +2927,7 @@ def new_food():
                 ),
                 form=request.form,
                 return_to=return_to,
-                error="Az étel neve kötelező.",
+                error=translate("error.food_name_required"),
             )
 
         duplicate_query = Food.query.filter(
@@ -2815,9 +2963,8 @@ def new_food():
                 ),
                 form=request.form,
                 return_to=return_to,
-                error=(
-                    "Ez az étel már szerepel a listában. "
-                    "Válaszd ki a meglévő ételt."
+                error=translate(
+                    "error.food_duplicate"
                 ),
             )
 
@@ -2871,14 +3018,9 @@ def new_food():
                 normalized_name
             )
 
-            ingredient = (
-                Ingredient.query
-                .filter(
-                    db.func.lower(
-                        Ingredient.name
-                    ) == normalized_name
-                )
-                .first()
+            ingredient = find_reference_by_name(
+                Ingredient,
+                ingredient_name,
             )
 
             if ingredient is None:
@@ -2888,6 +3030,11 @@ def new_food():
 
                 db.session.add(ingredient)
                 db.session.flush()
+
+                create_reference_translations(
+                    ingredient,
+                    name=ingredient.name,
+                )
 
             if ingredient.id in used_ingredient_ids:
                 continue
@@ -2985,8 +3132,10 @@ def edit_food(food_id):
     )
 
     ingredients = (
-        Ingredient.query
-        .order_by(Ingredient.name)
+        order_reference_query(
+        Ingredient.query,
+        Ingredient,
+    )
         .all()
     )
 
@@ -3046,7 +3195,7 @@ def edit_food(food_id):
                 selected_ingredient_ids=(
                     selected_ingredient_ids
                 ),
-                error="Az étel neve kötelező.",
+                error=translate("error.food_name_required"),
             )
 
         food.name = name
@@ -3101,14 +3250,9 @@ def edit_food(food_id):
                 normalized_name
             )
 
-            ingredient = (
-                Ingredient.query
-                .filter(
-                    db.func.lower(
-                        Ingredient.name
-                    ) == normalized_name
-                )
-                .first()
+            ingredient = find_reference_by_name(
+                Ingredient,
+                ingredient_name,
             )
 
             if ingredient is None:
@@ -3118,6 +3262,11 @@ def edit_food(food_id):
 
                 db.session.add(ingredient)
                 db.session.flush()
+
+                create_reference_translations(
+                    ingredient,
+                    name=ingredient.name,
+                )
 
             if ingredient.id in used_ingredient_ids:
                 continue
@@ -3240,7 +3389,9 @@ def edit_food(food_id):
     confidence_labels = {
         "certain": "Biztos",
         "typical": "Tipikus",
-        "product_dependent": "Termékfüggő",
+        "product_dependent": translate(
+            "ingredient.product_dependent"
+        ),
     }
 
     for food_ingredient in food.ingredients:
@@ -3257,7 +3408,9 @@ def edit_food(food_id):
 
             risk_details_by_id[risk.id]["sources"].append(
                 {
-                    "ingredient": ingredient.name,
+                    "ingredient": get_reference_name(
+                        ingredient
+                    ),
                     "confidence": confidence_labels.get(
                         ingredient_risk.confidence,
                         ingredient_risk.confidence,
@@ -3342,7 +3495,7 @@ def log_food(food_id):
                 food=food,
                 local_now="",
                 form=request.form,
-                error="Az időpont kötelező.",
+                error=translate("error.datetime_required_short"),
             )
 
         try:
@@ -3358,7 +3511,7 @@ def log_food(food_id):
                 food=food,
                 local_now=occurred_at,
                 form=request.form,
-                error="Érvénytelen dátum vagy időpont.",
+                error=translate("error.invalid_datetime"),
             )
 
         event = Event(
@@ -3400,17 +3553,21 @@ def log_food(food_id):
 )
 def add_symptom():
     symptom_types = (
+        order_reference_query(
         SymptomType.query
-        .filter(SymptomType.active.is_(True))
-        .order_by(SymptomType.name)
-        .all()
+        .filter(SymptomType.active.is_(True)),
+        SymptomType,
+    )
+    .all()
     )
 
     body_parts = (
+        order_reference_query(
         BodyPart.query
-        .filter(BodyPart.active.is_(True))
-        .order_by(BodyPart.name)
-        .all()
+        .filter(BodyPart.active.is_(True)),
+        BodyPart,
+    )
+    .all()
     )
 
     if request.method == "POST":
@@ -3451,7 +3608,7 @@ def add_symptom():
                 body_parts=body_parts,
                 form=request.form,
                 selected_body_part_ids=selected_body_part_ids,
-                error="Az időpont és a tünettípus kötelező.",
+                error=translate("error.datetime_symptom_required"),
             )
 
         if severity is None or severity < 0 or severity > 10:
@@ -3461,7 +3618,7 @@ def add_symptom():
                 body_parts=body_parts,
                 form=request.form,
                 selected_body_part_ids=selected_body_part_ids,
-                error="Az erősség 0 és 10 közötti érték legyen.",
+                error=translate("error.severity"),
             )
 
         symptom_type = db.session.get(
@@ -3476,7 +3633,7 @@ def add_symptom():
                 body_parts=body_parts,
                 form=request.form,
                 selected_body_part_ids=selected_body_part_ids,
-                error="Érvénytelen tünettípus.",
+                error=translate("error.invalid_symptom_type"),
             )
 
         try:
@@ -3501,10 +3658,8 @@ def add_symptom():
                 body_parts=body_parts,
                 form=request.form,
                 selected_body_part_ids=selected_body_part_ids,
-                error=(
-                    "Érvénytelen dátum vagy időpont, "
-                    "illetve a megszűnés nem lehet "
-                    "korábbi a kezdetnél."
+                error=translate(
+                    "error.invalid_symptom_interval"
                 ),
             )
 
@@ -3670,9 +3825,8 @@ def add_default_medication():
         return jsonify(
             {
                 "ok": False,
-                "message": (
-                    "Nincs aktív alapértelmezett "
-                    "gyógyszer beállítva."
+                "message": translate(
+                    "medication.no_default"
                 ),
             }
         ), 500
@@ -3699,8 +3853,9 @@ def add_default_medication():
         {
             "ok": True,
             "event_id": event.id,
-            "message": (
-                f"{medication.name} rögzítve."
+            "message": translate(
+                "medication.logged",
+                name=medication.name,
             ),
         }
     )

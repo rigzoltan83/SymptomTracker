@@ -1,6 +1,9 @@
 document.addEventListener(
     "DOMContentLoaded",
     () => {
+        const i18n =
+            window.FOOD_IMAGE_I18N || {};
+
         const cameraInput =
             document.getElementById(
                 "food-camera-input"
@@ -94,7 +97,7 @@ document.addEventListener(
 
             if (processingCount > 0) {
                 count.textContent =
-                    "Képek feldolgozása…";
+                    (i18n.processing || "Processing images…");
 
                 return;
             }
@@ -115,7 +118,14 @@ document.addEventListener(
                 );
 
             count.textContent =
-                `${selectedFiles.length} kép`
+                (
+                    i18n.count
+                        ? i18n.count.replace(
+                            "{count}",
+                            selectedFiles.length
+                        )
+                        : `${selectedFiles.length} image(s)`
+                )
                 + " · "
                 + formatBytes(totalBytes);
         }
@@ -147,7 +157,7 @@ document.addEventListener(
 
                         reject(
                             new Error(
-                                "A kép nem olvasható."
+                                (i18n.unreadable || "The image cannot be read.")
                             )
                         );
                     };
@@ -204,7 +214,7 @@ document.addEventListener(
 
             if (!context) {
                 throw new Error(
-                    "A kép nem dolgozható fel."
+                    (i18n.processingFailed || "The image cannot be processed.")
                 );
             }
 
@@ -224,8 +234,7 @@ document.addEventListener(
                                 if (!result) {
                                     reject(
                                         new Error(
-                                            "A tömörítés "
-                                            + "sikertelen."
+                                            (i18n.compressionFailed || "Image compression failed.")
                                         )
                                     );
 
@@ -274,7 +283,7 @@ document.addEventListener(
                         );
 
                     image.alt =
-                        "Kiválasztott ételkép";
+                        (i18n.selectedFood || "Selected food image");
 
                     const url =
                         URL.createObjectURL(
@@ -310,7 +319,7 @@ document.addEventListener(
 
                     remove.setAttribute(
                         "aria-label",
-                        "Kép eltávolítása"
+                        (i18n.remove || "Remove image")
                     );
 
                     remove.addEventListener(
@@ -399,9 +408,7 @@ document.addEventListener(
                         console.error(error);
 
                         alert(
-                            "Az egyik kép "
-                            + "feldolgozása "
-                            + "nem sikerült."
+                            (i18n.oneFailed || "One of the images could not be processed.")
                         );
                     }
                 }
@@ -450,8 +457,7 @@ document.addEventListener(
                     event.preventDefault();
 
                     alert(
-                        "A képek feldolgozása "
-                        + "még folyamatban van."
+                        (i18n.stillProcessing || "Image processing is still in progress.")
                     );
                 }
             }

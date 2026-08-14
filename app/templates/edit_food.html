@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hu">
+<html lang="{{ current_language }}">
 <head>
     <meta charset="UTF-8">
 
@@ -8,7 +8,7 @@
         content="width=device-width, initial-scale=1"
     >
 
-    <title>Étel szerkesztése</title>
+    <title>{{ t("food.edit_title") }}</title>
 
     <link
         rel="stylesheet"
@@ -18,10 +18,13 @@
 
 <body>
 
+{% include "_language_switcher.html" %}
+
+
 <main class="container">
 
     <header class="header">
-        <h1>🍽️ Étel szerkesztése</h1>
+        <h1>🍽️ {{ t("food.edit_title") }}</h1>
         <p>{{ food.name }}</p>
     </header>
 
@@ -44,7 +47,7 @@
 
             <label class="form-field">
 
-                <span>Név</span>
+                <span>{{ t("common.name") }}</span>
 
                 <input
                     type="text"
@@ -58,7 +61,7 @@
 
             <label class="form-field">
 
-                <span>Márka / gyártó</span>
+                <span>{{ t("common.brand") }}</span>
 
                 <input
                     type="text"
@@ -71,7 +74,7 @@
 
             <div class="form-field">
 
-                <span>Összetevők</span>
+                <span>{{ t("common.ingredients") }}</span>
 
                 <div class="ingredient-grid">
 
@@ -92,7 +95,7 @@
                             >
 
                             <span>
-                                {{ ingredient.name }}
+{{ reference_name(ingredient) }}
                             </span>
 
                         </label>
@@ -108,13 +111,13 @@
                 <div class="form-field">
 
                     <span>
-                        ⚠️ Felismert rizikófaktorok
+                        ⚠️ {{ t("food.detected_risks") }}
                     </span>
 
 <small class="field-help">
-    Az összetevők alapján automatikusan
+    {{ t("food.risk_hint_1") }}
     felismert faktorok. Kapcsold ki azt,
-    amely az adott termékre biztosan
+    {{ t("food.risk_hint_2") }}
     nem vonatkozik.
 </small>
 
@@ -146,7 +149,7 @@
         >
 
         <strong class="food-risk-name">
-            {{ detail.risk.name }}
+{{ reference_name(detail.risk) }}
         </strong>
 
     </label>
@@ -184,7 +187,7 @@
 
             <div class="form-field">
 
-                <span>Új összetevő</span>
+                <span>{{ t("food.new_ingredient") }}</span>
 
                 <div class="new-ingredient-row">
 
@@ -213,12 +216,12 @@
 
 <div class="form-field">
 
-    <span>Új képek hozzáadása</span>
+    <span>{{ t("food.add_images") }}</span>
 
     <div class="food-image-actions">
 
         <label class="camera-button">
-            📷 Fotó készítése
+            📷 {{ t("common.photo_take") }}
 
             <input
                 id="food-camera-input"
@@ -230,7 +233,7 @@
 
 
         <label class="gallery-button">
-            🖼️ Kép kiválasztása
+            🖼️ {{ t("common.image_select") }}
 
             <input
                 id="food-gallery-input"
@@ -257,8 +260,8 @@
 
 
     <small class="field-help">
-        Több új fotót is készíthetsz
-        egymás után mentés előtt.
+        {{ t("food.new_images_hint") }}
+
     </small>
 
 </div>
@@ -268,7 +271,7 @@
 
                 <div class="form-field">
 
-                    <span>Jelenlegi képek</span>
+                    <span>{{ t("common.current_images") }}</span>
 
                     <div class="symptom-image-grid">
 
@@ -290,11 +293,11 @@
     formnovalidate
     onclick="
         return confirm(
-            'Biztosan törlöd ezt a képet?'
+            "{{ t('common.delete_image_confirm') }}"
         );
     "
 >
-    🗑️ Kép törlése
+    🗑️ {{ t("common.delete_image") }}
 </button>
 
     </div>
@@ -310,7 +313,7 @@
 
             <label class="form-field">
 
-                <span>Megjegyzés az ételhez</span>
+                <span>{{ t("food.notes") }}</span>
 
                 <textarea
                     name="description"
@@ -324,7 +327,7 @@
                 class="primary-button"
                 type="submit"
             >
-                Mentés
+                {{ t("common.save") }}
             </button>
 
         </form>
@@ -334,16 +337,16 @@
 <section class="danger-card">
 
     <strong>
-        Ételtörzs állapota
+        {{ t("food.status") }}
     </strong>
 
     <p>
         {% if food.active %}
-            Az étel jelenleg aktív és megjelenik
-            a gyors kiválasztási listában.
+            {{ t("food.active_hint_1") }}
+            {{ t("food.active_hint_2") }}
         {% else %}
-            Az étel inaktív, ezért nem jelenik meg
-            a normál gyors listában.
+            {{ t("food.inactive_hint_1") }}
+            {{ t("food.inactive_hint_2") }}
         {% endif %}
     </p>
 
@@ -357,9 +360,9 @@
             type="submit"
         >
             {% if food.active %}
-                ⛔ Étel inaktiválása
+                ⛔ {{ t("food.deactivate") }}
             {% else %}
-                ✅ Étel újraaktiválása
+                ✅ {{ t("food.reactivate") }}
             {% endif %}
         </button>
 
@@ -373,7 +376,7 @@
     class="home-button"
     href="/symptomtracker/admin/foods"
 >
-    ← Ételek / italok
+    ← {{ t("food.back") }}
 </a>
 
     </nav>
@@ -466,8 +469,22 @@
     );
 </script>
 
+<script>
+    window.FOOD_IMAGE_I18N = {
+        processing: {{ t("image.processing") | tojson }},
+        count: {{ t("image.count") | tojson }},
+        unreadable: {{ t("image.unreadable") | tojson }},
+        processingFailed: {{ t("image.processing_failed") | tojson }},
+        compressionFailed: {{ t("image.compression_failed") | tojson }},
+        selectedFood: {{ t("image.selected_food") | tojson }},
+        remove: {{ t("image.remove") | tojson }},
+        oneFailed: {{ t("image.one_failed") | tojson }},
+        stillProcessing: {{ t("image.still_processing") | tojson }}
+    };
+</script>
+
 <script
-    src="/symptomtracker/static/js/food_images.js?v=3"
+    src="/symptomtracker/static/js/food_images.js?v=4"
 ></script>
 
 </body>

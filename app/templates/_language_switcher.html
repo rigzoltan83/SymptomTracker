@@ -1,0 +1,47 @@
+<div class="language-switcher">
+
+    <a
+        class="language-button"
+        href="{{ url_for(
+            'main.change_language',
+            language_code='hu',
+            next=request.script_root ~ request.full_path
+        ) }}"
+        title="Magyar"
+        aria-label="Magyar"
+        {% if current_language == "hu" %}
+            aria-current="page"
+        {% endif %}
+    >
+        <img
+            src="{{ url_for(
+                'static',
+                filename='img/flags/hu.svg'
+            ) }}"
+            alt="Magyar"
+        >
+    </a>
+
+    <a
+        class="language-button"
+        href="{{ url_for(
+            'main.change_language',
+            language_code='en',
+            next=request.script_root ~ request.full_path
+        ) }}"
+        title="English"
+        aria-label="English"
+        {% if current_language == "en" %}
+            aria-current="page"
+        {% endif %}
+    >
+        <img
+            src="{{ url_for(
+                'static',
+                filename='img/flags/en.svg'
+            ) }}"
+            alt="English"
+        >
+    </a>
+
+</div>

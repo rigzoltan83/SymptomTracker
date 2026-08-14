@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hu">
+<html lang="{{ current_language }}">
 <head>
     <meta charset="UTF-8">
 
@@ -8,7 +8,7 @@
         content="width=device-width, initial-scale=1"
     >
 
-    <title>Új étel / ital</title>
+    <title>{{ t("food.new_title") }}</title>
 
     <link
         rel="stylesheet"
@@ -18,11 +18,14 @@
 
 <body>
 
+{% include "_language_switcher.html" %}
+
+
 <main class="container">
 
     <header class="header">
-        <h1>🍽️ Új étel</h1>
-        <p>Az alapadatokat csak egyszer kell megadni</p>
+        <h1>🍽️ {{ t("food.new_heading") }}</h1>
+        <p>{{ t("food.basic_data_once") }}</p>
     </header>
 
 
@@ -50,13 +53,13 @@
 
             <label class="form-field">
 
-                <span>Név *</span>
+                <span>{{ t("common.name") }} *</span>
 
                 <input
                     type="text"
                     name="name"
                     value="{{ form.get('name', '') }}"
-                    placeholder="pl. Sonkás pizza"
+                    placeholder="{{ t('food.name_example') }}"
                     required
                     autofocus
                 >
@@ -66,13 +69,13 @@
 
             <label class="form-field">
 
-                <span>Márka / gyártó</span>
+                <span>{{ t("common.brand") }}</span>
 
                 <input
                     type="text"
                     name="brand"
                     value="{{ form.get('brand', '') }}"
-                    placeholder="Opcionális"
+                    placeholder="{{ t('common.optional') }}"
                 >
 
             </label>
@@ -80,7 +83,7 @@
 
             <div class="form-field">
 
-                <span>Összetevők</span>
+                <span>{{ t("common.ingredients") }}</span>
 
                 {% if ingredients %}
 
@@ -103,7 +106,7 @@
                                 >
 
                                 <span>
-                                    {{ ingredient.name }}
+{{ reference_name(ingredient) }}
                                 </span>
 
                             </label>
@@ -115,7 +118,7 @@
                 {% else %}
 
                     <small class="field-help">
-                        Még nincs összetevő a törzsben.
+                        {{ t("food.no_ingredients") }}
                     </small>
 
                 {% endif %}
@@ -125,7 +128,7 @@
 
             <div class="form-field">
 
-                <span>Új összetevő hozzáadása</span>
+                <span>{{ t("food.add_ingredient") }}</span>
 
                 <div class="new-ingredient-row">
 
@@ -154,13 +157,13 @@
 <div class="form-field">
 
     <span>
-        Fotó az ételről / csomagolásról
+        {{ t("food.photo") }}
     </span>
 
     <div class="food-image-actions">
 
         <label class="camera-button">
-            📷 Fotó készítése
+            📷 {{ t("common.photo_take") }}
 
             <input
                 id="food-camera-input"
@@ -172,7 +175,7 @@
 
 
         <label class="gallery-button">
-            🖼️ Kép kiválasztása
+            🖼️ {{ t("common.image_select") }}
 
             <input
                 id="food-gallery-input"
@@ -200,20 +203,20 @@
 
 
     <small class="field-help">
-        Több fotót is készíthetsz egymás után.
-        A képek mentés előtt itt megjelennek.
+        {{ t("food.multiple_photos") }}
+        {{ t("food.photos_preview") }}
     </small>
 
 </div>
 
             <label class="form-field">
 
-                <span>Megjegyzés az ételhez</span>
+                <span>{{ t("food.notes") }}</span>
 
                 <textarea
                     name="description"
                     rows="3"
-                    placeholder="Opcionális..."
+                    placeholder="{{ t('common.optional_dots') }}"
                 >{{ form.get('description', '') }}</textarea>
 
             </label>
@@ -223,7 +226,7 @@
                 class="primary-button"
                 type="submit"
             >
-                Étel mentése
+                {{ t("food.save") }}
             </button>
 
         </form>
@@ -335,8 +338,22 @@
     );
 </script>
 
+<script>
+    window.FOOD_IMAGE_I18N = {
+        processing: {{ t("image.processing") | tojson }},
+        count: {{ t("image.count") | tojson }},
+        unreadable: {{ t("image.unreadable") | tojson }},
+        processingFailed: {{ t("image.processing_failed") | tojson }},
+        compressionFailed: {{ t("image.compression_failed") | tojson }},
+        selectedFood: {{ t("image.selected_food") | tojson }},
+        remove: {{ t("image.remove") | tojson }},
+        oneFailed: {{ t("image.one_failed") | tojson }},
+        stillProcessing: {{ t("image.still_processing") | tojson }}
+    };
+</script>
+
 <script
-    src="/symptomtracker/static/js/food_images.js?v=3"
+    src="/symptomtracker/static/js/food_images.js?v=4"
 ></script>
 
 </body>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hu">
+<html lang="{{ current_language }}">
 <head>
     <meta charset="UTF-8">
 
@@ -8,7 +8,7 @@
         content="width=device-width, initial-scale=1"
     >
 
-    <title>Elemzés - SymptomTracker</title>
+    <title>{{ t("analysis.title") }} - SymptomTracker</title>
 
     <link
         rel="stylesheet"
@@ -18,15 +18,17 @@
 
 <body>
 
+{% include "_language_switcher.html" %}
+
+
 <main class="container analysis-page">
 
     <header class="header">
 
-        <h1>📊 Elemzés</h1>
+        <h1>📊 {{ t("analysis.title") }}</h1>
 
         <p>
-            Étkezések, rizikófaktorok és tünetek
-            időbeli összefüggései
+            {{ t("analysis.subtitle") }}
         </p>
 
     </header>
@@ -41,7 +43,7 @@
 
             <label>
 
-                <span>Időszak</span>
+                <span>{{ t("analysis.period") }}</span>
 
                 <select name="days">
 
@@ -51,7 +53,7 @@
                             selected
                         {% endif %}
                     >
-                        Utolsó 30 nap
+                        {{ t("analysis.last_30") }}
                     </option>
 
                     <option
@@ -60,7 +62,7 @@
                             selected
                         {% endif %}
                     >
-                        Utolsó 90 nap
+                        {{ t("analysis.last_90") }}
                     </option>
 
                     <option
@@ -69,7 +71,7 @@
                             selected
                         {% endif %}
                     >
-                        Utolsó 180 nap
+                        {{ t("analysis.last_180") }}
                     </option>
 
                     <option
@@ -78,7 +80,7 @@
                             selected
                         {% endif %}
                     >
-                        Utolsó 1 év
+                        {{ t("analysis.last_year") }}
                     </option>
 
                     <option
@@ -87,7 +89,7 @@
                             selected
                         {% endif %}
                     >
-                        Minden adat
+                        {{ t("analysis.all_data") }}
                     </option>
 
                 </select>
@@ -97,12 +99,12 @@
 
             <label>
 
-                <span>Tünet</span>
+                <span>{{ t("analysis.symptom") }}</span>
 
                 <select name="symptom_type_id">
 
                     <option value="">
-                        Minden tünet
+                        {{ t("analysis.all_symptoms") }}
                     </option>
 
                     {% for symptom_type
@@ -118,7 +120,7 @@
                                 selected
                             {% endif %}
                         >
-                            {{ symptom_type.name }}
+                            {{ reference_name(symptom_type) }}
                         </option>
 
                     {% endfor %}
@@ -130,7 +132,7 @@
 
             <label>
 
-                <span>Vizsgált időablak</span>
+                <span>{{ t("analysis.examined_window") }}</span>
 
                 <select name="window">
 
@@ -146,7 +148,7 @@
                                 selected
                             {% endif %}
                         >
-                            {{ hours }} óra
+                            {{ t("analysis.hours", value=hours) }}
                         </option>
 
                     {% endfor %}
@@ -160,7 +162,7 @@
                 class="primary-button"
                 type="submit"
             >
-                Elemzés frissítése
+                {{ t("analysis.refresh_analysis") }}
             </button>
 
         </form>
@@ -176,7 +178,7 @@
                 {{ analysis.summary.food_events }}
             </strong>
 
-            <span>étkezés</span>
+            <span>{{ t("analysis.food_events") }}</span>
 
         </div>
 
@@ -187,7 +189,7 @@
                 {{ analysis.summary.symptom_events }}
             </strong>
 
-            <span>tünet</span>
+            <span>{{ t("analysis.symptom_events") }}</span>
 
         </div>
 
@@ -198,7 +200,7 @@
                 {{ analysis.summary.risk_components }}
             </strong>
 
-            <span>vizsgált faktor</span>
+            <span>{{ t("analysis.risk_count") }}</span>
 
         </div>
 
@@ -213,7 +215,7 @@
             </strong>
 
             <span>
-                tünet étkezési előzménnyel
+                {{ t("analysis.symptoms_with_food") }}
             </span>
 
         </div>
@@ -228,13 +230,11 @@
             <div>
 
                 <h2>
-                    ⚠️ Rizikófaktorok rangsora
+                    ⚠️ {{ t("analysis.risk_ranking") }}
                 </h2>
 
                 <p>
-                    Mi történt a faktorral járó
-                    étkezések után a kiválasztott
-                    időablakban?
+                    {{ t("analysis.risk_ranking_help") }}
                 </p>
 
             </div>
@@ -274,23 +274,23 @@
                                     analysis-signal
                                     {% if
                                         row.signal
-                                        == 'Magasabb együttjárás'
+                                        == 'high'
                                     %}
                                         analysis-signal-high
                                     {% elif
                                         row.signal
-                                        == 'Mérsékelt együttjárás'
+                                        == 'medium'
                                     %}
                                         analysis-signal-medium
                                     {% elif
                                         row.signal
-                                        == 'Kevés adat'
+                                        == 'low_data'
                                     %}
                                         analysis-signal-low-data
                                     {% endif %}
                                 "
                             >
-                                {{ row.signal }}
+                                {{ t("analysis.signal." ~ row.signal) }}
                             </span>
 
                         </div>
@@ -301,7 +301,7 @@
                             <div>
 
                                 <span>
-                                    Faktorral
+                                    {{ t("analysis.with_factor") }}
                                 </span>
 
                                 <strong>
@@ -318,7 +318,7 @@
                                     {{ row.exposed_hits }}
                                     /
                                     {{ row.exposed_count }}
-                                    étkezés
+                                    {{ t("analysis.meal_unit") }}
                                 </small>
 
                             </div>
@@ -327,7 +327,7 @@
                             <div>
 
                                 <span>
-                                    Kontroll
+                                    {{ t("analysis.control") }}
                                 </span>
 
                                 <strong>
@@ -344,7 +344,7 @@
                                     {{ row.control_hits }}
                                     /
                                     {{ row.control_count }}
-                                    étkezés
+                                    {{ t("analysis.meal_unit") }}
                                 </small>
 
                             </div>
@@ -353,7 +353,7 @@
                             <div>
 
                                 <span>
-                                    Különbség
+                                    {{ t("analysis.difference") }}
                                 </span>
 
                                 <strong>
@@ -383,7 +383,7 @@
                             {% if row.lift is not none %}
 
                                 <span>
-                                    Relatív arány:
+                                    {{ t("analysis.relative_ratio") }}
                                     <strong>
                                         {{
                                             row.lift
@@ -401,13 +401,13 @@
                             %}
 
                                 <span>
-                                    Medián késés:
+                                    {{ t("analysis.median_delay") }}
                                     <strong>
                                         {{
                                             row.median_delay
                                             | round(1)
                                         }}
-                                        óra
+                                        {{ t("analysis.hour_unit") }}
                                     </strong>
                                 </span>
 
@@ -421,7 +421,7 @@
                             <div class="analysis-top-symptoms">
 
                                 <span>
-                                    Gyakoribb követő tünetek:
+                                    {{ t("analysis.frequent_following_symptoms") }}
                                 </span>
 
                                 <div>
@@ -457,8 +457,7 @@
 
             <div class="empty-card">
 
-                Nincs még elegendő étkezési
-                és rizikófaktor-adat az elemzéshez.
+                {{ t("analysis.no_risk_data") }}
 
             </div>
 
@@ -473,13 +472,11 @@
         <div>
 
             <h2>
-                🧩 Rizikófaktor-kombinációk
+                🧩 {{ t("analysis.combinations") }}
             </h2>
 
             <p>
-                Gyakoribb-e a tünet,
-                amikor két faktor együtt van jelen,
-                mint amikor csak az egyik?
+                {{ t("analysis.combinations_help") }}
             </p>
 
         </div>
@@ -528,23 +525,23 @@
                                 analysis-signal
                                 {% if
                                     row.signal
-                                    == 'Erős kombinációs jel'
+                                    == 'high'
                                 %}
                                     analysis-signal-high
                                 {% elif
                                     row.signal
-                                    == 'Mérsékelt kombinációs jel'
+                                    == 'medium'
                                 %}
                                     analysis-signal-medium
                                 {% elif
                                     row.signal
-                                    == 'Kevés adat'
+                                    == 'low_data'
                                 %}
                                     analysis-signal-low-data
                                 {% endif %}
                             "
                         >
-                            {{ row.signal }}
+                            {{ t("analysis.combination_signal." ~ row.signal) }}
                         </span>
 
                     </div>
@@ -557,7 +554,7 @@
                         <div>
 
                             <span>
-                                Együtt
+                                {{ t("analysis.together") }}
                             </span>
 
                             <strong>
@@ -574,7 +571,7 @@
                                 {{ row.pair_hits }}
                                 /
                                 {{ row.pair_count }}
-                                étkezés
+                                {{ t("analysis.meal_unit") }}
                             </small>
 
                         </div>
@@ -583,7 +580,7 @@
                         <div>
 
                             <span>
-                                Csak egyik
+                                {{ t("analysis.only_one") }}
                             </span>
 
                             <strong>
@@ -600,7 +597,7 @@
                                 {{ row.single_hits }}
                                 /
                                 {{ row.single_count }}
-                                étkezés
+                                {{ t("analysis.meal_unit") }}
                             </small>
 
                         </div>
@@ -609,7 +606,7 @@
                         <div>
 
                             <span>
-                                Többlet
+                                {{ t("analysis.excess") }}
                             </span>
 
                             <strong>
@@ -642,7 +639,7 @@
                         {% if row.lift is not none %}
 
                             <span>
-                                Relatív arány:
+                                {{ t("analysis.relative_ratio") }}
                                 <strong>
                                     {{
                                         row.lift
@@ -660,13 +657,13 @@
                         %}
 
                             <span>
-                                Medián késés:
+                                {{ t("analysis.median_delay") }}
                                 <strong>
                                     {{
                                         row.median_delay
                                         | round(1)
                                     }}
-                                    óra
+                                    {{ t("analysis.hour_unit") }}
                                 </strong>
                             </span>
 
@@ -684,9 +681,7 @@
 
         <div class="empty-card">
 
-            Még nincs elegendő olyan étkezés,
-            ahol több rizikófaktor együtt
-            vizsgálható.
+            {{ t("analysis.no_combination_data") }}
 
         </div>
 
@@ -701,13 +696,11 @@
             <div>
 
                 <h2>
-                    🔴 Tünetből visszafelé
+                    🔴 {{ t("analysis.backtrace") }}
                 </h2>
 
                 <p>
-                    Milyen étkezések és faktorok
-                    előzték meg a tünetet
-                    {{ selected_window }} órán belül?
+                    {{ t("analysis.backtrace_help", hours=selected_window) }}
                 </p>
 
             </div>
@@ -818,11 +811,7 @@
 
 
                                         <span>
-                                            {{
-                                                food.delay_hours
-                                                | round(1)
-                                            }}
-                                            órával előtte
+                                            {{ t("analysis.hours_before", value=(food.delay_hours | round(1))) }}
                                         </span>
 
                                     </div>
@@ -836,8 +825,7 @@
                             <div
                                 class="analysis-no-preceding"
                             >
-                                Nem volt rögzített étkezés
-                                a vizsgált időablakban.
+                                {{ t("analysis.no_preceding_food") }}
                             </div>
 
                         {% endif %}
@@ -851,8 +839,7 @@
         {% else %}
 
             <div class="empty-card">
-                Nincs tünetesemény a kiválasztott
-                időszakban.
+                {{ t("analysis.no_symptom_events") }}
             </div>
 
         {% endif %}
@@ -863,16 +850,11 @@
     <section class="analysis-warning">
 
         <strong>
-            ℹ️ Az eredmények értelmezése
+            ℹ️ {{ t("analysis.interpretation") }}
         </strong>
 
         <p>
-            Az oldal időbeli együttjárásokat mutat.
-            A magasabb százalék vagy relatív arány
-            önmagában nem bizonyít allergiát,
-            intoleranciát vagy ok-okozati kapcsolatot.
-            Kevés adatnál az eredmények különösen
-            bizonytalanok lehetnek.
+            {{ t("analysis.interpretation_text") }}
         </p>
 
     </section>
@@ -884,7 +866,7 @@
             class="home-button"
             href="/symptomtracker/"
         >
-            ← Főoldal
+            ← {{ t("common.home") }}
         </a>
 
     </nav>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hu">
+<html lang="{{ current_language }}">
 <head>
     <meta charset="UTF-8">
 
@@ -8,7 +8,7 @@
         content="width=device-width, initial-scale=1"
     >
 
-    <title>Testrész</title>
+    <title>{{ t("body_part.single") }}</title>
 
     <link
         rel="stylesheet"
@@ -18,21 +18,24 @@
 
 <body>
 
+{% include "_language_switcher.html" %}
+
+
 <main class="container">
 
     <header class="header">
 
         {% if body_part %}
 
-            <h1>🧍 Testrész</h1>
+            <h1>🧍 {{ t("body_part.single") }}</h1>
 
             <p>
-                {{ body_part.name }}
+{{ body_part_display_name }}
             </p>
 
         {% else %}
 
-            <h1>🧍 Új testrész</h1>
+            <h1>🧍 {{ t("body_part.new") }}</h1>
 
         {% endif %}
 
@@ -54,7 +57,7 @@
 
             <label class="form-field">
 
-                <span>Név *</span>
+                <span>{{ t("common.name") }} *</span>
 
                 <input
                     type="text"
@@ -62,7 +65,7 @@
                     value="{{
                         form.get(
                             'name',
-                            body_part.name
+body_part_display_name
                             if body_part
                             else ''
                         )
@@ -77,7 +80,7 @@
                 class="primary-button"
                 type="submit"
             >
-                Mentés
+                {{ t("common.save") }}
             </button>
 
         </form>
@@ -100,9 +103,9 @@
                 >
 
                     {% if body_part.active %}
-                        ⛔ Inaktiválás
+                        ⛔ {{ t("common.deactivate") }}
                     {% else %}
-                        ✅ Aktiválás
+                        ✅ {{ t("common.activate") }}
                     {% endif %}
 
                 </button>
@@ -120,7 +123,7 @@
             class="home-button"
             href="/symptomtracker/admin/body-parts"
         >
-            ← Testrészek
+            ← {{ t("body_part.title") }}
         </a>
 
     </nav>

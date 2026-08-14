@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hu">
+<html lang="{{ current_language }}">
 <head>
     <meta charset="UTF-8">
 
@@ -8,7 +8,7 @@
         content="width=device-width, initial-scale=1"
     >
 
-    <title>Események - SymptomTracker</title>
+    <title>{{ t("events.title") }} - SymptomTracker</title>
 
 <link
     rel="stylesheet"
@@ -18,13 +18,16 @@
 
 <body>
 
+{% include "_language_switcher.html" %}
+
+
 <main class="container">
 
 <header class="header event-page-header">
-    <h1>Események</h1>
+    <h1>{{ t("events.title") }}</h1>
 
     <p>
-        {{ pagination.total }} találat
+        {{ t("events.results", count=pagination.total) }}
     </p>
 </header>
 
@@ -39,7 +42,7 @@
                 type="search"
                 name="q"
                 value="{{ search }}"
-placeholder="🔎 Étel, összetevő, tünet..."                
+placeholder="{{ t('events.search_placeholder') }}"
             >
 
             <div class="filter-grid">
@@ -47,7 +50,7 @@ placeholder="🔎 Étel, összetevő, tünet..."
                 <select name="type">
 
                     <option value="">
-                        Minden típus
+                        {{ t("events.all_types") }}
                     </option>
 
                     <option
@@ -56,7 +59,7 @@ placeholder="🔎 Étel, összetevő, tünet..."
                             selected
                         {% endif %}
                     >
-                        💊 Gyógyszer
+                        💊 {{ t("event.medication") }}
                     </option>
 
                     <option
@@ -65,7 +68,7 @@ placeholder="🔎 Étel, összetevő, tünet..."
                             selected
                         {% endif %}
                     >
-                        🍽️ Étel / ital
+                        🍽️ {{ t("event.food") }}
                     </option>
 
                     <option
@@ -74,7 +77,7 @@ placeholder="🔎 Étel, összetevő, tünet..."
                             selected
                         {% endif %}
                     >
-                        🔴 Tünet
+                        🔴 {{ t("event.symptom") }}
                     </option>
 
                 </select>
@@ -88,7 +91,7 @@ placeholder="🔎 Étel, összetevő, tünet..."
                             selected
                         {% endif %}
                     >
-                        Aktív
+                        {{ t("common.active") }}
                     </option>
 
                     <option
@@ -97,7 +100,7 @@ placeholder="🔎 Étel, összetevő, tünet..."
                             selected
                         {% endif %}
                     >
-                        Inaktív
+                        {{ t("common.inactive") }}
                     </option>
 
                     <option
@@ -117,7 +120,7 @@ placeholder="🔎 Étel, összetevő, tünet..."
                 class="primary-button"
                 type="submit"
             >
-                Keresés / Szűrés
+                {{ t("events.filter") }}
             </button>
 
         </form>
@@ -130,7 +133,7 @@ placeholder="🔎 Étel, összetevő, tünet..."
         {% if events %}
 
             <div class="event-count">
-                {{ pagination.total }} esemény
+                {{ t("events.event_count", count=pagination.total) }}
             </div>
 
             {% for event in events %}
@@ -168,7 +171,7 @@ placeholder="🔎 Étel, összetevő, tünet..."
                                             .name
                                         }}
                                     {% else %}
-                                        Gyógyszer
+                                        {{ t("event.medication") }}
                                     {% endif %}
 
                                 </span>
@@ -184,7 +187,7 @@ placeholder="🔎 Étel, összetevő, tünet..."
         {% if event.food_event %}
             {{ event.food_event.food.name }}
         {% else %}
-            Étel / ital
+            {{ t("event.food") }}
         {% endif %}
 
     </span>
@@ -199,9 +202,9 @@ placeholder="🔎 Étel, összetevő, tünet..."
     <span>
 
         {% if event.symptom_event %}
-            {{ event.symptom_event.symptom_type.name }}
+{{ reference_name(event.symptom_event.symptom_type) }}
         {% else %}
-            Tünet
+            {{ t("event.symptom") }}
         {% endif %}
 
     </span>
@@ -213,7 +216,7 @@ placeholder="🔎 Étel, összetevő, tünet..."
                         {% if not event.active %}
 
                             <span class="inactive-badge">
-                                Inaktív
+                                {{ t("common.inactive") }}
                             </span>
 
                         {% endif %}
@@ -282,7 +285,7 @@ placeholder="🔎 Étel, összetevő, tünet..."
                         duration_minutes % 60
                     %}
 
-                    {{ duration_hours }} óra
+                    {{ t("events.hours", value=duration_hours) }}
 
                     {% if remaining_minutes > 0 %}
                         {{ remaining_minutes }} perc
@@ -295,7 +298,7 @@ placeholder="🔎 Étel, összetevő, tünet..."
         {% else %}
 
             <span class="duration-badge duration-open">
-                még tart
+                {{ t("events.ongoing") }}
             </span>
 
         {% endif %}
@@ -308,7 +311,7 @@ placeholder="🔎 Étel, összetevő, tünet..."
                     in event.symptom_event.body_parts
                 %}
 
-                    {{ body_part.name }}{%
+                    {{ reference_name(body_part) }}{%
                         if not loop.last
                     %}, {% endif %}
 
@@ -351,7 +354,7 @@ placeholder="🔎 Étel, összetevő, tünet..."
                             class="edit-button"
                             href="/symptomtracker/events/{{ event.id }}/edit"
                         >
-                            ✏️ Szerkesztés
+                            ✏️ {{ t("events.edit") }}
                         </a>
 
                         <form
@@ -371,9 +374,9 @@ placeholder="🔎 Étel, összetevő, tünet..."
                             >
 
                                 {% if event.active %}
-                                    ⛔ Inaktiválás
+                                    ⛔ {{ t("events.deactivate") }}
                                 {% else %}
-                                    ✅ Aktiválás
+                                    ✅ {{ t("events.activate") }}
                                 {% endif %}
 
                             </button>
@@ -389,7 +392,7 @@ placeholder="🔎 Étel, összetevő, tünet..."
         {% else %}
 
             <div class="empty-card">
-                Nincs a szűrésnek megfelelő esemény.
+                {{ t("events.no_results") }}
             </div>
 
         {% endif %}
@@ -406,7 +409,7 @@ placeholder="🔎 Étel, összetevő, tünet..."
                 <a
                     href="?page={{ pagination.prev_num }}&q={{ search }}&type={{ selected_type }}&status={{ selected_status }}"
                 >
-                    ← Előző 50
+                    ← {{ t("events.previous_50") }}
                 </a>
 
             {% else %}
@@ -425,7 +428,7 @@ placeholder="🔎 Étel, összetevő, tünet..."
                 <a
                     href="?page={{ pagination.next_num }}&q={{ search }}&type={{ selected_type }}&status={{ selected_status }}"
                 >
-                    Következő 50 →
+                    {{ t("events.next_50") }} →
                 </a>
 
             {% else %}
@@ -445,7 +448,7 @@ placeholder="🔎 Étel, összetevő, tünet..."
             class="home-button"
             href="/symptomtracker/"
         >
-            ← Főoldal
+            ← {{ t("common.home") }}
         </a>
 
     </nav>

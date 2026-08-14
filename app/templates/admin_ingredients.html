@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hu">
+<html lang="{{ current_language }}">
 <head>
     <meta charset="UTF-8">
 
@@ -8,7 +8,7 @@
         content="width=device-width, initial-scale=1"
     >
 
-    <title>Összetevők - SymptomTracker</title>
+    <title>{{ t("ingredient.title") }} - SymptomTracker</title>
 
     <link
         rel="stylesheet"
@@ -18,13 +18,16 @@
 
 <body>
 
+{% include "_language_switcher.html" %}
+
+
 <main class="container">
 
     <header class="header">
-        <h1>🥕 Összetevők</h1>
+        <h1>🥕 {{ t("ingredient.title") }}</h1>
 
         <p>
-            Rizikófaktorok hozzárendelése
+            {{ t("admin.ingredients_desc") }}
         </p>
     </header>
 
@@ -38,7 +41,7 @@
         type="search"
         name="q"
         value="{{ search }}"
-        placeholder="🔎 Összetevő keresése..."
+        placeholder="{{ t('ingredient.search') }}"
         autocomplete="off"
     >
 
@@ -63,7 +66,7 @@
                 selected
             {% endif %}
         >
-            Van rizikófaktor
+            {{ t("ingredient.with_risk") }}
         </option>
 
         <option
@@ -72,7 +75,7 @@
                 selected
             {% endif %}
         >
-            Nincs rizikófaktor
+            {{ t("ingredient.without_risk") }}
         </option>
 
     </select>
@@ -82,7 +85,7 @@
         class="primary-button"
         type="submit"
     >
-        Szűrés
+        {{ t("common.filter") }}
     </button>
 
 </form>
@@ -104,7 +107,7 @@
         <div class="ingredient-admin-main">
 
             <strong>
-                {{ ingredient.name }}
+{{ reference_name(ingredient) }}
             </strong>
 
             {% if ingredient.risk_components %}
@@ -114,7 +117,7 @@
                     {% for link in ingredient.risk_components %}
 
                         <span class="ingredient-risk-chip">
-                            {{ link.risk_component.name }}
+{{ reference_name(link.risk_component) }}
                         </span>
 
                     {% endfor %}
@@ -125,7 +128,7 @@
 
                     <span>
                         {{ ingredient.risk_components|length }}
-                        rizikófaktor
+                        {{ t("ingredient.risk_count") }}
                     </span>
 
                 </div>
@@ -133,7 +136,7 @@
             {% else %}
 
                 <small class="risk-missing">
-                    Nincs rizikófaktor megadva
+                    {{ t("ingredient.without_risk") }} megadva
                 </small>
 
             {% endif %}
@@ -153,7 +156,7 @@
         {% else %}
 
             <div class="empty-card">
-                Nincs találat.
+                {{ t("common.no_results") }}
             </div>
 
         {% endif %}
@@ -167,7 +170,7 @@
             class="home-button"
             href="/symptomtracker/admin"
         >
-            ← Kezelés
+            ← {{ t("common.management") }}
         </a>
 
     </nav>

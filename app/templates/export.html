@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hu">
+<html lang="{{ current_language }}">
 <head>
     <meta charset="UTF-8">
 
@@ -8,7 +8,7 @@
         content="width=device-width, initial-scale=1"
     >
 
-    <title>Export - SymptomTracker</title>
+    <title>{{ t("export.heading") }} - SymptomTracker</title>
 
     <link
         rel="stylesheet"
@@ -18,13 +18,16 @@
 
 <body>
 
+{% include "_language_switcher.html" %}
+
+
 <main class="container">
 
     <header class="header">
-        <h1>Export</h1>
+        <h1>{{ t("export.heading") }}</h1>
 
         <p>
-            Események mentése
+            {{ t("export.title") }}
         </p>
     </header>
 
@@ -37,7 +40,7 @@
 
             <label class="form-field">
 
-                <span>Kezdő dátum</span>
+                <span>{{ t("export.start_date") }}</span>
 
                 <input
                     type="date"
@@ -49,7 +52,7 @@
 
             <label class="form-field">
 
-                <span>Záró dátum</span>
+                <span>{{ t("export.end_date") }}</span>
 
                 <input
                     type="date"
@@ -61,20 +64,20 @@
 
             <label class="form-field">
 
-                <span>Állapot</span>
+                <span>{{ t("export.status") }}</span>
 
                 <select name="status">
 
                     <option value="active">
-                        Csak aktív
+                        {{ t("export.active_only") }}
                     </option>
 
                     <option value="all">
-                        Aktív + inaktív
+                        {{ t("export.all") }}
                     </option>
 
                     <option value="inactive">
-                        Csak inaktív
+                        {{ t("export.inactive_only") }}
                     </option>
 
                 </select>
@@ -111,9 +114,9 @@
     href="{% if return_to == 'admin' %}/symptomtracker/admin{% else %}/symptomtracker/{% endif %}"
 >
     {% if return_to == "admin" %}
-        ← Kezelés
+        ← {{ t("common.management") }}
     {% else %}
-        ← Főoldal
+        ← {{ t("common.home") }}
     {% endif %}
 </a>
 

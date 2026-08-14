@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hu">
+<html lang="{{ current_language }}">
 
 <head>
 
@@ -11,8 +11,8 @@
     >
 
     <title>
-        {{ risk_component.name }}
-        - Összetevők
+        {{ reference_name(risk_component) }}
+        - {{ t("ingredient.title") }}
     </title>
 
     <link
@@ -25,18 +25,21 @@
 
 <body>
 
+{% include "_language_switcher.html" %}
+
+
 <main class="container">
 
 
     <header class="header">
 
         <h1>
-            ⚠️ {{ risk_component.name }}
+            ⚠️ {{ reference_name(risk_component) }}
         </h1>
 
         <p>
             {{ linked_count }}
-            kapcsolódó összetevő
+            {{ t("ingredient.linked_count") }}
         </p>
 
     </header>
@@ -51,7 +54,7 @@
             type="search"
             name="q"
             value="{{ search }}"
-            placeholder="🔎 Összetevő keresése..."
+            placeholder="{{ t('ingredient.search') }}"
             autocomplete="off"
         >
 
@@ -92,7 +95,7 @@
             class="primary-button"
             type="submit"
         >
-            Szűrés
+            {{ t("common.filter") }}
         </button>
 
     </form>
@@ -139,7 +142,7 @@
                             >
 
                             <span>
-                                {{ ingredient.name }}
+                                {{ reference_name(ingredient) }}
                             </span>
 
                         </label>
@@ -182,7 +185,7 @@
                                     selected
                                 {% endif %}
                             >
-                                Termékfüggő
+                                {{ t("ingredient.product_dependent") }}
                             </option>
 
                         </select>
@@ -194,7 +197,7 @@
             {% else %}
 
                 <div class="empty-card">
-                    Nincs találat.
+                    {{ t("common.no_results") }}
                 </div>
 
             {% endif %}
@@ -212,7 +215,7 @@
                     class="primary-button"
                     type="submit"
                 >
-                    Kapcsolatok mentése
+                    {{ t("ingredient.save_links") }}
                 </button>
 
             </div>
@@ -228,7 +231,7 @@
             class="home-button"
             href="/symptomtracker/admin/risk-components"
         >
-            ← Rizikófaktorok
+            ← {{ t("risk.title") }}
         </a>
 
     </nav>

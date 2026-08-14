@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hu">
+<html lang="{{ current_language }}">
 <head>
     <meta charset="UTF-8">
 
@@ -8,7 +8,7 @@
         content="width=device-width, initial-scale=1"
     >
 
-    <title>Összetevő szerkesztése</title>
+    <title>{{ t("ingredient.edit_title") }}</title>
 
     <link
         rel="stylesheet"
@@ -18,13 +18,16 @@
 
 <body>
 
+{% include "_language_switcher.html" %}
+
+
 <main class="container">
 
     <header class="header">
-        <h1>🥕 Összetevő</h1>
+        <h1>🥕 {{ t("ingredient.single") }}</h1>
 
         <p>
-            {{ ingredient.name }}
+{{ ingredient_display_name }}
         </p>
     </header>
 
@@ -44,12 +47,12 @@
 
             <label class="form-field">
 
-                <span>Név</span>
+                <span>{{ t("common.name") }}</span>
 
                 <input
                     type="text"
                     name="name"
-                    value="{{ ingredient.name }}"
+value="{{ ingredient_display_name }}"
                     required
                 >
 
@@ -58,11 +61,11 @@
 
             <div class="form-field">
 
-                <span>Rizikófaktorok</span>
+                <span>{{ t("ingredient.risks") }}</span>
 
                 <small class="field-help">
-                    Jelöld azokat, amelyek ehhez az
-                    összetevőhöz kapcsolódhatnak.
+                    {{ t("ingredient.risk_hint_1") }}
+                    {{ t("ingredient.risk_hint_2") }}
                 </small>
 
             </div>
@@ -88,7 +91,7 @@
                             <span>
 
                                 <strong>
-                                    {{ risk.name }}
+                                    {{ reference_name(risk) }}
                                 </strong>
 
                                 <small>
@@ -138,7 +141,7 @@
                                     selected
                                 {% endif %}
                             >
-                                Termékfüggő
+                                {{ t("ingredient.product_dependent") }}
                             </option>
 
                         </select>
@@ -154,7 +157,7 @@
                 class="primary-button"
                 type="submit"
             >
-                Mentés
+                {{ t("common.save") }}
             </button>
 
         </form>
@@ -168,7 +171,7 @@
             class="home-button"
             href="/symptomtracker/admin/ingredients"
         >
-            ← Összetevők
+            ← {{ t("ingredient.title") }}
         </a>
 
     </nav>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hu">
+<html lang="{{ current_language }}">
 <head>
     <meta charset="UTF-8">
 
@@ -8,7 +8,7 @@
         content="width=device-width, initial-scale=1"
     >
 
-    <title>Étel / ital</title>
+    <title>{{ t("foods.title") }}</title>
 
     <link
         rel="stylesheet"
@@ -18,11 +18,14 @@
 
 <body>
 
+{% include "_language_switcher.html" %}
+
+
 <main class="container">
 
     <header class="header">
-        <h1>🍽️ Étel / ital</h1>
-        <p>Mit fogyasztottál?</p>
+        <h1>🍽️ {{ t("foods.title") }}</h1>
+        <p>{{ t("foods.question") }}</p>
     </header>
 
 
@@ -35,7 +38,7 @@
             type="search"
             name="q"
             value="{{ search }}"
-            placeholder="🔎 Étel vagy márka keresése..."
+            placeholder="{{ t('foods.search_placeholder') }}"
             autocomplete="off"
         >
 
@@ -47,7 +50,7 @@
             selected
         {% endif %}
     >
-        Aktív ételek
+        {{ t("foods.active") }}
     </option>
 
     <option
@@ -56,7 +59,7 @@
             selected
         {% endif %}
     >
-        Inaktív ételek
+        {{ t("foods.inactive") }}
     </option>
 
     <option
@@ -74,7 +77,7 @@
             class="primary-button"
             type="submit"
         >
-            Keresés
+            {{ t("common.search") }}
         </button>
 
     </form>
@@ -84,7 +87,7 @@
     href="/symptomtracker/foods/new{% if admin_mode %}?return_to=admin{% endif %}"
 >
 
-        ＋ Új étel / ital felvétele
+        ＋ {{ t("foods.new") }}
     </a>
 
 
@@ -107,7 +110,7 @@ href="{% if admin_mode %}/symptomtracker/foods/{{ food.id }}/edit{% else %}/symp
 
 {% if not food.active %}
     <span class="inactive-badge">
-        Inaktív
+        {{ t("common.inactive") }}
     </span>
 {% endif %}
 
@@ -162,12 +165,12 @@ href="{% if admin_mode %}/symptomtracker/foods/{{ food.id }}/edit{% else %}/symp
 
                 {% if search %}
 
-                    Nincs találat erre:
+                    {{ t("food.no_search_result") }}
                     <strong>{{ search }}</strong>
 
                 {% else %}
 
-                    Még nincs felvett étel vagy ital.
+                    {{ t("foods.no_items") }}
 
                 {% endif %}
 
@@ -185,9 +188,9 @@ href="{% if admin_mode %}/symptomtracker/foods/{{ food.id }}/edit{% else %}/symp
         href="{% if admin_mode %}/symptomtracker/admin{% else %}/symptomtracker/{% endif %}"
     >
         {% if admin_mode %}
-            ← Kezelés
+            ← {{ t("common.management") }}
         {% else %}
-            ← Főoldal
+            ← {{ t("common.home") }}
         {% endif %}
     </a>
 

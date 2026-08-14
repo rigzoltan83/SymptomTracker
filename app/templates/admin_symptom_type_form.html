@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hu">
+<html lang="{{ current_language }}">
 <head>
     <meta charset="UTF-8">
 
@@ -8,7 +8,7 @@
         content="width=device-width, initial-scale=1"
     >
 
-    <title>Tünettípus</title>
+    <title>{{ t("symptom_type.single") }}</title>
 
     <link
         rel="stylesheet"
@@ -18,21 +18,24 @@
 
 <body>
 
+{% include "_language_switcher.html" %}
+
+
 <main class="container">
 
     <header class="header">
 
         {% if symptom_type %}
 
-            <h1>🔴 Tünettípus</h1>
+            <h1>🔴 {{ t("symptom_type.single") }}</h1>
 
             <p>
-                {{ symptom_type.name }}
+{{ symptom_type_display_name }}
             </p>
 
         {% else %}
 
-            <h1>🔴 Új tünettípus</h1>
+            <h1>🔴 {{ t("symptom_type.new") }}</h1>
 
         {% endif %}
 
@@ -54,7 +57,7 @@
 
             <label class="form-field">
 
-                <span>Név *</span>
+                <span>{{ t("common.name") }} *</span>
 
                 <input
                     type="text"
@@ -62,7 +65,7 @@
                     value="{{
                         form.get(
                             'name',
-                            symptom_type.name
+symptom_type_display_name
                             if symptom_type
                             else ''
                         )
@@ -77,7 +80,7 @@
                 class="primary-button"
                 type="submit"
             >
-                Mentés
+                {{ t("common.save") }}
             </button>
 
         </form>
@@ -100,9 +103,9 @@
                 >
 
                     {% if symptom_type.active %}
-                        ⛔ Inaktiválás
+                        ⛔ {{ t("common.deactivate") }}
                     {% else %}
-                        ✅ Aktiválás
+                        ✅ {{ t("common.activate") }}
                     {% endif %}
 
                 </button>
@@ -120,7 +123,7 @@
             class="home-button"
             href="/symptomtracker/admin/symptom-types"
         >
-            ← Tünettípusok
+            ← {{ t("symptom_type.title") }}
         </a>
 
     </nav>
