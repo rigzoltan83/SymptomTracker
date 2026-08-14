@@ -1266,7 +1266,9 @@ def admin_risk_components():
 
 
 @main.route(
-    "/admin/risk-components/<int:risk_component_id>/ingredients"
+    "/admin/risk-components/"
+    "<int:risk_component_id>/ingredients",
+    methods=["GET", "POST"],
 )
 def admin_risk_component_ingredients(
     risk_component_id
@@ -1276,20 +1278,178 @@ def admin_risk_component_ingredients(
         risk_component_id,
     )
 
-    links = (
-        IngredientRiskComponent.query
-        .filter_by(
-            risk_component_id=risk_component.id
+    if request.method == "POST":
+        selected_ids = set(
+            request.form.getlist(
+                "ingredient_ids",
+                type=int,
+            )
         )
-        .join(Ingredient)
-        .order_by(Ingredient.name)
+
+        existing_links = {
+            link.ingredient_id: link
+            for link
+            in (
+                IngredientRiskComponent.query
+                .filter_by(
+                    risk_component_id=(
+                        risk_component.id
+                    )
+                )
+                .all()
+            )
+        }
+
+        for ingredient_id in selected_ids:
+            ingredient = db.session.get(
+                Ingredient,
+                ingredient_id,
+            )
+
+            if ingredient is None:
+                continue
+
+            confidence = request.form.get(
+                f"confidence_{ingredient_id}",
+                "certain",
+            )
+
+            if confidence not in {
+                "certain",
+                "typical",
+                "product_dependent",
+            }:
+                confidence = "certain"
+
+            existing_link = (
+                existing_links.get(
+                    ingredient_id
+                )
+            )
+
+            if existing_link is not None:
+                existing_link.confidence = (
+                    confidence
+                )
+
+                continue
+
+            db.session.add(
+                IngredientRiskComponent(
+                    ingredient_id=(
+                        ingredient.id
+                    ),
+                    risk_component_id=(
+                        risk_component.id
+                    ),
+                    confidence=confidence,
+                )
+            )
+
+        for (
+            ingredient_id,
+            existing_link
+        ) in existing_links.items():
+            if (
+                ingredient_id
+                not in selected_ids
+            ):
+                db.session.delete(
+                    existing_link
+                )
+
+        db.session.commit()
+
+        return redirect(
+            f"/symptomtracker/admin/"
+            f"risk-components/"
+            f"{risk_component.id}/ingredients"
+        )
+
+    search = request.args.get(
+        "q",
+        "",
+    ).strip()
+
+    status = request.args.get(
+        "status",
+        "all",
+    ).strip()
+
+    existing_links = {
+        link.ingredient_id: link
+        for link
+        in (
+            IngredientRiskComponent.query
+            .filter_by(
+                risk_component_id=(
+                    risk_component.id
+                )
+            )
+            .all()
+        )
+    }
+
+    query = Ingredient.query
+
+    if search:
+        pattern = f"%{search}%"
+
+        query = query.filter(
+            Ingredient.name.ilike(
+                pattern
+            )
+        )
+
+    if status == "linked":
+        if existing_links:
+            query = query.filter(
+                Ingredient.id.in_(
+                    existing_links.keys()
+                )
+            )
+        else:
+            query = query.filter(
+                db.false()
+            )
+
+    elif status == "unlinked":
+        if existing_links:
+            query = query.filter(
+                ~Ingredient.id.in_(
+                    existing_links.keys()
+                )
+            )
+
+    ingredients = (
+        query
+        .order_by(
+            Ingredient.name
+        )
         .all()
     )
+
+    selected_confidences = {
+        ingredient_id:
+            link.confidence
+        for (
+            ingredient_id,
+            link
+        ) in existing_links.items()
+    }
 
     return render_template(
         "admin_risk_component_ingredients.html",
         risk_component=risk_component,
-        links=links,
+        ingredients=ingredients,
+        selected_confidences=(
+            selected_confidences
+        ),
+        linked_count=len(
+            existing_links
+        ),
+        search=search,
+        selected_status=status,
     )
 
 
@@ -1599,12 +1759,18 @@ def admin_edit_ingredient(ingredient_id):
 
         ingredient.name = name
 
-        selected_ids = request.form.getlist(
-            "risk_component_ids",
-            type=int,
+        selected_ids = set(
+            request.form.getlist(
+                "risk_component_ids",
+                type=int,
+            )
         )
 
-        ingredient.risk_components.clear()
+        existing_links = {
+            item.risk_component_id: item
+            for item
+            in ingredient.risk_components
+        }
 
         for risk_component_id in selected_ids:
             risk_component = db.session.get(
@@ -1627,12 +1793,37 @@ def admin_edit_ingredient(ingredient_id):
             }:
                 confidence = "certain"
 
+            existing_link = (
+                existing_links.get(
+                    risk_component_id
+                )
+            )
+
+            if existing_link is not None:
+                existing_link.confidence = (
+                    confidence
+                )
+
+                continue
+
             ingredient.risk_components.append(
                 IngredientRiskComponent(
                     risk_component=risk_component,
                     confidence=confidence,
                 )
             )
+
+        for (
+            risk_component_id,
+            existing_link
+        ) in existing_links.items():
+            if (
+                risk_component_id
+                not in selected_ids
+            ):
+                db.session.delete(
+                    existing_link
+                )
 
         db.session.commit()
 

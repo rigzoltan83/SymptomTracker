@@ -18,6 +18,6 @@ class Config:
 
     UPLOAD_FOLDER = BASE_DIR / "uploads"
 
-    MAX_CONTENT_LENGTH = 10 * 1024 * 1024
+    MAX_CONTENT_LENGTH = 100 * 1024 * 1024
 
     TIMEZONE = "Europe/Budapest"

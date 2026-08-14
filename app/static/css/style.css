@@ -2950,3 +2950,334 @@ body {
         width: 82%;
     }
 }
+
+.food-image-actions {
+    display: grid;
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+    gap: 8px;
+
+    margin-top: 6px;
+}
+
+.food-images-upload {
+    display: none;
+}
+
+.upload-preview {
+    display: grid;
+    grid-template-columns:
+        repeat(
+            auto-fill,
+            minmax(90px, 1fr)
+        );
+    gap: 8px;
+
+    margin-top: 8px;
+}
+
+.upload-preview-item {
+    position: relative;
+
+    overflow: hidden;
+
+    aspect-ratio: 1;
+
+    border-radius: 10px;
+
+    background: #f3f4f6;
+}
+
+.upload-preview-item img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+}
+
+.upload-preview-remove {
+    position: absolute;
+
+    top: 5px;
+    right: 5px;
+
+    width: 28px;
+    height: 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: 0;
+    border-radius: 999px;
+
+    background: rgba(0, 0, 0, 0.68);
+    color: white;
+
+    font-size: 20px;
+    line-height: 1;
+
+    cursor: pointer;
+}
+
+@media (max-width: 420px) {
+
+    .food-image-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .upload-preview {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+    }
+}
+
+.upload-preview-size {
+    position: absolute;
+
+    left: 5px;
+    bottom: 5px;
+
+    padding: 3px 5px;
+
+    border-radius: 6px;
+
+    background:
+        rgba(0, 0, 0, 0.68);
+
+    color: white;
+
+    font-size: 9px;
+    font-weight: 700;
+
+    line-height: 1;
+}
+
+/* =========================================================
+   Read-only ételtörzs képgaléria
+   ========================================================= */
+
+.food-readonly-images {
+    margin-bottom: 14px;
+}
+
+.food-readonly-image-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fill,
+            minmax(95px, 1fr)
+        );
+
+    gap: 8px;
+
+    margin-top: 6px;
+}
+
+.food-readonly-image {
+    display: block;
+
+    overflow: hidden;
+
+    aspect-ratio: 1;
+
+    border-radius: 11px;
+
+    background: #f3f4f6;
+
+    box-shadow:
+        0 1px 4px
+        rgba(0, 0, 0, 0.06);
+}
+
+.food-readonly-image img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+}
+
+.food-readonly-image:active {
+    transform: scale(0.98);
+}
+
+@media (max-width: 420px) {
+
+    .food-readonly-image-grid {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+    }
+}
+
+/* =========================================================
+   Ételes esemény szerkesztő
+   ========================================================= */
+
+.event-food-card {
+    display: grid;
+    gap: 10px;
+
+    margin-bottom: 14px;
+
+    padding: 12px;
+
+    border-radius: 12px;
+
+    background: #f9fafb;
+}
+
+.event-food-card .form-field {
+    margin: 0;
+}
+
+.event-food-images {
+    display: grid;
+    gap: 4px;
+}
+
+.event-food-images-label {
+    color: #6b7280;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+/* =========================================================
+   Rizikófaktor -> összetevő gyorsszerkesztő
+   ========================================================= */
+
+.risk-ingredient-editor-list {
+    display: grid;
+    gap: 4px;
+}
+
+.risk-ingredient-editor-row {
+    min-height: 42px;
+
+    display: grid;
+    grid-template-columns:
+        minmax(0, 1fr)
+        auto;
+    align-items: center;
+    gap: 8px;
+
+    padding:
+        5px
+        7px
+        5px
+        10px;
+
+    border-radius: 9px;
+
+    background: white;
+
+    box-shadow:
+        0 1px 4px
+        rgba(0, 0, 0, 0.04);
+}
+
+.risk-ingredient-editor-linked {
+    background: #f0fdf4;
+}
+
+.risk-ingredient-editor-main {
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    cursor: pointer;
+}
+
+.risk-ingredient-editor-main input {
+    flex: 0 0 auto;
+
+    width: 18px;
+    height: 18px;
+}
+
+.risk-ingredient-editor-main span {
+    overflow: hidden;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.risk-ingredient-confidence {
+    min-height: 34px;
+
+    padding:
+        4px
+        7px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+
+    background: white;
+
+    font-size: 11px;
+}
+
+.risk-ingredient-save {
+    position: sticky;
+
+    bottom: 8px;
+
+    z-index: 20;
+
+    margin-top: 12px;
+
+    padding: 8px;
+
+    border-radius: 12px;
+
+    background:
+        rgba(249, 250, 251, 0.94);
+
+    backdrop-filter:
+        blur(6px);
+}
+
+.risk-ingredient-save .primary-button {
+    width: 100%;
+}
+
+@media (max-width: 420px) {
+
+    .risk-ingredient-editor-row {
+        min-height: 40px;
+
+        gap: 5px;
+
+        padding:
+            4px
+            5px
+            4px
+            8px;
+    }
+
+    .risk-ingredient-editor-main span {
+        font-size: 12px;
+    }
+
+    .risk-ingredient-confidence {
+        max-width: 112px;
+
+        padding:
+            3px
+            5px;
+
+        font-size: 10px;
+    }
+}

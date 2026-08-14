@@ -153,36 +153,58 @@
 
 <div class="form-field">
 
-    <span>Fotó az ételről / csomagolásról</span>
+    <span>
+        Fotó az ételről / csomagolásról
+    </span>
 
-    <label class="camera-button">
-        📷 Fotó készítése
+    <div class="food-image-actions">
 
-        <input
-            type="file"
-            name="images"
-            accept="image/*"
-            capture="environment"
-        >
-    </label>
+        <label class="camera-button">
+            📷 Fotó készítése
 
-    <label class="gallery-button">
-        🖼️ Kép kiválasztása
+            <input
+                id="food-camera-input"
+                type="file"
+                accept="image/*"
+                capture="environment"
+            >
+        </label>
 
-        <input
-            type="file"
-            name="images"
-            accept="image/*"
-            multiple
-        >
-    </label>
+
+        <label class="gallery-button">
+            🖼️ Kép kiválasztása
+
+            <input
+                id="food-gallery-input"
+                type="file"
+                accept="image/*"
+                multiple
+            >
+        </label>
+
+    </div>
+
+
+
+
+    <small
+        id="food-image-count"
+        class="field-help"
+    ></small>
+
+
+    <div
+        id="food-image-preview"
+        class="upload-preview"
+    ></div>
+
 
     <small class="field-help">
-        Fotózhatod például a csomagolást vagy az összetevőlistát.
+        Több fotót is készíthetsz egymás után.
+        A képek mentés előtt itt megjelennek.
     </small>
 
 </div>
-
 
             <label class="form-field">
 
@@ -312,6 +334,10 @@
         }
     );
 </script>
+
+<script
+    src="/symptomtracker/static/js/food_images.js?v=3"
+></script>
 
 </body>
 </html>

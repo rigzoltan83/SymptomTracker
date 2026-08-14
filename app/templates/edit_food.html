@@ -211,33 +211,57 @@
             </div>
 
 
-            <div class="form-field">
+<div class="form-field">
 
-                <span>Új kép hozzáadása</span>
+    <span>Új képek hozzáadása</span>
 
-                <label class="camera-button">
-                    📷 Fotó készítése
+    <div class="food-image-actions">
 
-                    <input
-                        type="file"
-                        name="images"
-                        accept="image/*"
-                        capture="environment"
-                    >
-                </label>
+        <label class="camera-button">
+            📷 Fotó készítése
 
-                <label class="gallery-button">
-                    🖼️ Kép kiválasztása
+            <input
+                id="food-camera-input"
+                type="file"
+                accept="image/*"
+                capture="environment"
+            >
+        </label>
 
-                    <input
-                        type="file"
-                        name="images"
-                        accept="image/*"
-                        multiple
-                    >
-                </label>
 
-            </div>
+        <label class="gallery-button">
+            🖼️ Kép kiválasztása
+
+            <input
+                id="food-gallery-input"
+                type="file"
+                accept="image/*"
+                multiple
+            >
+        </label>
+
+    </div>
+
+
+
+    <small
+        id="food-image-count"
+        class="field-help"
+    ></small>
+
+
+    <div
+        id="food-image-preview"
+        class="upload-preview"
+    ></div>
+
+
+    <small class="field-help">
+        Több új fotót is készíthetsz
+        egymás után mentés előtt.
+    </small>
+
+</div>
 
 
             {% if food.images %}
@@ -441,6 +465,10 @@
         }
     );
 </script>
+
+<script
+    src="/symptomtracker/static/js/food_images.js?v=3"
+></script>
 
 </body>
 </html>

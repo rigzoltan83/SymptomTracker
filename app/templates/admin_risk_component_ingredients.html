@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="hu">
+
 <head>
+
     <meta charset="UTF-8">
 
     <meta
@@ -9,88 +11,216 @@
     >
 
     <title>
-        {{ risk_component.name }} - Összetevők
+        {{ risk_component.name }}
+        - Összetevők
     </title>
 
     <link
         rel="stylesheet"
         href="/symptomtracker/static/css/style.css"
     >
+
 </head>
+
 
 <body>
 
 <main class="container">
 
-<header class="header">
 
-    <h1>
-        ⚠️ {{ risk_component.name }}
-    </h1>
+    <header class="header">
 
-    <p>
-        {{ links|length }} kapcsolódó összetevő
-    </p>
+        <h1>
+            ⚠️ {{ risk_component.name }}
+        </h1>
 
-</header>
+        <p>
+            {{ linked_count }}
+            kapcsolódó összetevő
+        </p>
 
-<section class="ingredient-admin-list">
+    </header>
 
-    {% if links %}
 
-        {% for link in links %}
+    <form
+        method="get"
+        class="ingredient-admin-search"
+    >
 
-            <div class="risk-admin-card">
+        <input
+            type="search"
+            name="q"
+            value="{{ search }}"
+            placeholder="🔎 Összetevő keresése..."
+            autocomplete="off"
+        >
 
-                <a
-                    class="risk-admin-main-link"
-                    href="/symptomtracker/admin/ingredients/{{ link.ingredient.id }}/edit"
-                >
 
-                    <div class="ingredient-admin-main">
+        <select name="status">
 
-                        <strong>
-                            {{ link.ingredient.name }}
-                        </strong>
+            <option
+                value="all"
+                {% if selected_status == "all" %}
+                    selected
+                {% endif %}
+            >
+                Mind
+            </option>
 
-                        <div class="risk-admin-meta">
+            <option
+                value="linked"
+                {% if selected_status == "linked" %}
+                    selected
+                {% endif %}
+            >
+                Kapcsolt
+            </option>
+
+            <option
+                value="unlinked"
+                {% if selected_status == "unlinked" %}
+                    selected
+                {% endif %}
+            >
+                Nincs kapcsolva
+            </option>
+
+        </select>
+
+
+        <button
+            class="primary-button"
+            type="submit"
+        >
+            Szűrés
+        </button>
+
+    </form>
+
+
+    <form method="post">
+
+        <section
+            class="risk-ingredient-editor-list"
+        >
+
+            {% if ingredients %}
+
+                {% for ingredient
+                    in ingredients
+                %}
+
+                    {% set confidence =
+                        selected_confidences.get(
+                            ingredient.id
+                        )
+                    %}
+
+                    <div
+                        class="
+                            risk-ingredient-editor-row
+                            {% if confidence %}
+                                risk-ingredient-editor-linked
+                            {% endif %}
+                        "
+                    >
+
+                        <label
+                            class="risk-ingredient-editor-main"
+                        >
+
+                            <input
+                                type="checkbox"
+                                name="ingredient_ids"
+                                value="{{ ingredient.id }}"
+                                {% if confidence %}
+                                    checked
+                                {% endif %}
+                            >
 
                             <span>
-                                {% if link.confidence == "certain" %}
-                                    Biztos
-                                {% elif link.confidence == "typical" %}
-                                    Tipikus
-                                {% elif link.confidence == "product_dependent" %}
-                                    Termékfüggő
-                                {% else %}
-                                    {{ link.confidence }}
-                                {% endif %}
+                                {{ ingredient.name }}
                             </span>
 
-                        </div>
+                        </label>
+
+
+                        <select
+                            name="confidence_{{ ingredient.id }}"
+                            class="risk-ingredient-confidence"
+                        >
+
+                            <option
+                                value="certain"
+                                {% if
+                                    confidence == "certain"
+                                    or not confidence
+                                %}
+                                    selected
+                                {% endif %}
+                            >
+                                Biztos
+                            </option>
+
+                            <option
+                                value="typical"
+                                {% if
+                                    confidence == "typical"
+                                %}
+                                    selected
+                                {% endif %}
+                            >
+                                Tipikus
+                            </option>
+
+                            <option
+                                value="product_dependent"
+                                {% if
+                                    confidence
+                                    == "product_dependent"
+                                %}
+                                    selected
+                                {% endif %}
+                            >
+                                Termékfüggő
+                            </option>
+
+                        </select>
 
                     </div>
 
-                    <span class="admin-arrow">
-                        ›
-                    </span>
+                {% endfor %}
 
-                </a>
+            {% else %}
+
+                <div class="empty-card">
+                    Nincs találat.
+                </div>
+
+            {% endif %}
+
+        </section>
+
+
+        {% if ingredients %}
+
+            <div
+                class="risk-ingredient-save"
+            >
+
+                <button
+                    class="primary-button"
+                    type="submit"
+                >
+                    Kapcsolatok mentése
+                </button>
 
             </div>
 
-        {% endfor %}
+        {% endif %}
 
-    {% else %}
+    </form>
 
-        <div class="empty-card">
-            Ehhez a rizikófaktorhoz még nincs
-            összetevő kapcsolva.
-        </div>
-
-    {% endif %}
-
-</section>
 
     <nav class="page-bottom">
 
@@ -105,6 +235,7 @@
 
 
     {% include "_top_back_button.html" %}
+
 
 </main>
 

@@ -32,6 +32,35 @@
 
     </header>
 
+    {% if food.images %}
+
+        <section class="food-readonly-images">
+
+            <div class="food-readonly-image-grid">
+
+                {% for image in food.images %}
+
+                    <a
+                        class="food-readonly-image"
+                        href="/symptomtracker/uploads/foods/{{ image.filename }}"
+                        target="_blank"
+                    >
+
+                        <img
+                            src="/symptomtracker/uploads/foods/{{ image.filename }}"
+                            alt="{{ food.name }}"
+                            loading="lazy"
+                        >
+
+                    </a>
+
+                {% endfor %}
+
+            </div>
+
+        </section>
+
+    {% endif %}
 
     {% if error %}
 

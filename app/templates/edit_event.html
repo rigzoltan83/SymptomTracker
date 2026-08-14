@@ -110,43 +110,91 @@
 
             {% endif %}
 
+
 {% if (
     event.event_type == "food"
     and event.food_event
 ) %}
 
-    <label class="form-field">
+    <div class="event-food-card">
 
-        <span>Étel / ital</span>
+        <label class="form-field">
 
-        <select
-            name="food_id"
-            required
-        >
+            <span>Étel / ital</span>
 
-            {% for food in foods %}
+            <select
+                name="food_id"
+                required
+            >
 
-                <option
-                    value="{{ food.id }}"
-                    {% if
-                        food.id
-                        == event.food_event.food_id
+                {% for food in foods %}
+
+                    <option
+                        value="{{ food.id }}"
+                        {% if
+                            food.id
+                            == event.food_event.food_id
+                        %}
+                            selected
+                        {% endif %}
+                    >
+                        {{ food.name }}
+                        {% if food.brand %}
+                            – {{ food.brand }}
+                        {% endif %}
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+        </label>
+
+
+        {% if event.food_event.food.images %}
+
+            <div class="event-food-images">
+
+                <span class="event-food-images-label">
+                    Törzsképek
+                </span>
+
+                <div class="food-readonly-image-grid">
+
+                    {% for image
+                        in event.food_event.food.images
                     %}
-                        selected
-                    {% endif %}
-                >
-                    {{ food.name }}
-                    {% if food.brand %}
-                        – {{ food.brand }}
-                    {% endif %}
-                </option>
 
-            {% endfor %}
+                        <a
+                            class="food-readonly-image"
+                            href="/symptomtracker/uploads/foods/{{ image.filename }}"
+                            target="_blank"
+                        >
 
-        </select>
+                            <img
+                                src="/symptomtracker/uploads/foods/{{ image.filename }}"
+                                alt="{{ event.food_event.food.name }}"
+                                loading="lazy"
+                            >
 
-    </label>
+                        </a>
 
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+        {% endif %}
+
+
+        <small class="field-help">
+            A képek az ételtörzshöz tartoznak.
+            Módosításuk a Kezelés →
+            Ételek / italok alatt lehetséges.
+        </small>
+
+    </div>
 
     <label class="form-field">
 
