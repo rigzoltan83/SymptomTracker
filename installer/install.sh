@@ -435,6 +435,13 @@ echo "$MSG_COPY_FILES"
 mkdir -p \
     "$INSTALL_DIR"
 
+chown \
+    root:root \
+    "$INSTALL_DIR"
+
+chmod 755 \
+    "$INSTALL_DIR"
+
 if [ "$PROJECT_DIR" != "$INSTALL_DIR" ]; then
     tar \
         --exclude='.git' \
