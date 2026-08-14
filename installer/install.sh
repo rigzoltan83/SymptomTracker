@@ -509,4 +509,73 @@ printf "%-24s %s\n" \
     "$MSG_APP_PORT:" \
     "$APP_PORT"
 
+# ---------------------------------------------------------
+# PYTHON VENV
+# ---------------------------------------------------------
+
+echo
+echo "$MSG_CREATE_VENV"
+
+if [ ! -x "${INSTALL_DIR}/venv/bin/python" ]; then
+    python3 -m venv \
+        "${INSTALL_DIR}/venv"
+fi
+
+
+# ---------------------------------------------------------
+# REQUIREMENTS
+# ---------------------------------------------------------
+
+echo
+echo "$MSG_INSTALL_REQUIREMENTS"
+
+"${INSTALL_DIR}/venv/bin/python" \
+    -m pip install \
+    --upgrade pip
+
+"${INSTALL_DIR}/venv/bin/pip" \
+    install \
+    -r "${INSTALL_DIR}/requirements.txt"
+
+
+# ---------------------------------------------------------
+# MIGRÁCIÓ
+# ---------------------------------------------------------
+
+echo
+echo "$MSG_RUN_MIGRATIONS"
+
+set -a
+# shellcheck source=/dev/null
+source "${INSTALL_DIR}/.env"
+set +a
+
+FLASK_SKIP_DOTENV=1 \
+DATABASE_URL="$DATABASE_URL" \
+PYTHONDONTWRITEBYTECODE=1 \
+"${INSTALL_DIR}/venv/bin/flask" \
+    --app app:create_app \
+    db upgrade
+
+
+# ---------------------------------------------------------
+# REFERENCE SEED
+# ---------------------------------------------------------
+
+echo
+echo "$MSG_IMPORT_SEED"
+
+DATABASE_URL="$DATABASE_URL" \
+PYTHONDONTWRITEBYTECODE=1 \
+"${INSTALL_DIR}/venv/bin/python" \
+    "${INSTALL_DIR}/scripts/import_reference_seed.py"
+
+
+# ---------------------------------------------------------
+# MÁSODIK SZAKASZ KÉSZ
+# ---------------------------------------------------------
+
+echo
+echo "$MSG_PHASE2_DONE"
+
 exit 0
