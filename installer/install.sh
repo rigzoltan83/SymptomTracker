@@ -501,6 +501,11 @@ chown \
 chmod 640 \
     "${INSTALL_DIR}/.env"
 
+# A szigorú umask csak a titkos .env létrehozásához szükséges.
+# A később létrehozott runtime fájloknak a service user számára
+# olvashatónak/bejárhatónak kell lenniük.
+umask 022
+
 
 # ---------------------------------------------------------
 # FÁJLJOGOSULTSÁGOK
@@ -620,6 +625,16 @@ echo "$MSG_INSTALL_REQUIREMENTS"
 "${INSTALL_DIR}/venv/bin/pip" \
     install \
     -r "${INSTALL_DIR}/requirements.txt"
+
+# A virtualenv kódja root tulajdonban maradjon, de a
+# symptomtracker service user olvasni és végrehajtani tudja.
+chown -R \
+    root:root \
+    "${INSTALL_DIR}/venv"
+
+chmod -R \
+    u+rwX,go+rX \
+    "${INSTALL_DIR}/venv"
 
 
 # ---------------------------------------------------------
