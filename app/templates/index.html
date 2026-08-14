@@ -36,7 +36,7 @@
         <section class="event-buttons">
 
             <button
-                id="medication-button"                
+                id="medication-button"
                 class="event-button"
                 type="button"
             >
@@ -137,7 +137,7 @@
 {% if event.medication_event %}
     {{ event.medication_event.medication.name }}
 {% else %}
-    Gyógyszer
+    {{ t("index.medication") }}
 {% endif %}
 
 {% elif event.event_type == "food" %}
@@ -147,7 +147,7 @@
     {% if event.food_event %}
         {{ event.food_event.food.name }}
     {% else %}
-        Étel / ital
+        {{ t("index.food_drink") }}
     {% endif %}
 {% elif event.event_type == "symptom" %}
 
@@ -160,7 +160,7 @@
             ({{ event.symptom_event.severity }}/10)
         {% endif %}
     {% else %}
-        Tünet
+        {{ t("index.symptom") }}
     {% endif %}
                                 {% else %}
                                     {{ event.event_type }}

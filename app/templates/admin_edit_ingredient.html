@@ -8,7 +8,7 @@
         content="width=device-width, initial-scale=1"
     >
 
-    <title>Összetevő szerkesztése</title>
+    <title>{{ t("ingredient.edit_title") }}</title>
 
     <link
         rel="stylesheet"
@@ -24,7 +24,7 @@
 <main class="container">
 
     <header class="header">
-        <h1>🥕 Összetevő</h1>
+        <h1>🥕 {{ t("ingredient.single") }}</h1>
 
         <p>
 {{ ingredient_display_name }}
@@ -47,7 +47,7 @@
 
             <label class="form-field">
 
-                <span>Név</span>
+                <span>{{ t("common.name") }}</span>
 
                 <input
                     type="text"
@@ -61,11 +61,11 @@ value="{{ ingredient_display_name }}"
 
             <div class="form-field">
 
-                <span>Rizikófaktorok</span>
+                <span>{{ t("ingredient.risks") }}</span>
 
                 <small class="field-help">
-                    Jelöld azokat, amelyek ehhez az
-                    összetevőhöz kapcsolódhatnak.
+                    {{ t("ingredient.risk_hint_1") }}
+                    {{ t("ingredient.risk_hint_2") }}
                 </small>
 
             </div>
@@ -141,7 +141,7 @@ value="{{ ingredient_display_name }}"
                                     selected
                                 {% endif %}
                             >
-                                Termékfüggő
+                                {{ t("ingredient.product_dependent") }}
                             </option>
 
                         </select>
@@ -157,7 +157,7 @@ value="{{ ingredient_display_name }}"
                 class="primary-button"
                 type="submit"
             >
-                Mentés
+                {{ t("common.save") }}
             </button>
 
         </form>
@@ -171,7 +171,7 @@ value="{{ ingredient_display_name }}"
             class="home-button"
             href="/symptomtracker/admin/ingredients"
         >
-            ← Összetevők
+            ← {{ t("ingredient.title") }}
         </a>
 
     </nav>

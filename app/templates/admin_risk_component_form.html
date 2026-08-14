@@ -8,7 +8,7 @@
         content="width=device-width, initial-scale=1"
     >
 
-    <title>Rizikófaktor</title>
+    <title>{{ t("risk.single") }}</title>
 
     <link
         rel="stylesheet"
@@ -27,7 +27,7 @@
 
         {% if risk_component %}
 
-            <h1>⚠️ Rizikófaktor</h1>
+            <h1>⚠️ {{ t("risk.single") }}</h1>
 
             <p>
 {{ risk_component_display_name }}
@@ -35,7 +35,7 @@
 
         {% else %}
 
-            <h1>⚠️ Új rizikófaktor</h1>
+            <h1>⚠️ {{ t("risk.new") }}</h1>
 
         {% endif %}
 
@@ -57,7 +57,7 @@
 
             <label class="form-field">
 
-                <span>Név *</span>
+                <span>{{ t("common.name") }} *</span>
 
                 <input
                     type="text"
@@ -78,7 +78,7 @@ risk_component_display_name
 
             <label class="form-field">
 
-                <span>Kategória *</span>
+                <span>{{ t("common.category") }} *</span>
 
                 {% set current_category =
                     form.get(
@@ -95,7 +95,7 @@ risk_component_display_name
                 >
 
                     <option value="">
-                        -- válassz --
+                        {{ t("common.choose") }}
                     </option>
 
                     <option
@@ -104,7 +104,7 @@ risk_component_display_name
                             selected
                         {% endif %}
                     >
-                        Allergén
+                        {{ t("risk.allergen") }}
                     </option>
 
                     <option
@@ -122,7 +122,7 @@ risk_component_display_name
                             selected
                         {% endif %}
                     >
-                        Intolerancia
+                        {{ t("risk.intolerance") }}
                     </option>
 
                     <option
@@ -131,7 +131,7 @@ risk_component_display_name
                             selected
                         {% endif %}
                     >
-                        Biogén amin
+                        {{ t("risk.biogenic_amine") }}
                     </option>
 
                     <option
@@ -140,7 +140,7 @@ risk_component_display_name
                             selected
                         {% endif %}
                     >
-                        Egyéb
+                        {{ t("risk.other") }}
                     </option>
 
                 </select>
@@ -150,12 +150,12 @@ risk_component_display_name
 
             <label class="form-field">
 
-                <span>Leírás</span>
+                <span>{{ t("common.description") }}</span>
 
                 <textarea
                     name="description"
                     rows="5"
-                    placeholder="Opcionális..."
+                    placeholder="{{ t('common.optional_dots') }}"
                 >{{
                     form.get(
                         'description',
@@ -173,7 +173,7 @@ and risk_component_display_description
                 class="primary-button"
                 type="submit"
             >
-                Mentés
+                {{ t("common.save") }}
             </button>
 
         </form>
@@ -196,9 +196,9 @@ and risk_component_display_description
                 >
 
                     {% if risk_component.active %}
-                        ⛔ Inaktiválás
+                        ⛔ {{ t("common.deactivate") }}
                     {% else %}
-                        ✅ Aktiválás
+                        ✅ {{ t("common.activate") }}
                     {% endif %}
 
                 </button>
@@ -216,7 +216,7 @@ and risk_component_display_description
             class="home-button"
             href="/symptomtracker/admin/risk-components"
         >
-            ← Rizikófaktorok
+            ← {{ t("risk.title") }}
         </a>
 
     </nav>

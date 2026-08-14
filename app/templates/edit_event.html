@@ -8,7 +8,7 @@
         content="width=device-width, initial-scale=1"
     >
 
-    <title>Esemény szerkesztése</title>
+    <title>{{ t("event.edit_title") }}</title>
 
     <link
         rel="stylesheet"
@@ -26,17 +26,17 @@
     <header class="header">
 
         <h1>
-            Esemény szerkesztése
+            {{ t("event.edit_title") }}
         </h1>
 
         <p>
 
             {% if event.event_type == "medication" %}
-                💊 Gyógyszer
+                💊 {{ t("event.medication") }}
             {% elif event.event_type == "food" %}
-                🍽️ Étel / ital
+                🍽️ {{ t("event.food") }}
             {% elif event.event_type == "symptom" %}
-                🔴 Tünet
+                🔴 {{ t("event.symptom") }}
             {% endif %}
 
         </p>
@@ -63,7 +63,7 @@
             <label class="form-field">
 
                 <span>
-                    Dátum és idő
+                    {{ t("common.date_time") }}
                 </span>
 
                 <input
@@ -84,7 +84,7 @@
                 <label class="form-field">
 
                     <span>
-                        Gyógyszer
+                        {{ t("event.medication") }}
                     </span>
 
                     <input
@@ -123,7 +123,7 @@
 
         <label class="form-field">
 
-            <span>Étel / ital</span>
+            <span>{{ t("event.food") }}</span>
 
             <select
                 name="food_id"
@@ -159,7 +159,7 @@
             <div class="event-food-images">
 
                 <span class="event-food-images-label">
-                    Törzsképek
+                    {{ t("event.food_master_images") }}
                 </span>
 
                 <div class="food-readonly-image-grid">
@@ -192,16 +192,16 @@
 
 
         <small class="field-help">
-            A képek az ételtörzshöz tartoznak.
-            Módosításuk a Kezelés →
-            Ételek / italok alatt lehetséges.
+            {{ t("event.food_images_hint_1") }}
+            {{ t("event.food_images_hint_2") }}
+            {{ t("event.food_images_hint_3") }}
         </small>
 
     </div>
 
     <label class="form-field">
 
-        <span>Mennyiség</span>
+        <span>{{ t("event.amount") }}</span>
 
         <input
             type="text"
@@ -223,7 +223,7 @@
 
     <label class="form-field">
 
-        <span>Tünet típusa</span>
+        <span>{{ t("event.symptom_type") }}</span>
 
         <select
             name="symptom_type_id"
@@ -254,7 +254,7 @@
     <label class="form-field">
 
         <span>
-            Erősség:
+            {{ t("event.severity") }}
             <strong id="severity-value">
                 {{ event.symptom_event.severity }}
             </strong>
@@ -275,7 +275,7 @@
 
 <label class="form-field">
 
-    <span>Megszűnés ideje</span>
+    <span>{{ t("event.end_time") }}</span>
 
     <input
         type="datetime-local"
@@ -289,14 +289,14 @@
     >
 
     <small class="field-help">
-        Hagyd üresen, ha a tünet még tart.
+        {{ t("symptom.end_hint") }}
     </small>
 
 </label>
 
     <div class="form-field">
 
-        <span>Testrész(ek)</span>
+        <span>{{ t("event.body_parts") }}</span>
 
         <div class="body-part-grid">
 
@@ -330,11 +330,11 @@
 
 <div class="form-field">
 
-    <span>Új kép hozzáadása</span>
+    <span>{{ t("event.add_image") }}</span>
 
     <label class="camera-button">
 
-        📷 Fotó készítése
+        📷 {{ t("common.photo_take") }}
 
         <input
             class="image-input"
@@ -348,7 +348,7 @@
 
     <label class="gallery-button">
 
-        🖼️ Kép kiválasztása
+        🖼️ {{ t("common.image_select") }}
 
         <input
             class="image-input"
@@ -361,7 +361,7 @@
     </label>
 
     <small class="field-help">
-        Új fotót készíthetsz vagy több meglévő képet is kiválaszthatsz.
+        {{ t("event.add_image_hint") }}
     </small>
 
 </div>
@@ -375,7 +375,7 @@
 
     <div class="form-field">
 
-        <span>Jelenlegi képek</span>
+        <span>{{ t("common.current_images") }}</span>
 
         <div class="symptom-image-grid">
 
@@ -387,7 +387,7 @@
 
     <img
         src="/symptomtracker/uploads/symptoms/{{ image.filename }}"
-        alt="Tünetkép"
+        alt="{{ t('common.image_alt') }}"
         loading="lazy"
     >
 
@@ -399,11 +399,11 @@
         formnovalidate
         onclick="
             return confirm(
-                'Biztosan törlöd ezt a képet?'
+                "{{ t('common.delete_image_confirm') }}"
             );
         "
     >
-        🗑️ Kép törlése
+        🗑️ {{ t("common.delete_image") }}
     </button>
 
 </div>
@@ -421,13 +421,13 @@
             <label class="form-field">
 
                 <span>
-                    Megjegyzés
+                    {{ t("common.notes") }}
                 </span>
 
                 <textarea
                     name="notes"
                     rows="4"
-                    placeholder="Opcionális megjegyzés..."
+                    placeholder="{{ t('event.notes_placeholder') }}"
                 >{{ event.notes or '' }}</textarea>
 
             </label>
@@ -437,7 +437,7 @@
                 class="primary-button"
                 type="submit"
             >
-                Mentés
+                {{ t("common.save") }}
             </button>
 
         </form>
@@ -451,7 +451,7 @@
             class="home-button"
             href="/symptomtracker/events"
         >
-            ← Vissza az eseményekhez
+            ← {{ t("event.back") }}
         </a>
 
     </nav>
@@ -515,7 +515,7 @@ function addImagePreview(file) {
                 reader.result;
 
             image.alt =
-                "Kiválasztott kép";
+                "{{ t('common.selected_image') }}";
 
             wrapper.appendChild(
                 image

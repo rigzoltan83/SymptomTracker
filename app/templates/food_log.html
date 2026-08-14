@@ -8,7 +8,7 @@
         content="width=device-width, initial-scale=1"
     >
 
-    <title>Étel rögzítése</title>
+    <title>{{ t("food.log_title") }}</title>
 
     <link
         rel="stylesheet"
@@ -30,7 +30,7 @@
         {% if food.brand %}
             <p>{{ food.brand }}</p>
         {% else %}
-            <p>Fogyasztás rögzítése</p>
+            <p>{{ t("food.log_consumption") }}</p>
         {% endif %}
 
     </header>
@@ -79,7 +79,7 @@
         <section class="food-detail-card">
 
             <span class="food-detail-label">
-                Összetevők
+                {{ t("common.ingredients") }}
             </span>
 
             <div class="food-detail-ingredients">
@@ -111,7 +111,7 @@
 
             <label class="form-field">
 
-                <span>Dátum és idő</span>
+                <span>{{ t("common.date_time") }}</span>
 
                 <input
                     type="datetime-local"
@@ -130,7 +130,7 @@
 
             <label class="form-field">
 
-                <span>Mennyiség</span>
+                <span>{{ t("common.amount") }}</span>
 
                 <input
                     type="text"
@@ -144,12 +144,12 @@
 
             <label class="form-field">
 
-                <span>Megjegyzés</span>
+                <span>{{ t("common.notes") }}</span>
 
                 <textarea
                     name="notes"
                     rows="3"
-                    placeholder="Opcionális..."
+                    placeholder="{{ t('common.optional_dots') }}"
                 >{{ form.get('notes', '') }}</textarea>
 
             </label>
@@ -159,7 +159,7 @@
                 class="primary-button"
                 type="submit"
             >
-                Rögzítés
+                {{ t("food.log_save") }}
             </button>
 
         </form>
@@ -173,7 +173,7 @@
             class="home-button"
             href="/symptomtracker/foods"
         >
-            ← Másik étel
+            ← {{ t("food.other") }}
         </a>
 
     </nav>

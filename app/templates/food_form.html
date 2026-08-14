@@ -8,7 +8,7 @@
         content="width=device-width, initial-scale=1"
     >
 
-    <title>Új étel / ital</title>
+    <title>{{ t("food.new_title") }}</title>
 
     <link
         rel="stylesheet"
@@ -24,7 +24,7 @@
 <main class="container">
 
     <header class="header">
-        <h1>🍽️ Új étel</h1>
+        <h1>🍽️ {{ t("food.new_heading") }}</h1>
         <p>Az alapadatokat csak egyszer kell megadni</p>
     </header>
 
@@ -53,13 +53,13 @@
 
             <label class="form-field">
 
-                <span>Név *</span>
+                <span>{{ t("common.name") }} *</span>
 
                 <input
                     type="text"
                     name="name"
                     value="{{ form.get('name', '') }}"
-                    placeholder="pl. Sonkás pizza"
+                    placeholder="{{ t('food.name_example') }}"
                     required
                     autofocus
                 >
@@ -69,13 +69,13 @@
 
             <label class="form-field">
 
-                <span>Márka / gyártó</span>
+                <span>{{ t("common.brand") }}</span>
 
                 <input
                     type="text"
                     name="brand"
                     value="{{ form.get('brand', '') }}"
-                    placeholder="Opcionális"
+                    placeholder="{{ t('common.optional') }}"
                 >
 
             </label>
@@ -83,7 +83,7 @@
 
             <div class="form-field">
 
-                <span>Összetevők</span>
+                <span>{{ t("common.ingredients") }}</span>
 
                 {% if ingredients %}
 
@@ -118,7 +118,7 @@
                 {% else %}
 
                     <small class="field-help">
-                        Még nincs összetevő a törzsben.
+                        {{ t("food.no_ingredients") }}
                     </small>
 
                 {% endif %}
@@ -128,7 +128,7 @@
 
             <div class="form-field">
 
-                <span>Új összetevő hozzáadása</span>
+                <span>{{ t("food.add_ingredient") }}</span>
 
                 <div class="new-ingredient-row">
 
@@ -157,13 +157,13 @@
 <div class="form-field">
 
     <span>
-        Fotó az ételről / csomagolásról
+        {{ t("food.photo") }}
     </span>
 
     <div class="food-image-actions">
 
         <label class="camera-button">
-            📷 Fotó készítése
+            📷 {{ t("common.photo_take") }}
 
             <input
                 id="food-camera-input"
@@ -175,7 +175,7 @@
 
 
         <label class="gallery-button">
-            🖼️ Kép kiválasztása
+            🖼️ {{ t("common.image_select") }}
 
             <input
                 id="food-gallery-input"
@@ -203,20 +203,20 @@
 
 
     <small class="field-help">
-        Több fotót is készíthetsz egymás után.
-        A képek mentés előtt itt megjelennek.
+        {{ t("food.multiple_photos") }}
+        {{ t("food.photos_preview") }}
     </small>
 
 </div>
 
             <label class="form-field">
 
-                <span>Megjegyzés az ételhez</span>
+                <span>{{ t("food.notes") }}</span>
 
                 <textarea
                     name="description"
                     rows="3"
-                    placeholder="Opcionális..."
+                    placeholder="{{ t('common.optional_dots') }}"
                 >{{ form.get('description', '') }}</textarea>
 
             </label>
@@ -226,7 +226,7 @@
                 class="primary-button"
                 type="submit"
             >
-                Étel mentése
+                {{ t("food.save") }}
             </button>
 
         </form>

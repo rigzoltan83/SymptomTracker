@@ -8,7 +8,7 @@
         content="width=device-width, initial-scale=1"
     >
 
-    <title>Kezelés - SymptomTracker</title>
+    <title>{{ t("admin.title") }} - SymptomTracker</title>
 
     <link
         rel="stylesheet"
@@ -24,10 +24,10 @@
 <main class="container">
 
     <header class="header">
-        <h1>⚙️ Kezelés</h1>
+        <h1>⚙️ {{ t("admin.title") }}</h1>
 
         <p>
-            Törzsadatok és beállítások
+            {{ t("admin.subtitle") }}
         </p>
     </header>
 
@@ -43,10 +43,10 @@ href="/symptomtracker/admin/foods"
             </span>
 
             <span class="admin-content">
-                <strong>Ételek / italok</strong>
+                <strong>{{ t("admin.foods") }}</strong>
 
                 <small>
-                    Szerkesztés, összetevők, képek
+                    {{ t("admin.foods_desc") }}
                 </small>
             </span>
 
@@ -65,10 +65,10 @@ href="/symptomtracker/admin/foods"
             </span>
 
             <span class="admin-content">
-                <strong>Összetevők</strong>
+                <strong>{{ t("admin.ingredients") }}</strong>
 
                 <small>
-                    Rizikófaktorok hozzárendelése
+                    {{ t("admin.ingredients_desc") }}
                 </small>
             </span>
 
@@ -87,10 +87,10 @@ href="/symptomtracker/admin/foods"
             </span>
 
             <span class="admin-content">
-                <strong>Rizikófaktorok</strong>
+                <strong>{{ t("admin.risks") }}</strong>
 
                 <small>
-                    Allergének, FODMAP, intolerancia
+                    {{ t("admin.risks_desc") }}
                 </small>
             </span>
 
@@ -109,10 +109,10 @@ href="/symptomtracker/admin/foods"
     </span>
 
     <span class="admin-content">
-        <strong>Tünettípusok</strong>
+        <strong>{{ t("admin.symptom_types") }}</strong>
 
         <small>
-            Felvitel, szerkesztés, aktiválás
+            {{ t("admin.reference_desc") }}
         </small>
     </span>
 
@@ -131,10 +131,10 @@ href="/symptomtracker/admin/foods"
     </span>
 
     <span class="admin-content">
-        <strong>Testrészek</strong>
+        <strong>{{ t("admin.body_parts") }}</strong>
 
         <small>
-            Felvitel, szerkesztés, aktiválás
+            {{ t("admin.reference_desc") }}
         </small>
     </span>
 
@@ -153,10 +153,10 @@ href="/symptomtracker/admin/foods"
     </span>
 
     <span class="admin-content">
-        <strong>Gyógyszerek</strong>
+        <strong>{{ t("admin.medications") }}</strong>
 
         <small>
-            Felvitel, szerkesztés, aktiválás
+            {{ t("admin.reference_desc") }}
         </small>
     </span>
 
@@ -178,7 +178,7 @@ href="/symptomtracker/export?return_to=admin"
                 <strong>Export</strong>
 
                 <small>
-                    CSV és XLSX
+                    {{ t("admin.export_desc") }}
                 </small>
             </span>
 
@@ -196,7 +196,7 @@ href="/symptomtracker/export?return_to=admin"
             class="home-button"
             href="/symptomtracker/"
         >
-            ← Főoldal
+            ← {{ t("common.home") }}
         </a>
 
     </nav>

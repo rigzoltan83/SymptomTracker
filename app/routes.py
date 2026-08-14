@@ -49,6 +49,7 @@ LOCAL_TIMEZONE = ZoneInfo("Europe/Budapest")
 from app.i18n import (
     SUPPORTED_LANGUAGES,
     set_current_language,
+    translate,
 )
 
 
@@ -972,7 +973,7 @@ def admin_new_body_part():
                 "admin_body_part_form.html",
                 body_part=None,
                 form=request.form,
-                error="A név kötelező.",
+                error=translate("error.name_required"),
             )
 
         duplicate = find_reference_by_name(
@@ -985,8 +986,8 @@ def admin_new_body_part():
                 "admin_body_part_form.html",
                 body_part=None,
                 form=request.form,
-                error=(
-                    "Már létezik ilyen testrész."
+                error=translate(
+                    "error.duplicate_body_part"
                 ),
             )
 
@@ -1045,7 +1046,7 @@ def admin_edit_body_part(
                     get_reference_name(body_part)
                 ),
                 form=request.form,
-                error="A név kötelező.",
+                error=translate("error.name_required"),
             )
 
         duplicate = find_reference_by_name(
@@ -1062,8 +1063,8 @@ def admin_edit_body_part(
                     get_reference_name(body_part)
                 ),
                 form=request.form,
-                error=(
-                    "Már létezik ilyen testrész."
+                error=translate(
+                    "error.duplicate_body_part"
                 ),
             )
 
@@ -1134,7 +1135,7 @@ def admin_new_symptom_type():
                 "admin_symptom_type_form.html",
                 symptom_type=None,
                 form=request.form,
-                error="A név kötelező.",
+                error=translate("error.name_required"),
             )
 
         duplicate = find_reference_by_name(
@@ -1147,8 +1148,8 @@ def admin_new_symptom_type():
                 "admin_symptom_type_form.html",
                 symptom_type=None,
                 form=request.form,
-                error=(
-                    "Már létezik ilyen tünettípus."
+                error=translate(
+                    "error.duplicate_symptom_type"
                 ),
             )
 
@@ -1207,7 +1208,7 @@ def admin_edit_symptom_type(
                     get_reference_name(symptom_type)
                 ),
                 form=request.form,
-                error="A név kötelező.",
+                error=translate("error.name_required"),
             )
 
         duplicate = find_reference_by_name(
@@ -1224,8 +1225,8 @@ def admin_edit_symptom_type(
                     get_reference_name(symptom_type)
                 ),
                 form=request.form,
-                error=(
-                    "Már létezik ilyen tünettípus."
+                error=translate(
+                    "error.duplicate_symptom_type"
                 ),
             )
 
@@ -1553,8 +1554,8 @@ def admin_new_risk_component():
                 "admin_risk_component_form.html",
                 risk_component=None,
                 form=request.form,
-                error=(
-                    "A név és a kategória kötelező."
+                error=translate(
+                    "error.risk_required"
                 ),
             )
 
@@ -1568,9 +1569,8 @@ def admin_new_risk_component():
                 "admin_risk_component_form.html",
                 risk_component=None,
                 form=request.form,
-                error=(
-                    "Már létezik ilyen nevű "
-                    "rizikófaktor."
+                error=translate(
+                    "error.duplicate_risk"
                 ),
             )
 
@@ -1649,8 +1649,8 @@ def admin_edit_risk_component(
                     )
                 ),
                 form=request.form,
-                error=(
-                    "A név és a kategória kötelező."
+                error=translate(
+                    "error.risk_required"
                 ),
             )
 
@@ -1675,9 +1675,8 @@ def admin_edit_risk_component(
                     )
                 ),
                 form=request.form,
-                error=(
-                    "Már létezik ilyen nevű "
-                    "rizikófaktor."
+                error=translate(
+                    "error.duplicate_risk"
                 ),
             )
 
@@ -1841,7 +1840,7 @@ def admin_edit_ingredient(ingredient_id):
                 ),
                 risk_components=risk_components,
                 selected_risks={},
-                error="Az összetevő neve kötelező.",
+                error=translate("error.ingredient_name_required"),
             )
 
         duplicate = find_reference_by_name(
@@ -1864,8 +1863,8 @@ def admin_edit_ingredient(ingredient_id):
                     for item
                     in ingredient.risk_components
                 },
-                error=(
-                    "Már létezik ilyen nevű összetevő."
+                error=translate(
+                    "error.duplicate_ingredient"
                 ),
             )
 
@@ -2029,7 +2028,7 @@ def admin_new_medication():
                 "admin_medication_form.html",
                 medication=None,
                 form=request.form,
-                error="A név kötelező.",
+                error=translate("error.name_required"),
             )
 
         duplicate = (
@@ -2047,8 +2046,8 @@ def admin_new_medication():
                 "admin_medication_form.html",
                 medication=None,
                 form=request.form,
-                error=(
-                    "Már létezik ilyen gyógyszer."
+                error=translate(
+                    "error.duplicate_medication"
                 ),
             )
 
@@ -2097,7 +2096,7 @@ def admin_edit_medication(
                 "admin_medication_form.html",
                 medication=medication,
                 form=request.form,
-                error="A név kötelező.",
+                error=translate("error.name_required"),
             )
 
         duplicate = (
@@ -2118,8 +2117,8 @@ def admin_edit_medication(
                 "admin_medication_form.html",
                 medication=medication,
                 form=request.form,
-                error=(
-                    "Már létezik ilyen gyógyszer."
+                error=translate(
+                    "error.duplicate_medication"
                 ),
             )
 
@@ -2381,7 +2380,7 @@ def edit_event(event_id):
                 local_occurred_at=local_datetime_value(
                     event.occurred_at
                 ),
-                error="Az időpont megadása kötelező.",
+                error=translate("error.datetime_required"),
             )
 
         try:
@@ -2394,7 +2393,7 @@ def edit_event(event_id):
                 "edit_event.html",
                 event=event,
                 local_occurred_at=occurred_at,
-                error="Érvénytelen dátum vagy időpont.",
+                error=translate("error.invalid_datetime"),
             )
 
         event.notes = notes or None
@@ -2447,7 +2446,7 @@ def edit_event(event_id):
                     symptom_types=[],
                     body_parts=[],
                     selected_body_part_ids=[],
-                    error="Érvénytelen étel / ital.",
+                    error=translate("error.invalid_food"),
                 )
 
             event.food_event.food = food
@@ -2512,7 +2511,7 @@ def edit_event(event_id):
                     selected_body_part_ids=(
                         selected_body_part_ids
                     ),
-                    error="Érvénytelen tünettípus.",
+                    error=translate("error.invalid_symptom_type"),
                 )
 
             if (
@@ -2547,9 +2546,8 @@ def edit_event(event_id):
                     selected_body_part_ids=(
                         selected_body_part_ids
                     ),
-                    error=(
-                        "Az erősség 0 és 10 közötti "
-                        "érték legyen."
+                    error=translate(
+                        "error.severity"
                     ),
                 )
 
@@ -2588,8 +2586,8 @@ def edit_event(event_id):
                         selected_body_part_ids=(
                             selected_body_part_ids
                         ),
-                        error=(
-                            "Érvénytelen megszűnési időpont."
+                        error=translate(
+                            "error.invalid_end_time"
                         ),
                     )
 
@@ -2621,9 +2619,8 @@ def edit_event(event_id):
                         selected_body_part_ids=(
                             selected_body_part_ids
                         ),
-                        error=(
-                            "A megszűnés ideje nem lehet "
-                            "korábbi a tünet kezdeténél."
+                        error=translate(
+                            "error.end_before_start"
                         ),
                     )
 
@@ -2921,7 +2918,7 @@ def new_food():
                 ),
                 form=request.form,
                 return_to=return_to,
-                error="Az étel neve kötelező.",
+                error=translate("error.food_name_required"),
             )
 
         duplicate_query = Food.query.filter(
@@ -2957,9 +2954,8 @@ def new_food():
                 ),
                 form=request.form,
                 return_to=return_to,
-                error=(
-                    "Ez az étel már szerepel a listában. "
-                    "Válaszd ki a meglévő ételt."
+                error=translate(
+                    "error.food_duplicate"
                 ),
             )
 
@@ -3190,7 +3186,7 @@ def edit_food(food_id):
                 selected_ingredient_ids=(
                     selected_ingredient_ids
                 ),
-                error="Az étel neve kötelező.",
+                error=translate("error.food_name_required"),
             )
 
         food.name = name
@@ -3486,7 +3482,7 @@ def log_food(food_id):
                 food=food,
                 local_now="",
                 form=request.form,
-                error="Az időpont kötelező.",
+                error=translate("error.datetime_required_short"),
             )
 
         try:
@@ -3502,7 +3498,7 @@ def log_food(food_id):
                 food=food,
                 local_now=occurred_at,
                 form=request.form,
-                error="Érvénytelen dátum vagy időpont.",
+                error=translate("error.invalid_datetime"),
             )
 
         event = Event(
@@ -3599,7 +3595,7 @@ def add_symptom():
                 body_parts=body_parts,
                 form=request.form,
                 selected_body_part_ids=selected_body_part_ids,
-                error="Az időpont és a tünettípus kötelező.",
+                error=translate("error.datetime_symptom_required"),
             )
 
         if severity is None or severity < 0 or severity > 10:
@@ -3609,7 +3605,7 @@ def add_symptom():
                 body_parts=body_parts,
                 form=request.form,
                 selected_body_part_ids=selected_body_part_ids,
-                error="Az erősség 0 és 10 közötti érték legyen.",
+                error=translate("error.severity"),
             )
 
         symptom_type = db.session.get(
@@ -3624,7 +3620,7 @@ def add_symptom():
                 body_parts=body_parts,
                 form=request.form,
                 selected_body_part_ids=selected_body_part_ids,
-                error="Érvénytelen tünettípus.",
+                error=translate("error.invalid_symptom_type"),
             )
 
         try:
@@ -3649,10 +3645,8 @@ def add_symptom():
                 body_parts=body_parts,
                 form=request.form,
                 selected_body_part_ids=selected_body_part_ids,
-                error=(
-                    "Érvénytelen dátum vagy időpont, "
-                    "illetve a megszűnés nem lehet "
-                    "korábbi a kezdetnél."
+                error=translate(
+                    "error.invalid_symptom_interval"
                 ),
             )
 

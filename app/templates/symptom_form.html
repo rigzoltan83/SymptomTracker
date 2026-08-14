@@ -8,7 +8,7 @@
         content="width=device-width, initial-scale=1"
     >
 
-    <title>Tünet rögzítése</title>
+    <title>{{ t("symptom.new_title") }}</title>
 
     <link
         rel="stylesheet"
@@ -24,8 +24,8 @@
 <main class="container">
 
     <header class="header">
-        <h1>🔴 Tünet</h1>
-        <p>Új tünet rögzítése</p>
+        <h1>🔴 {{ t("event.symptom") }}</h1>
+        <p>{{ t("symptom.new") }}</p>
     </header>
 
 
@@ -47,7 +47,7 @@
 
             <label class="form-field">
 
-                <span>Dátum és idő</span>
+                <span>{{ t("common.date_time") }}</span>
 
                 <input
                     type="datetime-local"
@@ -65,7 +65,7 @@
 
 <label class="form-field">
 
-    <span>Megszűnés ideje</span>
+    <span>{{ t("symptom.end_time") }}</span>
 
     <input
         type="datetime-local"
@@ -74,14 +74,14 @@
     >
 
     <small class="field-help">
-        Hagyd üresen, ha a tünet még tart.
+        {{ t("symptom.end_hint") }}
     </small>
 
 </label>
 
             <label class="form-field">
 
-                <span>Tünet típusa</span>
+                <span>{{ t("symptom.type") }}</span>
 
                 <select
                     name="symptom_type_id"
@@ -89,7 +89,7 @@
                 >
 
                     <option value="">
-                        Válassz...
+                        {{ t("symptom.choose") }}
                     </option>
 
                     {% for symptom_type in symptom_types %}
@@ -117,7 +117,7 @@
             <label class="form-field">
 
                 <span>
-                    Erősség:
+                    {{ t("symptom.severity") }}
                     <strong id="severity-value">
                         {{
                             form.get(
@@ -149,7 +149,7 @@
 
             <div class="form-field">
 
-                <span>Testrész(ek)</span>
+                <span>{{ t("symptom.body_parts") }}</span>
 
                 <div class="body-part-grid">
 
@@ -184,11 +184,11 @@
 
             <div class="form-field">
 
-                <span>Fénykép</span>
+                <span>{{ t("symptom.photo") }}</span>
 
                 <label class="camera-button">
 
-                    📷 Fotó készítése
+                    📷 {{ t("common.photo_take") }}
 
                     <input
                         class="image-input"
@@ -202,7 +202,7 @@
 
                 <label class="gallery-button">
 
-                    🖼️ Kép kiválasztása
+                    🖼️ {{ t("common.image_select") }}
 
                     <input
                         class="image-input"
@@ -220,7 +220,7 @@
 ></div>
 
                 <small class="field-help">
-                    Több képet is csatolhatsz.
+                    {{ t("symptom.multi_images") }}
                 </small>
 
             </div>
@@ -228,12 +228,12 @@
 
             <label class="form-field">
 
-                <span>Megjegyzés</span>
+                <span>{{ t("common.notes") }}</span>
 
                 <textarea
                     name="notes"
                     rows="3"
-                    placeholder="Opcionális..."
+                    placeholder="{{ t('common.optional_dots') }}"
                 >{{ form.get('notes', '') }}</textarea>
 
             </label>
@@ -243,7 +243,7 @@
                 class="primary-button"
                 type="submit"
             >
-                Tünet mentése
+                {{ t("symptom.save") }}
             </button>
 
         </form>
@@ -257,7 +257,7 @@
             class="home-button"
             href="/symptomtracker/"
         >
-            ← Mégse
+            ← {{ t("common.cancel") }}
         </a>
 
     </nav>
@@ -318,7 +318,7 @@ function addImagePreview(file) {
                 reader.result;
 
             image.alt =
-                "Kiválasztott kép";
+                "{{ t('common.selected_image') }}";
 
             wrapper.appendChild(
                 image

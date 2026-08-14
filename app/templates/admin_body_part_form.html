@@ -8,7 +8,7 @@
         content="width=device-width, initial-scale=1"
     >
 
-    <title>Testrész</title>
+    <title>{{ t("body_part.single") }}</title>
 
     <link
         rel="stylesheet"
@@ -27,7 +27,7 @@
 
         {% if body_part %}
 
-            <h1>🧍 Testrész</h1>
+            <h1>🧍 {{ t("body_part.single") }}</h1>
 
             <p>
 {{ body_part_display_name }}
@@ -35,7 +35,7 @@
 
         {% else %}
 
-            <h1>🧍 Új testrész</h1>
+            <h1>🧍 {{ t("body_part.new") }}</h1>
 
         {% endif %}
 
@@ -57,7 +57,7 @@
 
             <label class="form-field">
 
-                <span>Név *</span>
+                <span>{{ t("common.name") }} *</span>
 
                 <input
                     type="text"
@@ -80,7 +80,7 @@ body_part_display_name
                 class="primary-button"
                 type="submit"
             >
-                Mentés
+                {{ t("common.save") }}
             </button>
 
         </form>
@@ -103,9 +103,9 @@ body_part_display_name
                 >
 
                     {% if body_part.active %}
-                        ⛔ Inaktiválás
+                        ⛔ {{ t("common.deactivate") }}
                     {% else %}
-                        ✅ Aktiválás
+                        ✅ {{ t("common.activate") }}
                     {% endif %}
 
                 </button>
@@ -123,7 +123,7 @@ body_part_display_name
             class="home-button"
             href="/symptomtracker/admin/body-parts"
         >
-            ← Testrészek
+            ← {{ t("body_part.title") }}
         </a>
 
     </nav>
