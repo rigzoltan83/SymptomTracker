@@ -2,6 +2,28 @@
 
 All notable changes to SymptomTracker will be documented in this file.
 
+## [0.1.0-alpha.4] - 2026-08-14
+
+Fourth public alpha release.
+
+### Fixed
+
+- Applied `/opt/symptomtracker` ownership and permissions after the
+  release files are copied into place.
+- Prevented archive metadata from restoring the source directory
+  ownership on the installed application root.
+
+### Validation
+
+- Installer and helper scripts pass Bash syntax validation.
+- Main installer scripts pass ShellCheck validation.
+- Clean-install permission handling was reviewed after the alpha.3
+  installation test.
+
+### Status
+
+This is an alpha release intended for clean-install testing.
+
 ## [0.1.0-alpha.3] - 2026-08-14
 
 Third public alpha release.
