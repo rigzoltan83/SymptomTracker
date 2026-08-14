@@ -2,6 +2,29 @@
 
 All notable changes to SymptomTracker will be documented in this file.
 
+## [0.1.0-alpha.3] - 2026-08-14
+
+Third public alpha release.
+
+### Fixed
+
+- Fixed virtualenv permissions so the SymptomTracker systemd service
+  user can execute Gunicorn and access the Python environment.
+- Restored the normal file-creation mask after generating the private
+  `.env` file.
+- Hardened `/opt/symptomtracker` ownership and permissions during
+  installation.
+
+### Validation
+
+- Installer and helper scripts pass Bash syntax validation.
+- Main installer scripts pass ShellCheck validation.
+- Installation directory and runtime permission handling were audited.
+
+### Status
+
+This is an alpha release intended for clean-install testing.
+
 ## [0.1.0-alpha.2] - 2026-08-14
 
 Second public alpha release.
