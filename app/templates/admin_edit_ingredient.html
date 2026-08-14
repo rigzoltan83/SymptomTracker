@@ -27,7 +27,7 @@
         <h1>🥕 Összetevő</h1>
 
         <p>
-            {{ ingredient.name }}
+{{ ingredient_display_name }}
         </p>
     </header>
 
@@ -52,7 +52,7 @@
                 <input
                     type="text"
                     name="name"
-                    value="{{ ingredient.name }}"
+value="{{ ingredient_display_name }}"
                     required
                 >
 

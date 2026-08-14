@@ -30,7 +30,7 @@
             <h1>🔴 Tünettípus</h1>
 
             <p>
-                {{ symptom_type.name }}
+{{ symptom_type_display_name }}
             </p>
 
         {% else %}
@@ -65,7 +65,7 @@
                     value="{{
                         form.get(
                             'name',
-                            symptom_type.name
+symptom_type_display_name
                             if symptom_type
                             else ''
                         )

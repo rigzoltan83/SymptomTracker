@@ -30,7 +30,7 @@
             <h1>🧍 Testrész</h1>
 
             <p>
-                {{ body_part.name }}
+{{ body_part_display_name }}
             </p>
 
         {% else %}
@@ -65,7 +65,7 @@
                     value="{{
                         form.get(
                             'name',
-                            body_part.name
+body_part_display_name
                             if body_part
                             else ''
                         )

@@ -30,7 +30,7 @@
             <h1>⚠️ Rizikófaktor</h1>
 
             <p>
-                {{ risk_component.name }}
+{{ risk_component_display_name }}
             </p>
 
         {% else %}
@@ -65,7 +65,7 @@
                     value="{{
                         form.get(
                             'name',
-                            risk_component.name
+risk_component_display_name
                             if risk_component
                             else ''
                         )
@@ -159,9 +159,9 @@
                 >{{
                     form.get(
                         'description',
-                        risk_component.description
+risk_component_display_description
                         if risk_component
-                        and risk_component.description
+and risk_component_display_description
                         else ''
                     )
                 }}</textarea>

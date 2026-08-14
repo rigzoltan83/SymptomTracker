@@ -52,6 +52,15 @@ from app.i18n import (
 )
 
 
+from app.reference_i18n import (
+    create_reference_translations,
+    find_reference_by_name,
+    get_reference_description,
+    get_reference_name,
+    update_current_reference_translation,
+)
+
+
 @main.get("/language/<language_code>")
 def change_language(language_code):
     if language_code not in SUPPORTED_LANGUAGES:
@@ -938,14 +947,9 @@ def admin_new_body_part():
                 error="A név kötelező.",
             )
 
-        duplicate = (
-            BodyPart.query
-            .filter(
-                db.func.lower(
-                    BodyPart.name
-                ) == name.lower()
-            )
-            .first()
+        duplicate = find_reference_by_name(
+            BodyPart,
+            name,
         )
 
         if duplicate is not None:
@@ -964,6 +968,13 @@ def admin_new_body_part():
         )
 
         db.session.add(body_part)
+        db.session.flush()
+
+        create_reference_translations(
+            body_part,
+            name=body_part.name,
+        )
+
         db.session.commit()
 
         return redirect(
@@ -1002,34 +1013,36 @@ def admin_edit_body_part(
             return render_template(
                 "admin_body_part_form.html",
                 body_part=body_part,
+                body_part_display_name=(
+                    get_reference_name(body_part)
+                ),
                 form=request.form,
                 error="A név kötelező.",
             )
 
-        duplicate = (
-            BodyPart.query
-            .filter(
-                db.func.lower(
-                    BodyPart.name
-                ) == name.lower()
-            )
-            .filter(
-                BodyPart.id != body_part.id
-            )
-            .first()
+        duplicate = find_reference_by_name(
+            BodyPart,
+            name,
+            exclude_id=body_part.id,
         )
 
         if duplicate is not None:
             return render_template(
                 "admin_body_part_form.html",
                 body_part=body_part,
+                body_part_display_name=(
+                    get_reference_name(body_part)
+                ),
                 form=request.form,
                 error=(
                     "Már létezik ilyen testrész."
                 ),
             )
 
-        body_part.name = name
+        update_current_reference_translation(
+            body_part,
+            name=name,
+        )
 
         db.session.commit()
 
@@ -1042,6 +1055,9 @@ def admin_edit_body_part(
     return render_template(
         "admin_body_part_form.html",
         body_part=body_part,
+        body_part_display_name=(
+            get_reference_name(body_part)
+        ),
         form={},
         error=None,
     )
@@ -1093,14 +1109,9 @@ def admin_new_symptom_type():
                 error="A név kötelező.",
             )
 
-        duplicate = (
-            SymptomType.query
-            .filter(
-                db.func.lower(
-                    SymptomType.name
-                ) == name.lower()
-            )
-            .first()
+        duplicate = find_reference_by_name(
+            SymptomType,
+            name,
         )
 
         if duplicate is not None:
@@ -1119,6 +1130,13 @@ def admin_new_symptom_type():
         )
 
         db.session.add(symptom_type)
+        db.session.flush()
+
+        create_reference_translations(
+            symptom_type,
+            name=symptom_type.name,
+        )
+
         db.session.commit()
 
         return redirect(
@@ -1157,35 +1175,36 @@ def admin_edit_symptom_type(
             return render_template(
                 "admin_symptom_type_form.html",
                 symptom_type=symptom_type,
+                symptom_type_display_name=(
+                    get_reference_name(symptom_type)
+                ),
                 form=request.form,
                 error="A név kötelező.",
             )
 
-        duplicate = (
-            SymptomType.query
-            .filter(
-                db.func.lower(
-                    SymptomType.name
-                ) == name.lower()
-            )
-            .filter(
-                SymptomType.id
-                != symptom_type.id
-            )
-            .first()
+        duplicate = find_reference_by_name(
+            SymptomType,
+            name,
+            exclude_id=symptom_type.id,
         )
 
         if duplicate is not None:
             return render_template(
                 "admin_symptom_type_form.html",
                 symptom_type=symptom_type,
+                symptom_type_display_name=(
+                    get_reference_name(symptom_type)
+                ),
                 form=request.form,
                 error=(
                     "Már létezik ilyen tünettípus."
                 ),
             )
 
-        symptom_type.name = name
+        update_current_reference_translation(
+            symptom_type,
+            name=name,
+        )
 
         db.session.commit()
 
@@ -1198,6 +1217,9 @@ def admin_edit_symptom_type(
     return render_template(
         "admin_symptom_type_form.html",
         symptom_type=symptom_type,
+        symptom_type_display_name=(
+            get_reference_name(symptom_type)
+        ),
         form={},
         error=None,
     )
@@ -1507,14 +1529,9 @@ def admin_new_risk_component():
                 ),
             )
 
-        duplicate = (
-            RiskComponent.query
-            .filter(
-                db.func.lower(
-                    RiskComponent.name
-                ) == name.lower()
-            )
-            .first()
+        duplicate = find_reference_by_name(
+            RiskComponent,
+            name,
         )
 
         if duplicate is not None:
@@ -1536,6 +1553,14 @@ def admin_new_risk_component():
         )
 
         db.session.add(risk_component)
+        db.session.flush()
+
+        create_reference_translations(
+            risk_component,
+            name=risk_component.name,
+            description=risk_component.description,
+        )
+
         db.session.commit()
 
         return redirect(
@@ -1584,30 +1609,42 @@ def admin_edit_risk_component(
             return render_template(
                 "admin_risk_component_form.html",
                 risk_component=risk_component,
+                risk_component_display_name=(
+                    get_reference_name(
+                        risk_component
+                    )
+                ),
+                risk_component_display_description=(
+                    get_reference_description(
+                        risk_component
+                    )
+                ),
                 form=request.form,
                 error=(
                     "A név és a kategória kötelező."
                 ),
             )
 
-        duplicate = (
-            RiskComponent.query
-            .filter(
-                db.func.lower(
-                    RiskComponent.name
-                ) == name.lower()
-            )
-            .filter(
-                RiskComponent.id
-                != risk_component.id
-            )
-            .first()
+        duplicate = find_reference_by_name(
+            RiskComponent,
+            name,
+            exclude_id=risk_component.id,
         )
 
         if duplicate is not None:
             return render_template(
                 "admin_risk_component_form.html",
                 risk_component=risk_component,
+                risk_component_display_name=(
+                    get_reference_name(
+                        risk_component
+                    )
+                ),
+                risk_component_display_description=(
+                    get_reference_description(
+                        risk_component
+                    )
+                ),
                 form=request.form,
                 error=(
                     "Már létezik ilyen nevű "
@@ -1615,11 +1652,13 @@ def admin_edit_risk_component(
                 ),
             )
 
-        risk_component.name = name
-        risk_component.category = category
-        risk_component.description = (
-            description or None
+        update_current_reference_translation(
+            risk_component,
+            name=name,
+            description=description or None,
         )
+
+        risk_component.category = category
 
         db.session.commit()
 
@@ -1632,6 +1671,16 @@ def admin_edit_risk_component(
     return render_template(
         "admin_risk_component_form.html",
         risk_component=risk_component,
+        risk_component_display_name=(
+            get_reference_name(
+                risk_component
+            )
+        ),
+        risk_component_display_description=(
+            get_reference_description(
+                risk_component
+            )
+        ),
         form={},
         error=None,
     )
@@ -1744,28 +1793,27 @@ def admin_edit_ingredient(ingredient_id):
             return render_template(
                 "admin_edit_ingredient.html",
                 ingredient=ingredient,
+                ingredient_display_name=(
+                    get_reference_name(ingredient)
+                ),
                 risk_components=risk_components,
                 selected_risks={},
                 error="Az összetevő neve kötelező.",
             )
 
-        duplicate = (
-            Ingredient.query
-            .filter(
-                db.func.lower(
-                    Ingredient.name
-                ) == name.lower()
-            )
-            .filter(
-                Ingredient.id != ingredient.id
-            )
-            .first()
+        duplicate = find_reference_by_name(
+            Ingredient,
+            name,
+            exclude_id=ingredient.id,
         )
 
         if duplicate is not None:
             return render_template(
                 "admin_edit_ingredient.html",
                 ingredient=ingredient,
+                ingredient_display_name=(
+                    get_reference_name(ingredient)
+                ),
                 risk_components=risk_components,
                 selected_risks={
                     item.risk_component_id:
@@ -1778,7 +1826,10 @@ def admin_edit_ingredient(ingredient_id):
                 ),
             )
 
-        ingredient.name = name
+        update_current_reference_translation(
+            ingredient,
+            name=name,
+        )
 
         selected_ids = set(
             request.form.getlist(
@@ -1863,6 +1914,9 @@ def admin_edit_ingredient(ingredient_id):
     return render_template(
         "admin_edit_ingredient.html",
         ingredient=ingredient,
+        ingredient_display_name=(
+            get_reference_name(ingredient)
+        ),
         risk_components=risk_components,
         selected_risks=selected_risks,
         error=None,
@@ -2892,14 +2946,9 @@ def new_food():
                 normalized_name
             )
 
-            ingredient = (
-                Ingredient.query
-                .filter(
-                    db.func.lower(
-                        Ingredient.name
-                    ) == normalized_name
-                )
-                .first()
+            ingredient = find_reference_by_name(
+                Ingredient,
+                ingredient_name,
             )
 
             if ingredient is None:
@@ -2909,6 +2958,11 @@ def new_food():
 
                 db.session.add(ingredient)
                 db.session.flush()
+
+                create_reference_translations(
+                    ingredient,
+                    name=ingredient.name,
+                )
 
             if ingredient.id in used_ingredient_ids:
                 continue
@@ -3122,14 +3176,9 @@ def edit_food(food_id):
                 normalized_name
             )
 
-            ingredient = (
-                Ingredient.query
-                .filter(
-                    db.func.lower(
-                        Ingredient.name
-                    ) == normalized_name
-                )
-                .first()
+            ingredient = find_reference_by_name(
+                Ingredient,
+                ingredient_name,
             )
 
             if ingredient is None:
@@ -3139,6 +3188,11 @@ def edit_food(food_id):
 
                 db.session.add(ingredient)
                 db.session.flush()
+
+                create_reference_translations(
+                    ingredient,
+                    name=ingredient.name,
+                )
 
             if ingredient.id in used_ingredient_ids:
                 continue
