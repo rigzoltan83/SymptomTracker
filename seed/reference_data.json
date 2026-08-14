@@ -1,0 +1,4497 @@
+{
+  "format_version": 1,
+  "ingredients": [
+    {
+      "base_name": "liszt",
+      "translations": {
+        "en": {
+          "name": "flour"
+        },
+        "hu": {
+          "name": "liszt"
+        }
+      }
+    },
+    {
+      "base_name": "paradicsom",
+      "translations": {
+        "en": {
+          "name": "tomato"
+        },
+        "hu": {
+          "name": "paradicsom"
+        }
+      }
+    },
+    {
+      "base_name": "sonka",
+      "translations": {
+        "en": {
+          "name": "ham"
+        },
+        "hu": {
+          "name": "sonka"
+        }
+      }
+    },
+    {
+      "base_name": "sajt",
+      "translations": {
+        "en": {
+          "name": "cheese"
+        },
+        "hu": {
+          "name": "sajt"
+        }
+      }
+    },
+    {
+      "base_name": "tej",
+      "translations": {
+        "en": {
+          "name": "milk"
+        },
+        "hu": {
+          "name": "tej"
+        }
+      }
+    },
+    {
+      "base_name": "kávé",
+      "translations": {
+        "en": {
+          "name": "coffee"
+        },
+        "hu": {
+          "name": "kávé"
+        }
+      }
+    },
+    {
+      "base_name": "fahéj",
+      "translations": {
+        "en": {
+          "name": "cinnamon"
+        },
+        "hu": {
+          "name": "fahéj"
+        }
+      }
+    },
+    {
+      "base_name": "Tojás",
+      "translations": {
+        "en": {
+          "name": "egg"
+        },
+        "hu": {
+          "name": "Tojás"
+        }
+      }
+    },
+    {
+      "base_name": "cukor",
+      "translations": {
+        "en": {
+          "name": "sugar"
+        },
+        "hu": {
+          "name": "cukor"
+        }
+      }
+    },
+    {
+      "base_name": "Élesztő",
+      "translations": {
+        "en": {
+          "name": "yeast"
+        },
+        "hu": {
+          "name": "Élesztő"
+        }
+      }
+    },
+    {
+      "base_name": "búza",
+      "translations": {
+        "en": {
+          "name": "wheat"
+        },
+        "hu": {
+          "name": "búza"
+        }
+      }
+    },
+    {
+      "base_name": "búzaliszt",
+      "translations": {
+        "en": {
+          "name": "wheat flour"
+        },
+        "hu": {
+          "name": "búzaliszt"
+        }
+      }
+    },
+    {
+      "base_name": "finomliszt",
+      "translations": {
+        "en": {
+          "name": "refined wheat flour"
+        },
+        "hu": {
+          "name": "finomliszt"
+        }
+      }
+    },
+    {
+      "base_name": "teljes kiőrlésű búzaliszt",
+      "translations": {
+        "en": {
+          "name": "whole wheat flour"
+        },
+        "hu": {
+          "name": "teljes kiőrlésű búzaliszt"
+        }
+      }
+    },
+    {
+      "base_name": "durum",
+      "translations": {
+        "en": {
+          "name": "durum wheat"
+        },
+        "hu": {
+          "name": "durum"
+        }
+      }
+    },
+    {
+      "base_name": "durumliszt",
+      "translations": {
+        "en": {
+          "name": "durum flour"
+        },
+        "hu": {
+          "name": "durumliszt"
+        }
+      }
+    },
+    {
+      "base_name": "búzadara",
+      "translations": {
+        "en": {
+          "name": "semolina"
+        },
+        "hu": {
+          "name": "búzadara"
+        }
+      }
+    },
+    {
+      "base_name": "gríz",
+      "translations": {
+        "en": {
+          "name": "semolina"
+        },
+        "hu": {
+          "name": "gríz"
+        }
+      }
+    },
+    {
+      "base_name": "kuszkusz",
+      "translations": {
+        "en": {
+          "name": "couscous"
+        },
+        "hu": {
+          "name": "kuszkusz"
+        }
+      }
+    },
+    {
+      "base_name": "bulgur",
+      "translations": {
+        "en": {
+          "name": "bulgur"
+        },
+        "hu": {
+          "name": "bulgur"
+        }
+      }
+    },
+    {
+      "base_name": "tönkölybúza",
+      "translations": {
+        "en": {
+          "name": "spelt"
+        },
+        "hu": {
+          "name": "tönkölybúza"
+        }
+      }
+    },
+    {
+      "base_name": "tönkölyliszt",
+      "translations": {
+        "en": {
+          "name": "spelt flour"
+        },
+        "hu": {
+          "name": "tönkölyliszt"
+        }
+      }
+    },
+    {
+      "base_name": "rozs",
+      "translations": {
+        "en": {
+          "name": "rye"
+        },
+        "hu": {
+          "name": "rozs"
+        }
+      }
+    },
+    {
+      "base_name": "rozsliszt",
+      "translations": {
+        "en": {
+          "name": "rye flour"
+        },
+        "hu": {
+          "name": "rozsliszt"
+        }
+      }
+    },
+    {
+      "base_name": "árpa",
+      "translations": {
+        "en": {
+          "name": "barley"
+        },
+        "hu": {
+          "name": "árpa"
+        }
+      }
+    },
+    {
+      "base_name": "zab",
+      "translations": {
+        "en": {
+          "name": "oats"
+        },
+        "hu": {
+          "name": "zab"
+        }
+      }
+    },
+    {
+      "base_name": "zabpehely",
+      "translations": {
+        "en": {
+          "name": "oat flakes"
+        },
+        "hu": {
+          "name": "zabpehely"
+        }
+      }
+    },
+    {
+      "base_name": "búzakenyér",
+      "translations": {
+        "en": {
+          "name": "wheat bread"
+        },
+        "hu": {
+          "name": "búzakenyér"
+        }
+      }
+    },
+    {
+      "base_name": "teljes kiőrlésű kenyér",
+      "translations": {
+        "en": {
+          "name": "whole grain bread"
+        },
+        "hu": {
+          "name": "teljes kiőrlésű kenyér"
+        }
+      }
+    },
+    {
+      "base_name": "rozskenyér",
+      "translations": {
+        "en": {
+          "name": "rye bread"
+        },
+        "hu": {
+          "name": "rozskenyér"
+        }
+      }
+    },
+    {
+      "base_name": "búzatészta",
+      "translations": {
+        "en": {
+          "name": "wheat pasta"
+        },
+        "hu": {
+          "name": "búzatészta"
+        }
+      }
+    },
+    {
+      "base_name": "durumtészta",
+      "translations": {
+        "en": {
+          "name": "durum wheat pasta"
+        },
+        "hu": {
+          "name": "durumtészta"
+        }
+      }
+    },
+    {
+      "base_name": "tehéntej",
+      "translations": {
+        "en": {
+          "name": "cow's milk"
+        },
+        "hu": {
+          "name": "tehéntej"
+        }
+      }
+    },
+    {
+      "base_name": "kecsketej",
+      "translations": {
+        "en": {
+          "name": "goat's milk"
+        },
+        "hu": {
+          "name": "kecsketej"
+        }
+      }
+    },
+    {
+      "base_name": "juhtej",
+      "translations": {
+        "en": {
+          "name": "sheep's milk"
+        },
+        "hu": {
+          "name": "juhtej"
+        }
+      }
+    },
+    {
+      "base_name": "tejpor",
+      "translations": {
+        "en": {
+          "name": "milk powder"
+        },
+        "hu": {
+          "name": "tejpor"
+        }
+      }
+    },
+    {
+      "base_name": "sovány tejpor",
+      "translations": {
+        "en": {
+          "name": "skimmed milk powder"
+        },
+        "hu": {
+          "name": "sovány tejpor"
+        }
+      }
+    },
+    {
+      "base_name": "sűrített tej",
+      "translations": {
+        "en": {
+          "name": "condensed milk"
+        },
+        "hu": {
+          "name": "sűrített tej"
+        }
+      }
+    },
+    {
+      "base_name": "tejszín",
+      "translations": {
+        "en": {
+          "name": "cream"
+        },
+        "hu": {
+          "name": "tejszín"
+        }
+      }
+    },
+    {
+      "base_name": "főzőtejszín",
+      "translations": {
+        "en": {
+          "name": "cooking cream"
+        },
+        "hu": {
+          "name": "főzőtejszín"
+        }
+      }
+    },
+    {
+      "base_name": "joghurt",
+      "translations": {
+        "en": {
+          "name": "yogurt"
+        },
+        "hu": {
+          "name": "joghurt"
+        }
+      }
+    },
+    {
+      "base_name": "görög joghurt",
+      "translations": {
+        "en": {
+          "name": "Greek yogurt"
+        },
+        "hu": {
+          "name": "görög joghurt"
+        }
+      }
+    },
+    {
+      "base_name": "kefir",
+      "translations": {
+        "en": {
+          "name": "kefir"
+        },
+        "hu": {
+          "name": "kefir"
+        }
+      }
+    },
+    {
+      "base_name": "túró",
+      "translations": {
+        "en": {
+          "name": "curd cheese"
+        },
+        "hu": {
+          "name": "túró"
+        }
+      }
+    },
+    {
+      "base_name": "krémsajt",
+      "translations": {
+        "en": {
+          "name": "cream cheese"
+        },
+        "hu": {
+          "name": "krémsajt"
+        }
+      }
+    },
+    {
+      "base_name": "mascarpone",
+      "translations": {
+        "en": {
+          "name": "mascarpone"
+        },
+        "hu": {
+          "name": "mascarpone"
+        }
+      }
+    },
+    {
+      "base_name": "mozzarella",
+      "translations": {
+        "en": {
+          "name": "mozzarella"
+        },
+        "hu": {
+          "name": "mozzarella"
+        }
+      }
+    },
+    {
+      "base_name": "feta",
+      "translations": {
+        "en": {
+          "name": "feta"
+        },
+        "hu": {
+          "name": "feta"
+        }
+      }
+    },
+    {
+      "base_name": "parmezán",
+      "translations": {
+        "en": {
+          "name": "Parmesan"
+        },
+        "hu": {
+          "name": "parmezán"
+        }
+      }
+    },
+    {
+      "base_name": "tejsavó",
+      "translations": {
+        "en": {
+          "name": "whey"
+        },
+        "hu": {
+          "name": "tejsavó"
+        }
+      }
+    },
+    {
+      "base_name": "tejsavópor",
+      "translations": {
+        "en": {
+          "name": "whey powder"
+        },
+        "hu": {
+          "name": "tejsavópor"
+        }
+      }
+    },
+    {
+      "base_name": "fagylalt",
+      "translations": {
+        "en": {
+          "name": "ice cream"
+        },
+        "hu": {
+          "name": "fagylalt"
+        }
+      }
+    },
+    {
+      "base_name": "vaj",
+      "translations": {
+        "en": {
+          "name": "butter"
+        },
+        "hu": {
+          "name": "vaj"
+        }
+      }
+    },
+    {
+      "base_name": "tojásfehérje",
+      "translations": {
+        "en": {
+          "name": "egg white"
+        },
+        "hu": {
+          "name": "tojásfehérje"
+        }
+      }
+    },
+    {
+      "base_name": "tojássárgája",
+      "translations": {
+        "en": {
+          "name": "egg yolk"
+        },
+        "hu": {
+          "name": "tojássárgája"
+        }
+      }
+    },
+    {
+      "base_name": "tojáspor",
+      "translations": {
+        "en": {
+          "name": "egg powder"
+        },
+        "hu": {
+          "name": "tojáspor"
+        }
+      }
+    },
+    {
+      "base_name": "majonéz",
+      "translations": {
+        "en": {
+          "name": "mayonnaise"
+        },
+        "hu": {
+          "name": "majonéz"
+        }
+      }
+    },
+    {
+      "base_name": "szója",
+      "translations": {
+        "en": {
+          "name": "soy"
+        },
+        "hu": {
+          "name": "szója"
+        }
+      }
+    },
+    {
+      "base_name": "szójabab",
+      "translations": {
+        "en": {
+          "name": "soybean"
+        },
+        "hu": {
+          "name": "szójabab"
+        }
+      }
+    },
+    {
+      "base_name": "szójaliszt",
+      "translations": {
+        "en": {
+          "name": "soy flour"
+        },
+        "hu": {
+          "name": "szójaliszt"
+        }
+      }
+    },
+    {
+      "base_name": "szójafehérje",
+      "translations": {
+        "en": {
+          "name": "soy protein"
+        },
+        "hu": {
+          "name": "szójafehérje"
+        }
+      }
+    },
+    {
+      "base_name": "tofu",
+      "translations": {
+        "en": {
+          "name": "tofu"
+        },
+        "hu": {
+          "name": "tofu"
+        }
+      }
+    },
+    {
+      "base_name": "szójaital",
+      "translations": {
+        "en": {
+          "name": "soy drink"
+        },
+        "hu": {
+          "name": "szójaital"
+        }
+      }
+    },
+    {
+      "base_name": "szójaszósz",
+      "translations": {
+        "en": {
+          "name": "soy sauce"
+        },
+        "hu": {
+          "name": "szójaszósz"
+        }
+      }
+    },
+    {
+      "base_name": "földimogyoró",
+      "translations": {
+        "en": {
+          "name": "peanut"
+        },
+        "hu": {
+          "name": "földimogyoró"
+        }
+      }
+    },
+    {
+      "base_name": "földimogyorókrém",
+      "translations": {
+        "en": {
+          "name": "peanut butter"
+        },
+        "hu": {
+          "name": "földimogyorókrém"
+        }
+      }
+    },
+    {
+      "base_name": "mandula",
+      "translations": {
+        "en": {
+          "name": "almond"
+        },
+        "hu": {
+          "name": "mandula"
+        }
+      }
+    },
+    {
+      "base_name": "mogyoró",
+      "translations": {
+        "en": {
+          "name": "hazelnut"
+        },
+        "hu": {
+          "name": "mogyoró"
+        }
+      }
+    },
+    {
+      "base_name": "dió",
+      "translations": {
+        "en": {
+          "name": "walnut"
+        },
+        "hu": {
+          "name": "dió"
+        }
+      }
+    },
+    {
+      "base_name": "kesudió",
+      "translations": {
+        "en": {
+          "name": "cashew"
+        },
+        "hu": {
+          "name": "kesudió"
+        }
+      }
+    },
+    {
+      "base_name": "pekándió",
+      "translations": {
+        "en": {
+          "name": "pecan"
+        },
+        "hu": {
+          "name": "pekándió"
+        }
+      }
+    },
+    {
+      "base_name": "brazil dió",
+      "translations": {
+        "en": {
+          "name": "Brazil nut"
+        },
+        "hu": {
+          "name": "brazil dió"
+        }
+      }
+    },
+    {
+      "base_name": "pisztácia",
+      "translations": {
+        "en": {
+          "name": "pistachio"
+        },
+        "hu": {
+          "name": "pisztácia"
+        }
+      }
+    },
+    {
+      "base_name": "makadámdió",
+      "translations": {
+        "en": {
+          "name": "macadamia nut"
+        },
+        "hu": {
+          "name": "makadámdió"
+        }
+      }
+    },
+    {
+      "base_name": "vegyes diófélék",
+      "translations": {
+        "en": {
+          "name": "mixed nuts"
+        },
+        "hu": {
+          "name": "vegyes diófélék"
+        }
+      }
+    },
+    {
+      "base_name": "szezámmag",
+      "translations": {
+        "en": {
+          "name": "sesame seed"
+        },
+        "hu": {
+          "name": "szezámmag"
+        }
+      }
+    },
+    {
+      "base_name": "tahini",
+      "translations": {
+        "en": {
+          "name": "tahini"
+        },
+        "hu": {
+          "name": "tahini"
+        }
+      }
+    },
+    {
+      "base_name": "szezámolaj",
+      "translations": {
+        "en": {
+          "name": "sesame oil"
+        },
+        "hu": {
+          "name": "szezámolaj"
+        }
+      }
+    },
+    {
+      "base_name": "mustár",
+      "translations": {
+        "en": {
+          "name": "mustard"
+        },
+        "hu": {
+          "name": "mustár"
+        }
+      }
+    },
+    {
+      "base_name": "mustármag",
+      "translations": {
+        "en": {
+          "name": "mustard seed"
+        },
+        "hu": {
+          "name": "mustármag"
+        }
+      }
+    },
+    {
+      "base_name": "mustárpor",
+      "translations": {
+        "en": {
+          "name": "mustard powder"
+        },
+        "hu": {
+          "name": "mustárpor"
+        }
+      }
+    },
+    {
+      "base_name": "zeller",
+      "translations": {
+        "en": {
+          "name": "celery"
+        },
+        "hu": {
+          "name": "zeller"
+        }
+      }
+    },
+    {
+      "base_name": "zellergumó",
+      "translations": {
+        "en": {
+          "name": "celeriac"
+        },
+        "hu": {
+          "name": "zellergumó"
+        }
+      }
+    },
+    {
+      "base_name": "zellerszár",
+      "translations": {
+        "en": {
+          "name": "celery stalk"
+        },
+        "hu": {
+          "name": "zellerszár"
+        }
+      }
+    },
+    {
+      "base_name": "csillagfürt",
+      "translations": {
+        "en": {
+          "name": "lupin"
+        },
+        "hu": {
+          "name": "csillagfürt"
+        }
+      }
+    },
+    {
+      "base_name": "csillagfürtliszt",
+      "translations": {
+        "en": {
+          "name": "lupin flour"
+        },
+        "hu": {
+          "name": "csillagfürtliszt"
+        }
+      }
+    },
+    {
+      "base_name": "csicseriborsó",
+      "translations": {
+        "en": {
+          "name": "chickpea"
+        },
+        "hu": {
+          "name": "csicseriborsó"
+        }
+      }
+    },
+    {
+      "base_name": "csicseriborsóliszt",
+      "translations": {
+        "en": {
+          "name": "chickpea flour"
+        },
+        "hu": {
+          "name": "csicseriborsóliszt"
+        }
+      }
+    },
+    {
+      "base_name": "lencse",
+      "translations": {
+        "en": {
+          "name": "lentils"
+        },
+        "hu": {
+          "name": "lencse"
+        }
+      }
+    },
+    {
+      "base_name": "vöröslencse",
+      "translations": {
+        "en": {
+          "name": "red lentils"
+        },
+        "hu": {
+          "name": "vöröslencse"
+        }
+      }
+    },
+    {
+      "base_name": "bab",
+      "translations": {
+        "en": {
+          "name": "beans"
+        },
+        "hu": {
+          "name": "bab"
+        }
+      }
+    },
+    {
+      "base_name": "vörösbab",
+      "translations": {
+        "en": {
+          "name": "red kidney beans"
+        },
+        "hu": {
+          "name": "vörösbab"
+        }
+      }
+    },
+    {
+      "base_name": "fehérbab",
+      "translations": {
+        "en": {
+          "name": "white beans"
+        },
+        "hu": {
+          "name": "fehérbab"
+        }
+      }
+    },
+    {
+      "base_name": "tarkabab",
+      "translations": {
+        "en": {
+          "name": "pinto beans"
+        },
+        "hu": {
+          "name": "tarkabab"
+        }
+      }
+    },
+    {
+      "base_name": "sárgaborsó",
+      "translations": {
+        "en": {
+          "name": "yellow split peas"
+        },
+        "hu": {
+          "name": "sárgaborsó"
+        }
+      }
+    },
+    {
+      "base_name": "zöldborsó",
+      "translations": {
+        "en": {
+          "name": "green peas"
+        },
+        "hu": {
+          "name": "zöldborsó"
+        }
+      }
+    },
+    {
+      "base_name": "falafel",
+      "translations": {
+        "en": {
+          "name": "falafel"
+        },
+        "hu": {
+          "name": "falafel"
+        }
+      }
+    },
+    {
+      "base_name": "sült bab",
+      "translations": {
+        "en": {
+          "name": "baked beans"
+        },
+        "hu": {
+          "name": "sült bab"
+        }
+      }
+    },
+    {
+      "base_name": "hagyma",
+      "translations": {
+        "en": {
+          "name": "onion"
+        },
+        "hu": {
+          "name": "hagyma"
+        }
+      }
+    },
+    {
+      "base_name": "vöröshagyma",
+      "translations": {
+        "en": {
+          "name": "yellow onion"
+        },
+        "hu": {
+          "name": "vöröshagyma"
+        }
+      }
+    },
+    {
+      "base_name": "lilahagyma",
+      "translations": {
+        "en": {
+          "name": "red onion"
+        },
+        "hu": {
+          "name": "lilahagyma"
+        }
+      }
+    },
+    {
+      "base_name": "fokhagyma",
+      "translations": {
+        "en": {
+          "name": "garlic"
+        },
+        "hu": {
+          "name": "fokhagyma"
+        }
+      }
+    },
+    {
+      "base_name": "fokhagymapor",
+      "translations": {
+        "en": {
+          "name": "garlic powder"
+        },
+        "hu": {
+          "name": "fokhagymapor"
+        }
+      }
+    },
+    {
+      "base_name": "hagymapor",
+      "translations": {
+        "en": {
+          "name": "onion powder"
+        },
+        "hu": {
+          "name": "hagymapor"
+        }
+      }
+    },
+    {
+      "base_name": "póréhagyma",
+      "translations": {
+        "en": {
+          "name": "leek"
+        },
+        "hu": {
+          "name": "póréhagyma"
+        }
+      }
+    },
+    {
+      "base_name": "újhagyma fehér része",
+      "translations": {
+        "en": {
+          "name": "white part of spring onion"
+        },
+        "hu": {
+          "name": "újhagyma fehér része"
+        }
+      }
+    },
+    {
+      "base_name": "articsóka",
+      "translations": {
+        "en": {
+          "name": "artichoke"
+        },
+        "hu": {
+          "name": "articsóka"
+        }
+      }
+    },
+    {
+      "base_name": "csicsóka",
+      "translations": {
+        "en": {
+          "name": "Jerusalem artichoke"
+        },
+        "hu": {
+          "name": "csicsóka"
+        }
+      }
+    },
+    {
+      "base_name": "gomba",
+      "translations": {
+        "en": {
+          "name": "mushroom"
+        },
+        "hu": {
+          "name": "gomba"
+        }
+      }
+    },
+    {
+      "base_name": "csiperke",
+      "translations": {
+        "en": {
+          "name": "button mushroom"
+        },
+        "hu": {
+          "name": "csiperke"
+        }
+      }
+    },
+    {
+      "base_name": "alma",
+      "translations": {
+        "en": {
+          "name": "apple"
+        },
+        "hu": {
+          "name": "alma"
+        }
+      }
+    },
+    {
+      "base_name": "körte",
+      "translations": {
+        "en": {
+          "name": "pear"
+        },
+        "hu": {
+          "name": "körte"
+        }
+      }
+    },
+    {
+      "base_name": "nashi körte",
+      "translations": {
+        "en": {
+          "name": "nashi pear"
+        },
+        "hu": {
+          "name": "nashi körte"
+        }
+      }
+    },
+    {
+      "base_name": "mangó",
+      "translations": {
+        "en": {
+          "name": "mango"
+        },
+        "hu": {
+          "name": "mangó"
+        }
+      }
+    },
+    {
+      "base_name": "cseresznye",
+      "translations": {
+        "en": {
+          "name": "cherry"
+        },
+        "hu": {
+          "name": "cseresznye"
+        }
+      }
+    },
+    {
+      "base_name": "füge",
+      "translations": {
+        "en": {
+          "name": "fig"
+        },
+        "hu": {
+          "name": "füge"
+        }
+      }
+    },
+    {
+      "base_name": "görögdinnye",
+      "translations": {
+        "en": {
+          "name": "watermelon"
+        },
+        "hu": {
+          "name": "görögdinnye"
+        }
+      }
+    },
+    {
+      "base_name": "őszibarack",
+      "translations": {
+        "en": {
+          "name": "peach"
+        },
+        "hu": {
+          "name": "őszibarack"
+        }
+      }
+    },
+    {
+      "base_name": "szilva",
+      "translations": {
+        "en": {
+          "name": "plum"
+        },
+        "hu": {
+          "name": "szilva"
+        }
+      }
+    },
+    {
+      "base_name": "sárgabarack",
+      "translations": {
+        "en": {
+          "name": "apricot"
+        },
+        "hu": {
+          "name": "sárgabarack"
+        }
+      }
+    },
+    {
+      "base_name": "aszalt gyümölcs",
+      "translations": {
+        "en": {
+          "name": "dried fruit"
+        },
+        "hu": {
+          "name": "aszalt gyümölcs"
+        }
+      }
+    },
+    {
+      "base_name": "almalé",
+      "translations": {
+        "en": {
+          "name": "apple juice"
+        },
+        "hu": {
+          "name": "almalé"
+        }
+      }
+    },
+    {
+      "base_name": "körtelé",
+      "translations": {
+        "en": {
+          "name": "pear juice"
+        },
+        "hu": {
+          "name": "körtelé"
+        }
+      }
+    },
+    {
+      "base_name": "gyümölcslé-koncentrátum",
+      "translations": {
+        "en": {
+          "name": "fruit juice concentrate"
+        },
+        "hu": {
+          "name": "gyümölcslé-koncentrátum"
+        }
+      }
+    },
+    {
+      "base_name": "méz",
+      "translations": {
+        "en": {
+          "name": "honey"
+        },
+        "hu": {
+          "name": "méz"
+        }
+      }
+    },
+    {
+      "base_name": "inulin",
+      "translations": {
+        "en": {
+          "name": "inulin"
+        },
+        "hu": {
+          "name": "inulin"
+        }
+      }
+    },
+    {
+      "base_name": "FOS",
+      "translations": {
+        "en": {
+          "name": "FOS"
+        },
+        "hu": {
+          "name": "FOS"
+        }
+      }
+    },
+    {
+      "base_name": "frukto-oligoszacharid",
+      "translations": {
+        "en": {
+          "name": "fructo-oligosaccharide"
+        },
+        "hu": {
+          "name": "frukto-oligoszacharid"
+        }
+      }
+    },
+    {
+      "base_name": "GOS",
+      "translations": {
+        "en": {
+          "name": "GOS"
+        },
+        "hu": {
+          "name": "GOS"
+        }
+      }
+    },
+    {
+      "base_name": "galakto-oligoszacharid",
+      "translations": {
+        "en": {
+          "name": "galacto-oligosaccharide"
+        },
+        "hu": {
+          "name": "galakto-oligoszacharid"
+        }
+      }
+    },
+    {
+      "base_name": "fruktóz",
+      "translations": {
+        "en": {
+          "name": "fructose"
+        },
+        "hu": {
+          "name": "fruktóz"
+        }
+      }
+    },
+    {
+      "base_name": "glükóz-fruktóz szirup",
+      "translations": {
+        "en": {
+          "name": "glucose-fructose syrup"
+        },
+        "hu": {
+          "name": "glükóz-fruktóz szirup"
+        }
+      }
+    },
+    {
+      "base_name": "magas fruktóztartalmú kukoricaszirup",
+      "translations": {
+        "en": {
+          "name": "high-fructose corn syrup"
+        },
+        "hu": {
+          "name": "magas fruktóztartalmú kukoricaszirup"
+        }
+      }
+    },
+    {
+      "base_name": "szorbit",
+      "translations": {
+        "en": {
+          "name": "sorbitol"
+        },
+        "hu": {
+          "name": "szorbit"
+        }
+      }
+    },
+    {
+      "base_name": "szorbitol",
+      "translations": {
+        "en": {
+          "name": "sorbitol"
+        },
+        "hu": {
+          "name": "szorbitol"
+        }
+      }
+    },
+    {
+      "base_name": "E420",
+      "translations": {
+        "en": {
+          "name": "E420"
+        },
+        "hu": {
+          "name": "E420"
+        }
+      }
+    },
+    {
+      "base_name": "mannit",
+      "translations": {
+        "en": {
+          "name": "mannitol"
+        },
+        "hu": {
+          "name": "mannit"
+        }
+      }
+    },
+    {
+      "base_name": "mannitol",
+      "translations": {
+        "en": {
+          "name": "mannitol"
+        },
+        "hu": {
+          "name": "mannitol"
+        }
+      }
+    },
+    {
+      "base_name": "E421",
+      "translations": {
+        "en": {
+          "name": "E421"
+        },
+        "hu": {
+          "name": "E421"
+        }
+      }
+    },
+    {
+      "base_name": "xilit",
+      "translations": {
+        "en": {
+          "name": "xylitol"
+        },
+        "hu": {
+          "name": "xilit"
+        }
+      }
+    },
+    {
+      "base_name": "xilitol",
+      "translations": {
+        "en": {
+          "name": "xylitol"
+        },
+        "hu": {
+          "name": "xilitol"
+        }
+      }
+    },
+    {
+      "base_name": "E967",
+      "translations": {
+        "en": {
+          "name": "E967"
+        },
+        "hu": {
+          "name": "E967"
+        }
+      }
+    },
+    {
+      "base_name": "kén-dioxid",
+      "translations": {
+        "en": {
+          "name": "sulfur dioxide"
+        },
+        "hu": {
+          "name": "kén-dioxid"
+        }
+      }
+    },
+    {
+      "base_name": "E220",
+      "translations": {
+        "en": {
+          "name": "E220"
+        },
+        "hu": {
+          "name": "E220"
+        }
+      }
+    },
+    {
+      "base_name": "nátrium-szulfit",
+      "translations": {
+        "en": {
+          "name": "sodium sulfite"
+        },
+        "hu": {
+          "name": "nátrium-szulfit"
+        }
+      }
+    },
+    {
+      "base_name": "E221",
+      "translations": {
+        "en": {
+          "name": "E221"
+        },
+        "hu": {
+          "name": "E221"
+        }
+      }
+    },
+    {
+      "base_name": "nátrium-hidrogén-szulfit",
+      "translations": {
+        "en": {
+          "name": "sodium hydrogen sulfite"
+        },
+        "hu": {
+          "name": "nátrium-hidrogén-szulfit"
+        }
+      }
+    },
+    {
+      "base_name": "E222",
+      "translations": {
+        "en": {
+          "name": "E222"
+        },
+        "hu": {
+          "name": "E222"
+        }
+      }
+    },
+    {
+      "base_name": "nátrium-metabiszulfit",
+      "translations": {
+        "en": {
+          "name": "sodium metabisulfite"
+        },
+        "hu": {
+          "name": "nátrium-metabiszulfit"
+        }
+      }
+    },
+    {
+      "base_name": "E223",
+      "translations": {
+        "en": {
+          "name": "E223"
+        },
+        "hu": {
+          "name": "E223"
+        }
+      }
+    },
+    {
+      "base_name": "kálium-metabiszulfit",
+      "translations": {
+        "en": {
+          "name": "potassium metabisulfite"
+        },
+        "hu": {
+          "name": "kálium-metabiszulfit"
+        }
+      }
+    },
+    {
+      "base_name": "E224",
+      "translations": {
+        "en": {
+          "name": "E224"
+        },
+        "hu": {
+          "name": "E224"
+        }
+      }
+    },
+    {
+      "base_name": "kalcium-szulfit",
+      "translations": {
+        "en": {
+          "name": "calcium sulfite"
+        },
+        "hu": {
+          "name": "kalcium-szulfit"
+        }
+      }
+    },
+    {
+      "base_name": "E226",
+      "translations": {
+        "en": {
+          "name": "E226"
+        },
+        "hu": {
+          "name": "E226"
+        }
+      }
+    },
+    {
+      "base_name": "kalcium-hidrogén-szulfit",
+      "translations": {
+        "en": {
+          "name": "calcium hydrogen sulfite"
+        },
+        "hu": {
+          "name": "kalcium-hidrogén-szulfit"
+        }
+      }
+    },
+    {
+      "base_name": "E227",
+      "translations": {
+        "en": {
+          "name": "E227"
+        },
+        "hu": {
+          "name": "E227"
+        }
+      }
+    },
+    {
+      "base_name": "kálium-hidrogén-szulfit",
+      "translations": {
+        "en": {
+          "name": "potassium hydrogen sulfite"
+        },
+        "hu": {
+          "name": "kálium-hidrogén-szulfit"
+        }
+      }
+    },
+    {
+      "base_name": "E228",
+      "translations": {
+        "en": {
+          "name": "E228"
+        },
+        "hu": {
+          "name": "E228"
+        }
+      }
+    },
+    {
+      "base_name": "hal",
+      "translations": {
+        "en": {
+          "name": "fish"
+        },
+        "hu": {
+          "name": "hal"
+        }
+      }
+    },
+    {
+      "base_name": "lazac",
+      "translations": {
+        "en": {
+          "name": "salmon"
+        },
+        "hu": {
+          "name": "lazac"
+        }
+      }
+    },
+    {
+      "base_name": "tonhal",
+      "translations": {
+        "en": {
+          "name": "tuna"
+        },
+        "hu": {
+          "name": "tonhal"
+        }
+      }
+    },
+    {
+      "base_name": "tőkehal",
+      "translations": {
+        "en": {
+          "name": "cod"
+        },
+        "hu": {
+          "name": "tőkehal"
+        }
+      }
+    },
+    {
+      "base_name": "rák",
+      "translations": {
+        "en": {
+          "name": "crustacean"
+        },
+        "hu": {
+          "name": "rák"
+        }
+      }
+    },
+    {
+      "base_name": "garnéla",
+      "translations": {
+        "en": {
+          "name": "shrimp"
+        },
+        "hu": {
+          "name": "garnéla"
+        }
+      }
+    },
+    {
+      "base_name": "homár",
+      "translations": {
+        "en": {
+          "name": "lobster"
+        },
+        "hu": {
+          "name": "homár"
+        }
+      }
+    },
+    {
+      "base_name": "languszta",
+      "translations": {
+        "en": {
+          "name": "spiny lobster"
+        },
+        "hu": {
+          "name": "languszta"
+        }
+      }
+    },
+    {
+      "base_name": "kagyló",
+      "translations": {
+        "en": {
+          "name": "mussel"
+        },
+        "hu": {
+          "name": "kagyló"
+        }
+      }
+    },
+    {
+      "base_name": "osztriga",
+      "translations": {
+        "en": {
+          "name": "oyster"
+        },
+        "hu": {
+          "name": "osztriga"
+        }
+      }
+    },
+    {
+      "base_name": "tintahal",
+      "translations": {
+        "en": {
+          "name": "squid"
+        },
+        "hu": {
+          "name": "tintahal"
+        }
+      }
+    },
+    {
+      "base_name": "polip",
+      "translations": {
+        "en": {
+          "name": "octopus"
+        },
+        "hu": {
+          "name": "polip"
+        }
+      }
+    },
+    {
+      "base_name": "éticsiga",
+      "translations": {
+        "en": {
+          "name": "edible snail"
+        },
+        "hu": {
+          "name": "éticsiga"
+        }
+      }
+    },
+    {
+      "base_name": "zsemlemorzsa",
+      "translations": {
+        "en": {
+          "name": "breadcrumbs"
+        },
+        "hu": {
+          "name": "zsemlemorzsa"
+        }
+      }
+    },
+    {
+      "base_name": "basmati rizs",
+      "translations": {
+        "en": {
+          "name": "basmati rice"
+        },
+        "hu": {
+          "name": "basmati rizs"
+        }
+      }
+    },
+    {
+      "base_name": "rizsliszt",
+      "translations": {
+        "en": {
+          "name": "rice flour"
+        },
+        "hu": {
+          "name": "rizsliszt"
+        }
+      }
+    },
+    {
+      "base_name": "só",
+      "translations": {
+        "en": {
+          "name": "salt"
+        },
+        "hu": {
+          "name": "só"
+        }
+      }
+    },
+    {
+      "base_name": "kókuszzsír",
+      "translations": {
+        "en": {
+          "name": "coconut fat"
+        },
+        "hu": {
+          "name": "kókuszzsír"
+        }
+      }
+    },
+    {
+      "base_name": "glükózszirup",
+      "translations": {
+        "en": {
+          "name": "glucose syrup"
+        },
+        "hu": {
+          "name": "glükózszirup"
+        }
+      }
+    },
+    {
+      "base_name": "kakaóvaj",
+      "translations": {
+        "en": {
+          "name": "cocoa butter"
+        },
+        "hu": {
+          "name": "kakaóvaj"
+        }
+      }
+    },
+    {
+      "base_name": "kukoricakeményítő",
+      "translations": {
+        "en": {
+          "name": "corn starch"
+        },
+        "hu": {
+          "name": "kukoricakeményítő"
+        }
+      }
+    },
+    {
+      "base_name": "tejcukor",
+      "translations": {
+        "en": {
+          "name": "lactose"
+        },
+        "hu": {
+          "name": "tejcukor"
+        }
+      }
+    },
+    {
+      "base_name": "vajzsír",
+      "translations": {
+        "en": {
+          "name": "butterfat"
+        },
+        "hu": {
+          "name": "vajzsír"
+        }
+      }
+    },
+    {
+      "base_name": "étolaj",
+      "translations": {
+        "en": {
+          "name": "cooking oil"
+        },
+        "hu": {
+          "name": "étolaj"
+        }
+      }
+    },
+    {
+      "base_name": "vajkrém",
+      "translations": {
+        "en": {
+          "name": "butter spread"
+        },
+        "hu": {
+          "name": "vajkrém"
+        }
+      }
+    },
+    {
+      "base_name": "medvesajt",
+      "translations": {
+        "en": {
+          "name": "processed cheese"
+        },
+        "hu": {
+          "name": "medvesajt"
+        }
+      }
+    },
+    {
+      "base_name": "sertészsír",
+      "translations": {
+        "en": {
+          "name": "lard"
+        },
+        "hu": {
+          "name": "sertészsír"
+        }
+      }
+    },
+    {
+      "base_name": "füstölt sonka",
+      "translations": {
+        "en": {
+          "name": "smoked ham"
+        },
+        "hu": {
+          "name": "füstölt sonka"
+        }
+      }
+    },
+    {
+      "base_name": "bors",
+      "translations": {
+        "en": {
+          "name": "pepper"
+        },
+        "hu": {
+          "name": "bors"
+        }
+      }
+    },
+    {
+      "base_name": "őrölt pirospaprika",
+      "translations": {
+        "en": {
+          "name": "ground paprika"
+        },
+        "hu": {
+          "name": "őrölt pirospaprika"
+        }
+      }
+    },
+    {
+      "base_name": "Málna",
+      "translations": {
+        "en": {
+          "name": "raspberry"
+        },
+        "hu": {
+          "name": "Málna"
+        }
+      }
+    },
+    {
+      "base_name": "Ribizli",
+      "translations": {
+        "en": {
+          "name": "currant"
+        },
+        "hu": {
+          "name": "Ribizli"
+        }
+      }
+    }
+  ],
+  "risk_components": [
+    {
+      "base_name": "Glutén",
+      "category": "allergen",
+      "description": "Glutént tartalmazó gabonákhoz kapcsolódó komponens.",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Gluten",
+          "description": "Component associated with gluten-containing cereals."
+        },
+        "hu": {
+          "name": "Glutén",
+          "description": "Glutént tartalmazó gabonákhoz kapcsolódó komponens."
+        }
+      }
+    },
+    {
+      "base_name": "Tejfehérje",
+      "category": "allergen",
+      "description": "Tejeredetű fehérjék.",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Milk protein",
+          "description": "Proteins originating from milk."
+        },
+        "hu": {
+          "name": "Tejfehérje",
+          "description": "Tejeredetű fehérjék."
+        }
+      }
+    },
+    {
+      "base_name": "Tojás",
+      "category": "allergen",
+      "description": "Tojáshoz kapcsolódó allergén.",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Egg",
+          "description": "Allergen associated with egg."
+        },
+        "hu": {
+          "name": "Tojás",
+          "description": "Tojáshoz kapcsolódó allergén."
+        }
+      }
+    },
+    {
+      "base_name": "Szója",
+      "category": "allergen",
+      "description": "Szójához kapcsolódó allergén.",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Soy",
+          "description": "Allergen associated with soy."
+        },
+        "hu": {
+          "name": "Szója",
+          "description": "Szójához kapcsolódó allergén."
+        }
+      }
+    },
+    {
+      "base_name": "Földimogyoró",
+      "category": "allergen",
+      "description": "Földimogyoróhoz kapcsolódó allergén.",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Peanut",
+          "description": "Allergen associated with peanuts."
+        },
+        "hu": {
+          "name": "Földimogyoró",
+          "description": "Földimogyoróhoz kapcsolódó allergén."
+        }
+      }
+    },
+    {
+      "base_name": "Diófélék",
+      "category": "allergen",
+      "description": "Diófélékhez kapcsolódó allergéncsoport.",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Tree nuts",
+          "description": "Allergen group associated with tree nuts."
+        },
+        "hu": {
+          "name": "Diófélék",
+          "description": "Diófélékhez kapcsolódó allergéncsoport."
+        }
+      }
+    },
+    {
+      "base_name": "Szezám",
+      "category": "allergen",
+      "description": "Szezámmaghoz kapcsolódó allergén.",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Sesame",
+          "description": "Allergen associated with sesame seeds."
+        },
+        "hu": {
+          "name": "Szezám",
+          "description": "Szezámmaghoz kapcsolódó allergén."
+        }
+      }
+    },
+    {
+      "base_name": "Mustár",
+      "category": "allergen",
+      "description": "Mustárhoz kapcsolódó allergén.",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Mustard",
+          "description": "Allergen associated with mustard."
+        },
+        "hu": {
+          "name": "Mustár",
+          "description": "Mustárhoz kapcsolódó allergén."
+        }
+      }
+    },
+    {
+      "base_name": "Zeller",
+      "category": "allergen",
+      "description": "Zellerhez kapcsolódó allergén.",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Celery",
+          "description": "Allergen associated with celery."
+        },
+        "hu": {
+          "name": "Zeller",
+          "description": "Zellerhez kapcsolódó allergén."
+        }
+      }
+    },
+    {
+      "base_name": "Szulfit",
+      "category": "allergen",
+      "description": "Szulfitok és kén-dioxid jelölésére.",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Sulfites",
+          "description": "Used to indicate sulfites and sulfur dioxide."
+        },
+        "hu": {
+          "name": "Szulfit",
+          "description": "Szulfitok és kén-dioxid jelölésére."
+        }
+      }
+    },
+    {
+      "base_name": "Laktóz",
+      "category": "intolerance",
+      "description": "Tejcukor.",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Lactose",
+          "description": "Milk sugar."
+        },
+        "hu": {
+          "name": "Laktóz",
+          "description": "Tejcukor."
+        }
+      }
+    },
+    {
+      "base_name": "Fruktóz",
+      "category": "intolerance",
+      "description": "Gyümölcscukor.",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Fructose",
+          "description": "Fruit sugar."
+        },
+        "hu": {
+          "name": "Fruktóz",
+          "description": "Gyümölcscukor."
+        }
+      }
+    },
+    {
+      "base_name": "Fruktán",
+      "category": "fodmap",
+      "description": "Fruktán típusú fermentálható szénhidrát.",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Fructans",
+          "description": "Fermentable carbohydrate of the fructan type."
+        },
+        "hu": {
+          "name": "Fruktán",
+          "description": "Fruktán típusú fermentálható szénhidrát."
+        }
+      }
+    },
+    {
+      "base_name": "GOS",
+      "category": "fodmap",
+      "description": "Galakto-oligoszacharidok.",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "GOS",
+          "description": "Galacto-oligosaccharides."
+        },
+        "hu": {
+          "name": "GOS",
+          "description": "Galakto-oligoszacharidok."
+        }
+      }
+    },
+    {
+      "base_name": "Szorbit",
+      "category": "fodmap",
+      "description": "Poliol.",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Sorbitol",
+          "description": "Polyol."
+        },
+        "hu": {
+          "name": "Szorbit",
+          "description": "Poliol."
+        }
+      }
+    },
+    {
+      "base_name": "Mannit",
+      "category": "fodmap",
+      "description": "Poliol.",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Mannitol",
+          "description": "Polyol."
+        },
+        "hu": {
+          "name": "Mannit",
+          "description": "Poliol."
+        }
+      }
+    },
+    {
+      "base_name": "Xilit",
+      "category": "fodmap",
+      "description": "Poliol.",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Xylitol",
+          "description": "Polyol."
+        },
+        "hu": {
+          "name": "Xilit",
+          "description": "Poliol."
+        }
+      }
+    },
+    {
+      "base_name": "Hisztamin-kockázat",
+      "category": "biogenic_amine",
+      "description": "Hisztaminnal kapcsolatos kockázati címke.",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Histamine risk",
+          "description": "Risk label associated with histamine."
+        },
+        "hu": {
+          "name": "Hisztamin-kockázat",
+          "description": "Hisztaminnal kapcsolatos kockázati címke."
+        }
+      }
+    },
+    {
+      "base_name": "Rákfélék",
+      "category": "allergen",
+      "description": "Rákfélékhez kapcsolódó allergén.",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Crustaceans",
+          "description": "Allergen associated with crustaceans."
+        },
+        "hu": {
+          "name": "Rákfélék",
+          "description": "Rákfélékhez kapcsolódó allergén."
+        }
+      }
+    },
+    {
+      "base_name": "Hal",
+      "category": "allergen",
+      "description": "Halhoz kapcsolódó allergén.",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Fish",
+          "description": "Allergen associated with fish."
+        },
+        "hu": {
+          "name": "Hal",
+          "description": "Halhoz kapcsolódó allergén."
+        }
+      }
+    },
+    {
+      "base_name": "Csillagfürt",
+      "category": "allergen",
+      "description": "Csillagfürthöz kapcsolódó allergén.",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Lupin",
+          "description": "Allergen associated with lupin."
+        },
+        "hu": {
+          "name": "Csillagfürt",
+          "description": "Csillagfürthöz kapcsolódó allergén."
+        }
+      }
+    },
+    {
+      "base_name": "Puhatestűek",
+      "category": "allergen",
+      "description": "Kagylókhoz és más puhatestűekhez kapcsolódó allergén.",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Molluscs",
+          "description": "Allergen associated with shellfish and other molluscs."
+        },
+        "hu": {
+          "name": "Puhatestűek",
+          "description": "Kagylókhoz és más puhatestűekhez kapcsolódó allergén."
+        }
+      }
+    },
+    {
+      "base_name": "Magas zsírtartalom",
+      "category": "other",
+      "description": null,
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "High fat content",
+          "description": null
+        },
+        "hu": {
+          "name": "Magas zsírtartalom",
+          "description": null
+        }
+      }
+    },
+    {
+      "base_name": "Koffein",
+      "category": "other",
+      "description": null,
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Caffeine",
+          "description": null
+        },
+        "hu": {
+          "name": "Koffein",
+          "description": null
+        }
+      }
+    },
+    {
+      "base_name": "Csípős / irritáló fűszer",
+      "category": "other",
+      "description": null,
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Spicy / irritating seasoning",
+          "description": null
+        },
+        "hu": {
+          "name": "Csípős / irritáló fűszer",
+          "description": null
+        }
+      }
+    },
+    {
+      "base_name": "Savas étel",
+      "category": "other",
+      "description": null,
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Acidic food",
+          "description": null
+        },
+        "hu": {
+          "name": "Savas étel",
+          "description": null
+        }
+      }
+    },
+    {
+      "base_name": "Feldolgozott / füstölt hús",
+      "category": "other",
+      "description": null,
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Processed / smoked meat",
+          "description": null
+        },
+        "hu": {
+          "name": "Feldolgozott / füstölt hús",
+          "description": null
+        }
+      }
+    }
+  ],
+  "ingredient_risk_components": [
+    {
+      "ingredient": "liszt",
+      "risk_component": "Glutén",
+      "confidence": "certain",
+      "notes": null
+    },
+    {
+      "ingredient": "liszt",
+      "risk_component": "Fruktán",
+      "confidence": "typical",
+      "notes": null
+    },
+    {
+      "ingredient": "tej",
+      "risk_component": "Tejfehérje",
+      "confidence": "certain",
+      "notes": null
+    },
+    {
+      "ingredient": "tej",
+      "risk_component": "Laktóz",
+      "confidence": "certain",
+      "notes": null
+    },
+    {
+      "ingredient": "búza",
+      "risk_component": "Glutén",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "búza",
+      "risk_component": "Fruktán",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "búzaliszt",
+      "risk_component": "Glutén",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "búzaliszt",
+      "risk_component": "Fruktán",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "finomliszt",
+      "risk_component": "Glutén",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "finomliszt",
+      "risk_component": "Fruktán",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "teljes kiőrlésű búzaliszt",
+      "risk_component": "Glutén",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "teljes kiőrlésű búzaliszt",
+      "risk_component": "Fruktán",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "durum",
+      "risk_component": "Glutén",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "durum",
+      "risk_component": "Fruktán",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "durumliszt",
+      "risk_component": "Glutén",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "durumliszt",
+      "risk_component": "Fruktán",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "búzadara",
+      "risk_component": "Glutén",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "búzadara",
+      "risk_component": "Fruktán",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "gríz",
+      "risk_component": "Glutén",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "gríz",
+      "risk_component": "Fruktán",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "kuszkusz",
+      "risk_component": "Glutén",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "kuszkusz",
+      "risk_component": "Fruktán",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "bulgur",
+      "risk_component": "Glutén",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "bulgur",
+      "risk_component": "Fruktán",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "tönkölybúza",
+      "risk_component": "Glutén",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "tönkölybúza",
+      "risk_component": "Fruktán",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "tönkölyliszt",
+      "risk_component": "Glutén",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "tönkölyliszt",
+      "risk_component": "Fruktán",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "rozs",
+      "risk_component": "Glutén",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "rozs",
+      "risk_component": "Fruktán",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "rozsliszt",
+      "risk_component": "Glutén",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "rozsliszt",
+      "risk_component": "Fruktán",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "árpa",
+      "risk_component": "Glutén",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "árpa",
+      "risk_component": "Fruktán",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "zab",
+      "risk_component": "Glutén",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "zabpehely",
+      "risk_component": "Glutén",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "búzakenyér",
+      "risk_component": "Glutén",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "búzakenyér",
+      "risk_component": "Fruktán",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "teljes kiőrlésű kenyér",
+      "risk_component": "Glutén",
+      "confidence": "product_dependent",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "teljes kiőrlésű kenyér",
+      "risk_component": "Fruktán",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "rozskenyér",
+      "risk_component": "Glutén",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "rozskenyér",
+      "risk_component": "Fruktán",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "búzatészta",
+      "risk_component": "Glutén",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "búzatészta",
+      "risk_component": "Fruktán",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "durumtészta",
+      "risk_component": "Glutén",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "durumtészta",
+      "risk_component": "Fruktán",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "tehéntej",
+      "risk_component": "Tejfehérje",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "tehéntej",
+      "risk_component": "Laktóz",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "kecsketej",
+      "risk_component": "Tejfehérje",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "kecsketej",
+      "risk_component": "Laktóz",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "juhtej",
+      "risk_component": "Tejfehérje",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "juhtej",
+      "risk_component": "Laktóz",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "tejpor",
+      "risk_component": "Tejfehérje",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "tejpor",
+      "risk_component": "Laktóz",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "sovány tejpor",
+      "risk_component": "Tejfehérje",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "sovány tejpor",
+      "risk_component": "Laktóz",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "sűrített tej",
+      "risk_component": "Tejfehérje",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "sűrített tej",
+      "risk_component": "Laktóz",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "tejszín",
+      "risk_component": "Tejfehérje",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "tejszín",
+      "risk_component": "Laktóz",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "főzőtejszín",
+      "risk_component": "Tejfehérje",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "főzőtejszín",
+      "risk_component": "Laktóz",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "joghurt",
+      "risk_component": "Tejfehérje",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "joghurt",
+      "risk_component": "Laktóz",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "görög joghurt",
+      "risk_component": "Tejfehérje",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "görög joghurt",
+      "risk_component": "Laktóz",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "kefir",
+      "risk_component": "Tejfehérje",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "kefir",
+      "risk_component": "Laktóz",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "túró",
+      "risk_component": "Tejfehérje",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "túró",
+      "risk_component": "Laktóz",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "krémsajt",
+      "risk_component": "Tejfehérje",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "krémsajt",
+      "risk_component": "Laktóz",
+      "confidence": "product_dependent",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "mascarpone",
+      "risk_component": "Tejfehérje",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "mascarpone",
+      "risk_component": "Laktóz",
+      "confidence": "product_dependent",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "mozzarella",
+      "risk_component": "Tejfehérje",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "mozzarella",
+      "risk_component": "Laktóz",
+      "confidence": "product_dependent",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "feta",
+      "risk_component": "Tejfehérje",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "feta",
+      "risk_component": "Laktóz",
+      "confidence": "product_dependent",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "parmezán",
+      "risk_component": "Tejfehérje",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "sajt",
+      "risk_component": "Tejfehérje",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "sajt",
+      "risk_component": "Laktóz",
+      "confidence": "product_dependent",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "tejsavó",
+      "risk_component": "Tejfehérje",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "tejsavó",
+      "risk_component": "Laktóz",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "tejsavópor",
+      "risk_component": "Tejfehérje",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "tejsavópor",
+      "risk_component": "Laktóz",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "fagylalt",
+      "risk_component": "Tejfehérje",
+      "confidence": "product_dependent",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "fagylalt",
+      "risk_component": "Laktóz",
+      "confidence": "product_dependent",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "vaj",
+      "risk_component": "Tejfehérje",
+      "confidence": "product_dependent",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "vaj",
+      "risk_component": "Laktóz",
+      "confidence": "product_dependent",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "Tojás",
+      "risk_component": "Tojás",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "tojásfehérje",
+      "risk_component": "Tojás",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "tojássárgája",
+      "risk_component": "Tojás",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "tojáspor",
+      "risk_component": "Tojás",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "majonéz",
+      "risk_component": "Tojás",
+      "confidence": "product_dependent",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "szója",
+      "risk_component": "Szója",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "szója",
+      "risk_component": "GOS",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "szójabab",
+      "risk_component": "Szója",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "szójabab",
+      "risk_component": "GOS",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "szójaliszt",
+      "risk_component": "Szója",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "szójaliszt",
+      "risk_component": "GOS",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "szójafehérje",
+      "risk_component": "Szója",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "tofu",
+      "risk_component": "Szója",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "szójaital",
+      "risk_component": "Szója",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "szójaital",
+      "risk_component": "GOS",
+      "confidence": "product_dependent",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "szójaszósz",
+      "risk_component": "Szója",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "szójaszósz",
+      "risk_component": "Glutén",
+      "confidence": "product_dependent",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "földimogyoró",
+      "risk_component": "Földimogyoró",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "földimogyorókrém",
+      "risk_component": "Földimogyoró",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "mandula",
+      "risk_component": "Diófélék",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "mogyoró",
+      "risk_component": "Diófélék",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "dió",
+      "risk_component": "Diófélék",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "kesudió",
+      "risk_component": "Diófélék",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "kesudió",
+      "risk_component": "Fruktán",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "kesudió",
+      "risk_component": "GOS",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "pekándió",
+      "risk_component": "Diófélék",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "brazil dió",
+      "risk_component": "Diófélék",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "pisztácia",
+      "risk_component": "Diófélék",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "makadámdió",
+      "risk_component": "Diófélék",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "vegyes diófélék",
+      "risk_component": "Diófélék",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "szezámmag",
+      "risk_component": "Szezám",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "tahini",
+      "risk_component": "Szezám",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "szezámolaj",
+      "risk_component": "Szezám",
+      "confidence": "product_dependent",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "mustár",
+      "risk_component": "Mustár",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "mustármag",
+      "risk_component": "Mustár",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "mustárpor",
+      "risk_component": "Mustár",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "zeller",
+      "risk_component": "Zeller",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "zeller",
+      "risk_component": "Mannit",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "zellergumó",
+      "risk_component": "Zeller",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "zellergumó",
+      "risk_component": "Mannit",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "zellerszár",
+      "risk_component": "Zeller",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "zellerszár",
+      "risk_component": "Mannit",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "csillagfürt",
+      "risk_component": "Csillagfürt",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "csillagfürtliszt",
+      "risk_component": "Csillagfürt",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "csicseriborsó",
+      "risk_component": "GOS",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "csicseriborsóliszt",
+      "risk_component": "GOS",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "lencse",
+      "risk_component": "GOS",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "vöröslencse",
+      "risk_component": "GOS",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "bab",
+      "risk_component": "GOS",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "vörösbab",
+      "risk_component": "GOS",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "fehérbab",
+      "risk_component": "GOS",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "tarkabab",
+      "risk_component": "GOS",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "sárgaborsó",
+      "risk_component": "GOS",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "zöldborsó",
+      "risk_component": "GOS",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "falafel",
+      "risk_component": "GOS",
+      "confidence": "product_dependent",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "sült bab",
+      "risk_component": "GOS",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "hagyma",
+      "risk_component": "Fruktán",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "vöröshagyma",
+      "risk_component": "Fruktán",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "lilahagyma",
+      "risk_component": "Fruktán",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "fokhagyma",
+      "risk_component": "Fruktán",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "fokhagymapor",
+      "risk_component": "Fruktán",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "hagymapor",
+      "risk_component": "Fruktán",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "póréhagyma",
+      "risk_component": "Fruktán",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "újhagyma fehér része",
+      "risk_component": "Fruktán",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "articsóka",
+      "risk_component": "Fruktán",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "csicsóka",
+      "risk_component": "Fruktán",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "gomba",
+      "risk_component": "Mannit",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "csiperke",
+      "risk_component": "Mannit",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "alma",
+      "risk_component": "Fruktóz",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "alma",
+      "risk_component": "Szorbit",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "körte",
+      "risk_component": "Fruktóz",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "körte",
+      "risk_component": "Szorbit",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "nashi körte",
+      "risk_component": "Fruktóz",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "nashi körte",
+      "risk_component": "Szorbit",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "mangó",
+      "risk_component": "Fruktóz",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "cseresznye",
+      "risk_component": "Fruktóz",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "cseresznye",
+      "risk_component": "Szorbit",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "füge",
+      "risk_component": "Fruktóz",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "görögdinnye",
+      "risk_component": "Fruktóz",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "őszibarack",
+      "risk_component": "Szorbit",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "szilva",
+      "risk_component": "Szorbit",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "sárgabarack",
+      "risk_component": "Szorbit",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "aszalt gyümölcs",
+      "risk_component": "Fruktóz",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "aszalt gyümölcs",
+      "risk_component": "Szorbit",
+      "confidence": "product_dependent",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "almalé",
+      "risk_component": "Fruktóz",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "almalé",
+      "risk_component": "Szorbit",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "körtelé",
+      "risk_component": "Fruktóz",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "körtelé",
+      "risk_component": "Szorbit",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "gyümölcslé-koncentrátum",
+      "risk_component": "Fruktóz",
+      "confidence": "product_dependent",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "méz",
+      "risk_component": "Fruktóz",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "inulin",
+      "risk_component": "Fruktán",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "FOS",
+      "risk_component": "Fruktán",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "frukto-oligoszacharid",
+      "risk_component": "Fruktán",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "GOS",
+      "risk_component": "GOS",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "galakto-oligoszacharid",
+      "risk_component": "GOS",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "fruktóz",
+      "risk_component": "Fruktóz",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "glükóz-fruktóz szirup",
+      "risk_component": "Fruktóz",
+      "confidence": "product_dependent",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "magas fruktóztartalmú kukoricaszirup",
+      "risk_component": "Fruktóz",
+      "confidence": "typical",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "szorbit",
+      "risk_component": "Szorbit",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "szorbitol",
+      "risk_component": "Szorbit",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "E420",
+      "risk_component": "Szorbit",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "mannit",
+      "risk_component": "Mannit",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "mannitol",
+      "risk_component": "Mannit",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "E421",
+      "risk_component": "Mannit",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "xilit",
+      "risk_component": "Xilit",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "xilitol",
+      "risk_component": "Xilit",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "E967",
+      "risk_component": "Xilit",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "kén-dioxid",
+      "risk_component": "Szulfit",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "E220",
+      "risk_component": "Szulfit",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "nátrium-szulfit",
+      "risk_component": "Szulfit",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "E221",
+      "risk_component": "Szulfit",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "nátrium-hidrogén-szulfit",
+      "risk_component": "Szulfit",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "E222",
+      "risk_component": "Szulfit",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "nátrium-metabiszulfit",
+      "risk_component": "Szulfit",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "E223",
+      "risk_component": "Szulfit",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "kálium-metabiszulfit",
+      "risk_component": "Szulfit",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "E224",
+      "risk_component": "Szulfit",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "kalcium-szulfit",
+      "risk_component": "Szulfit",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "E226",
+      "risk_component": "Szulfit",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "kalcium-hidrogén-szulfit",
+      "risk_component": "Szulfit",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "E227",
+      "risk_component": "Szulfit",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "kálium-hidrogén-szulfit",
+      "risk_component": "Szulfit",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "E228",
+      "risk_component": "Szulfit",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "hal",
+      "risk_component": "Hal",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "lazac",
+      "risk_component": "Hal",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "tonhal",
+      "risk_component": "Hal",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "tőkehal",
+      "risk_component": "Hal",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "rák",
+      "risk_component": "Rákfélék",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "garnéla",
+      "risk_component": "Rákfélék",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "homár",
+      "risk_component": "Rákfélék",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "languszta",
+      "risk_component": "Rákfélék",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "kagyló",
+      "risk_component": "Puhatestűek",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "osztriga",
+      "risk_component": "Puhatestűek",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "tintahal",
+      "risk_component": "Puhatestűek",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "polip",
+      "risk_component": "Puhatestűek",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "éticsiga",
+      "risk_component": "Puhatestűek",
+      "confidence": "certain",
+      "notes": "Alap tudásbázisból seedelt kapcsolat."
+    },
+    {
+      "ingredient": "zsemlemorzsa",
+      "risk_component": "Glutén",
+      "confidence": "certain",
+      "notes": null
+    },
+    {
+      "ingredient": "zsemlemorzsa",
+      "risk_component": "Fruktán",
+      "confidence": "typical",
+      "notes": null
+    },
+    {
+      "ingredient": "füstölt sonka",
+      "risk_component": "Hisztamin-kockázat",
+      "confidence": "product_dependent",
+      "notes": null
+    },
+    {
+      "ingredient": "kávé",
+      "risk_component": "Hisztamin-kockázat",
+      "confidence": "typical",
+      "notes": null
+    },
+    {
+      "ingredient": "medvesajt",
+      "risk_component": "Tejfehérje",
+      "confidence": "certain",
+      "notes": null
+    },
+    {
+      "ingredient": "medvesajt",
+      "risk_component": "Laktóz",
+      "confidence": "product_dependent",
+      "notes": null
+    },
+    {
+      "ingredient": "paradicsom",
+      "risk_component": "Hisztamin-kockázat",
+      "confidence": "typical",
+      "notes": null
+    },
+    {
+      "ingredient": "sonka",
+      "risk_component": "Hisztamin-kockázat",
+      "confidence": "product_dependent",
+      "notes": null
+    },
+    {
+      "ingredient": "tejcukor",
+      "risk_component": "Laktóz",
+      "confidence": "certain",
+      "notes": null
+    },
+    {
+      "ingredient": "vajkrém",
+      "risk_component": "Tejfehérje",
+      "confidence": "certain",
+      "notes": null
+    },
+    {
+      "ingredient": "vajkrém",
+      "risk_component": "Laktóz",
+      "confidence": "product_dependent",
+      "notes": null
+    },
+    {
+      "ingredient": "étolaj",
+      "risk_component": "Magas zsírtartalom",
+      "confidence": "certain",
+      "notes": null
+    },
+    {
+      "ingredient": "kakaóvaj",
+      "risk_component": "Magas zsírtartalom",
+      "confidence": "certain",
+      "notes": null
+    },
+    {
+      "ingredient": "kókuszzsír",
+      "risk_component": "Magas zsírtartalom",
+      "confidence": "certain",
+      "notes": null
+    },
+    {
+      "ingredient": "sertészsír",
+      "risk_component": "Magas zsírtartalom",
+      "confidence": "certain",
+      "notes": null
+    },
+    {
+      "ingredient": "vajzsír",
+      "risk_component": "Magas zsírtartalom",
+      "confidence": "certain",
+      "notes": null
+    },
+    {
+      "ingredient": "bors",
+      "risk_component": "Csípős / irritáló fűszer",
+      "confidence": "certain",
+      "notes": null
+    },
+    {
+      "ingredient": "kávé",
+      "risk_component": "Koffein",
+      "confidence": "certain",
+      "notes": null
+    },
+    {
+      "ingredient": "paradicsom",
+      "risk_component": "Savas étel",
+      "confidence": "certain",
+      "notes": null
+    },
+    {
+      "ingredient": "füstölt sonka",
+      "risk_component": "Feldolgozott / füstölt hús",
+      "confidence": "certain",
+      "notes": null
+    },
+    {
+      "ingredient": "sonka",
+      "risk_component": "Feldolgozott / füstölt hús",
+      "confidence": "product_dependent",
+      "notes": null
+    },
+    {
+      "ingredient": "őrölt pirospaprika",
+      "risk_component": "Csípős / irritáló fűszer",
+      "confidence": "certain",
+      "notes": null
+    },
+    {
+      "ingredient": "sajt",
+      "risk_component": "Magas zsírtartalom",
+      "confidence": "product_dependent",
+      "notes": null
+    },
+    {
+      "ingredient": "tejszín",
+      "risk_component": "Magas zsírtartalom",
+      "confidence": "typical",
+      "notes": null
+    },
+    {
+      "ingredient": "főzőtejszín",
+      "risk_component": "Magas zsírtartalom",
+      "confidence": "typical",
+      "notes": null
+    },
+    {
+      "ingredient": "krémsajt",
+      "risk_component": "Magas zsírtartalom",
+      "confidence": "typical",
+      "notes": null
+    },
+    {
+      "ingredient": "mascarpone",
+      "risk_component": "Magas zsírtartalom",
+      "confidence": "typical",
+      "notes": null
+    },
+    {
+      "ingredient": "mozzarella",
+      "risk_component": "Magas zsírtartalom",
+      "confidence": "product_dependent",
+      "notes": null
+    },
+    {
+      "ingredient": "feta",
+      "risk_component": "Magas zsírtartalom",
+      "confidence": "product_dependent",
+      "notes": null
+    },
+    {
+      "ingredient": "parmezán",
+      "risk_component": "Magas zsírtartalom",
+      "confidence": "product_dependent",
+      "notes": null
+    },
+    {
+      "ingredient": "vaj",
+      "risk_component": "Magas zsírtartalom",
+      "confidence": "typical",
+      "notes": null
+    },
+    {
+      "ingredient": "vajkrém",
+      "risk_component": "Magas zsírtartalom",
+      "confidence": "typical",
+      "notes": null
+    },
+    {
+      "ingredient": "medvesajt",
+      "risk_component": "Magas zsírtartalom",
+      "confidence": "typical",
+      "notes": null
+    },
+    {
+      "ingredient": "majonéz",
+      "risk_component": "Magas zsírtartalom",
+      "confidence": "typical",
+      "notes": null
+    },
+    {
+      "ingredient": "földimogyoró",
+      "risk_component": "Magas zsírtartalom",
+      "confidence": "typical",
+      "notes": null
+    },
+    {
+      "ingredient": "földimogyorókrém",
+      "risk_component": "Magas zsírtartalom",
+      "confidence": "typical",
+      "notes": null
+    },
+    {
+      "ingredient": "mandula",
+      "risk_component": "Magas zsírtartalom",
+      "confidence": "typical",
+      "notes": null
+    },
+    {
+      "ingredient": "mogyoró",
+      "risk_component": "Magas zsírtartalom",
+      "confidence": "typical",
+      "notes": null
+    },
+    {
+      "ingredient": "dió",
+      "risk_component": "Magas zsírtartalom",
+      "confidence": "typical",
+      "notes": null
+    },
+    {
+      "ingredient": "kesudió",
+      "risk_component": "Magas zsírtartalom",
+      "confidence": "typical",
+      "notes": null
+    },
+    {
+      "ingredient": "pekándió",
+      "risk_component": "Magas zsírtartalom",
+      "confidence": "typical",
+      "notes": null
+    },
+    {
+      "ingredient": "brazil dió",
+      "risk_component": "Magas zsírtartalom",
+      "confidence": "typical",
+      "notes": null
+    },
+    {
+      "ingredient": "pisztácia",
+      "risk_component": "Magas zsírtartalom",
+      "confidence": "typical",
+      "notes": null
+    },
+    {
+      "ingredient": "makadámdió",
+      "risk_component": "Magas zsírtartalom",
+      "confidence": "typical",
+      "notes": null
+    },
+    {
+      "ingredient": "vegyes diófélék",
+      "risk_component": "Magas zsírtartalom",
+      "confidence": "typical",
+      "notes": null
+    },
+    {
+      "ingredient": "szezámmag",
+      "risk_component": "Magas zsírtartalom",
+      "confidence": "typical",
+      "notes": null
+    },
+    {
+      "ingredient": "tahini",
+      "risk_component": "Magas zsírtartalom",
+      "confidence": "typical",
+      "notes": null
+    },
+    {
+      "ingredient": "almalé",
+      "risk_component": "Savas étel",
+      "confidence": "product_dependent",
+      "notes": null
+    },
+    {
+      "ingredient": "körtelé",
+      "risk_component": "Savas étel",
+      "confidence": "product_dependent",
+      "notes": null
+    },
+    {
+      "ingredient": "gyümölcslé-koncentrátum",
+      "risk_component": "Savas étel",
+      "confidence": "product_dependent",
+      "notes": null
+    }
+  ],
+  "symptom_types": [
+    {
+      "base_name": "Viszketés",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Itching"
+        },
+        "hu": {
+          "name": "Viszketés"
+        }
+      }
+    },
+    {
+      "base_name": "Kiütés",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Rash"
+        },
+        "hu": {
+          "name": "Kiütés"
+        }
+      }
+    },
+    {
+      "base_name": "Hányás",
+      "active": false,
+      "translations": {
+        "en": {
+          "name": "Vomiting"
+        },
+        "hu": {
+          "name": "Hányás"
+        }
+      }
+    }
+  ],
+  "body_parts": [
+    {
+      "base_name": "Fej",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Head"
+        },
+        "hu": {
+          "name": "Fej"
+        }
+      }
+    },
+    {
+      "base_name": "Arc",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Face"
+        },
+        "hu": {
+          "name": "Arc"
+        }
+      }
+    },
+    {
+      "base_name": "Nyak",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Neck"
+        },
+        "hu": {
+          "name": "Nyak"
+        }
+      }
+    },
+    {
+      "base_name": "Mellkas",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Chest"
+        },
+        "hu": {
+          "name": "Mellkas"
+        }
+      }
+    },
+    {
+      "base_name": "Has",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Abdomen"
+        },
+        "hu": {
+          "name": "Has"
+        }
+      }
+    },
+    {
+      "base_name": "Hát",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Back"
+        },
+        "hu": {
+          "name": "Hát"
+        }
+      }
+    },
+    {
+      "base_name": "Bal váll",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Left shoulder"
+        },
+        "hu": {
+          "name": "Bal váll"
+        }
+      }
+    },
+    {
+      "base_name": "Jobb váll",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Right shoulder"
+        },
+        "hu": {
+          "name": "Jobb váll"
+        }
+      }
+    },
+    {
+      "base_name": "Bal felkar",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Left upper arm"
+        },
+        "hu": {
+          "name": "Bal felkar"
+        }
+      }
+    },
+    {
+      "base_name": "Jobb felkar",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Right upper arm"
+        },
+        "hu": {
+          "name": "Jobb felkar"
+        }
+      }
+    },
+    {
+      "base_name": "Bal alkar",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Left forearm"
+        },
+        "hu": {
+          "name": "Bal alkar"
+        }
+      }
+    },
+    {
+      "base_name": "Jobb alkar",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Right forearm"
+        },
+        "hu": {
+          "name": "Jobb alkar"
+        }
+      }
+    },
+    {
+      "base_name": "Bal kéz",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Left hand"
+        },
+        "hu": {
+          "name": "Bal kéz"
+        }
+      }
+    },
+    {
+      "base_name": "Jobb kéz",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Right hand"
+        },
+        "hu": {
+          "name": "Jobb kéz"
+        }
+      }
+    },
+    {
+      "base_name": "Bal comb",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Left thigh"
+        },
+        "hu": {
+          "name": "Bal comb"
+        }
+      }
+    },
+    {
+      "base_name": "Jobb comb",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Right thigh"
+        },
+        "hu": {
+          "name": "Jobb comb"
+        }
+      }
+    },
+    {
+      "base_name": "Bal lábszár",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Left lower leg"
+        },
+        "hu": {
+          "name": "Bal lábszár"
+        }
+      }
+    },
+    {
+      "base_name": "Jobb lábszár",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Right lower leg"
+        },
+        "hu": {
+          "name": "Jobb lábszár"
+        }
+      }
+    },
+    {
+      "base_name": "Bal lábfej",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Left foot"
+        },
+        "hu": {
+          "name": "Bal lábfej"
+        }
+      }
+    },
+    {
+      "base_name": "Jobb lábfej",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Right foot"
+        },
+        "hu": {
+          "name": "Jobb lábfej"
+        }
+      }
+    },
+    {
+      "base_name": "Fül",
+      "active": false,
+      "translations": {
+        "en": {
+          "name": "Ear"
+        },
+        "hu": {
+          "name": "Fül"
+        }
+      }
+    },
+    {
+      "base_name": "Mell",
+      "active": true,
+      "translations": {
+        "en": {
+          "name": "Breast"
+        },
+        "hu": {
+          "name": "Mell"
+        }
+      }
+    }
+  ],
+  "medications": [
+    {
+      "name": "Cetirizin",
+      "active": true,
+      "is_default": true
+    },
+    {
+      "name": "Algopyrin",
+      "active": true,
+      "is_default": false
+    }
+  ]
+}
