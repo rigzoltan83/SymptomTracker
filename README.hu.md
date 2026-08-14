@@ -128,3 +128,12 @@ A teljes licenc a [LICENSE](LICENSE) fájlban található.
 
 English documentation is available in
 [README.md](README.md).
+
+## A fejlesztés támogatása
+
+A SymptomTracker ingyenes és nyílt forráskódú szoftver.
+
+Ha hasznosnak találod a projektet és támogatnád a további fejlesztését,
+ezt Patreonon teheted meg:
+
+https://www.patreon.com/c/ZoltanRigo

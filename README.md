@@ -125,3 +125,12 @@ See [LICENSE](LICENSE).
 
 A Hungarian introduction is available in
 [README.hu.md](README.hu.md).
+
+## Support development
+
+SymptomTracker is free and open-source software.
+
+If you find the project useful and would like to support its continued
+development, you can do so on Patreon:
+
+https://www.patreon.com/c/ZoltanRigo

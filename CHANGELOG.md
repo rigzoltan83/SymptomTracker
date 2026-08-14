@@ -1,0 +1,58 @@
+# Changelog
+
+All notable changes to SymptomTracker will be documented in this file.
+
+## [0.1.0-alpha.1] - 2026-08-14
+
+First public alpha release.
+
+### Added
+
+- Food and drink diary
+- Symptom diary
+- Medication tracking
+- Symptom severity and affected body-part tracking
+- Multiple image attachments for foods and symptoms
+- Ingredient database
+- Risk-component database
+- Ingredient/risk-component relationships
+- Food risk-component handling
+- Analysis of recorded events and possible associations
+- Excel export
+- Hungarian and English user interface
+- Hungarian and English reference-data translations
+- Administration interfaces for reference data
+- PostgreSQL database support
+- Database migrations
+- Reference-data seed export and import
+- Clean installation without personal events or recipes
+- Automatic application and database port selection
+- Ubuntu 24.04 installation support
+- Automatic installation of required system dependencies
+- Docker and Docker Compose dependency handling
+- systemd service installation
+- Installation health checks
+- Hungarian and English installer
+- GPL-3.0 licensing
+- Medical disclaimer
+
+### Included reference data
+
+The installation contains the application's reusable reference data,
+including:
+
+- ingredients and translations
+- risk components and translations
+- ingredient/risk-component relationships
+- symptom types and translations
+- body parts and translations
+- medications
+
+Personal diary events, food/recipe records and uploaded personal images
+are not included in the release seed data.
+
+### Status
+
+This is an alpha release intended for testing.
+
+Back up important data before upgrading or testing future releases.
