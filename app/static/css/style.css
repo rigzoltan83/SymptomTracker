@@ -3281,3 +3281,53 @@ body {
         font-size: 10px;
     }
 }
+
+.language-switcher {
+    position: fixed;
+    top: 12px;
+    right: 14px;
+    z-index: 1000;
+
+    display: flex;
+    gap: 7px;
+}
+
+.language-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 38px;
+    height: 30px;
+
+    padding: 3px;
+
+    background: #ffffff;
+
+    border: 1px solid #cccccc;
+    border-radius: 6px;
+
+    text-decoration: none;
+
+    opacity: 0.55;
+}
+
+.language-button img {
+    display: block;
+
+    width: 30px;
+    height: 20px;
+
+    object-fit: cover;
+
+    border-radius: 2px;
+}
+
+.language-button:hover {
+    opacity: 1;
+}
+
+.language-button[aria-current="page"] {
+    opacity: 1;
+    border-width: 2px;
+}

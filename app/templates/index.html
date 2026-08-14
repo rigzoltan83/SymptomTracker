@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hu">
+<html lang="{{ current_language }}">
 <head>
     <meta charset="UTF-8">
 
@@ -20,9 +20,11 @@
 
     <main class="container">
 
+{% include "_language_switcher.html" %}
+
         <header class="header">
             <h1>SymptomTracker</h1>
-            <p>Esemény rögzítése</p>
+<p>{{ t("index.subtitle") }}</p>
         </header>
 
         <div
@@ -44,7 +46,7 @@
 {% if default_medication %}
     {{ default_medication.name }}
 {% else %}
-    Gyógyszer
+{{ t("index.medication") }}
 {% endif %}
                 </span>
             </button>
@@ -56,7 +58,7 @@
     <span class="icon">🍽️</span>
 
     <span>
-        Étel / ital
+{{ t("index.food_drink") }}
     </span>
 </a>
 
@@ -67,7 +69,7 @@
     <span class="icon">🔴</span>
 
     <span>
-        Tünet
+{{ t("index.symptom") }}
     </span>
 </a>
 
@@ -79,14 +81,14 @@
         class="bottom-link"
         href="events"
     >
-        Korábbi események
+{{ t("index.previous_events") }}
     </a>
 
     <a
         class="bottom-link"
         href="analysis"
     >
-        📊 Elemzés
+{{ t("index.analysis") }}
     </a>
 
 </nav>
@@ -96,7 +98,7 @@
     class="manage-link"
     href="admin"
 >
-    ⚙️ Kezelés
+{{ t("index.management") }}
 </a>
 
 
@@ -106,14 +108,14 @@
         class="home-export-link"
         href="export"
     >
-        Export
+{{ t("index.export") }}
     </a>
 
 </div>
 
         <section class="recent-events">
 
-            <h2>Legutóbbi események</h2>
+            <h2>{{ t("index.recent_events") }}</h2>
 
             {% if recent_events %}
 
@@ -175,7 +177,7 @@
             {% else %}
 
                 <p class="empty-message">
-                    Még nincs rögzített esemény.
+{{ t("index.no_events") }}
                 </p>
 
             {% endif %}

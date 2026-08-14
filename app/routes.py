@@ -18,6 +18,7 @@ from flask import (
     render_template,
     request,
     send_from_directory,
+    url_for,
 )
 
 from sqlalchemy import or_
@@ -44,6 +45,26 @@ from app.models import (
 main = Blueprint("main", __name__)
 
 LOCAL_TIMEZONE = ZoneInfo("Europe/Budapest")
+
+from app.i18n import (
+    SUPPORTED_LANGUAGES,
+    set_current_language,
+)
+
+
+@main.get("/language/<language_code>")
+def change_language(language_code):
+    if language_code not in SUPPORTED_LANGUAGES:
+        abort(404)
+
+    set_current_language(
+        language_code
+    )
+
+    return redirect(
+        url_for("main.index")
+    )
+
 
 def event_export_row(event):
     medication = ""

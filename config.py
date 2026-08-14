@@ -5,6 +5,7 @@ BASE_DIR = Path(__file__).resolve().parent
 
 
 class Config:
+    APPLICATION_ROOT = "/symptomtracker"
     SECRET_KEY = os.environ.get(
         "SECRET_KEY",
         "dev-only-secret",
