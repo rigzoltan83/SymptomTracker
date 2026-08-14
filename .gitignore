@@ -9,4 +9,4 @@ uploads/*
 !uploads/.gitkeep
 
 .cache/
-.guvicorn/
+.gunicorn/
