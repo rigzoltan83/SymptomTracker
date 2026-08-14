@@ -10,3 +10,4 @@ uploads/*
 
 .cache/
 .gunicorn/
+backups/
