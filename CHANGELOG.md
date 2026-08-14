@@ -2,6 +2,28 @@
 
 All notable changes to SymptomTracker will be documented in this file.
 
+## [0.1.0-alpha.5] - 2026-08-14
+
+Fifth public alpha release.
+
+### Fixed
+
+- Changed the installed Gunicorn service binding from localhost
+  (`127.0.0.1`) to all network interfaces (`0.0.0.0`).
+- Fresh installations can now be accessed from other devices on the
+  local network using the server IP address and application port.
+
+### Security
+
+- SymptomTracker does not configure router port forwarding or expose
+  the application to the public Internet automatically.
+- Network access is still subject to the server firewall and network
+  configuration.
+
+### Status
+
+This is an alpha release intended for clean-install testing.
+
 ## [0.1.0-alpha.4] - 2026-08-14
 
 Fourth public alpha release.
