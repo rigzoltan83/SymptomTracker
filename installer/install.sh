@@ -181,6 +181,62 @@ echo "  $(docker compose version)"
 echo
 echo "$MSG_REQUIREMENTS_OK"
 
+# =========================================================
+# MEGLÉVŐ TELEPÍTÉS VÉDELME
+# =========================================================
+
+existing_install=false
+
+
+if [ -f "${INSTALL_DIR}/.env" ]; then
+    echo
+    echo "$MSG_EXISTING_ENV"
+
+    existing_install=true
+fi
+
+
+if docker ps -a \
+    --format '{{.Names}}' \
+    | grep -Fxq 'symptomtracker-db'
+then
+    echo
+    echo "$MSG_EXISTING_CONTAINER"
+
+    existing_install=true
+fi
+
+
+if systemctl list-unit-files \
+    --type=service \
+    --no-legend \
+    2>/dev/null \
+    | awk '{print $1}' \
+    | grep -Fxq 'symptomtracker.service'
+then
+    echo
+    echo "$MSG_EXISTING_SERVICE"
+
+    existing_install=true
+fi
+
+
+if [ "$existing_install" = true ]; then
+    echo
+    echo "$MSG_EXISTING_INSTALL"
+
+    if [ "$DRY_RUN" = true ]; then
+        echo "$MSG_INSTALL_ABORT"
+        echo "$MSG_USE_UPDATE"
+    else
+        echo "$MSG_INSTALL_ABORT" >&2
+        echo "$MSG_USE_UPDATE" >&2
+        exit 1
+    fi
+else
+    echo
+    echo "$MSG_FRESH_INSTALL"
+fi
 
 # =========================================================
 # PORTOK
