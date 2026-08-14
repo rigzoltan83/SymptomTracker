@@ -2,6 +2,22 @@
 
 All notable changes to SymptomTracker will be documented in this file.
 
+## [0.1.0-alpha.2] - 2026-08-14
+
+Second public alpha release.
+
+### Fixed
+
+- Fixed runtime failures in the installer caused by invalid multiline
+  shell test expressions.
+- Fixed fresh installation file-copy execution.
+- Prevented the installer from continuing with missing application
+  directories after the failed condition checks.
+
+### Status
+
+This is an alpha release intended for installation testing.
+
 ## [0.1.0-alpha.1] - 2026-08-14
 
 First public alpha release.
