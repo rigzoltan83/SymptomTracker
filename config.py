@@ -5,7 +5,12 @@ BASE_DIR = Path(__file__).resolve().parent
 
 
 class Config:
-    APPLICATION_ROOT = "/symptomtracker"
+    APPLICATION_ROOT = "/"
+
+    APPLICATION_PREFIX = os.environ.get(
+        "APPLICATION_PREFIX",
+        "",
+    )
     SECRET_KEY = os.environ.get(
         "SECRET_KEY"
     )

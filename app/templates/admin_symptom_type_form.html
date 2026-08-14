@@ -12,7 +12,7 @@
 
     <link
         rel="stylesheet"
-        href="/symptomtracker/static/css/style.css"
+        href="{{ url_for('static', filename='css/style.css') }}"
     >
 </head>
 
@@ -94,7 +94,7 @@ symptom_type_display_name
 
             <form
                 method="post"
-                action="/symptomtracker/admin/symptom-types/{{ symptom_type.id }}/toggle"
+                action="{{ url_for('main.admin_toggle_symptom_type', symptom_type_id=symptom_type.id) }}"
             >
 
                 <button
@@ -121,7 +121,7 @@ symptom_type_display_name
 
         <a
             class="home-button"
-            href="/symptomtracker/admin/symptom-types"
+            href="{{ url_for('main.admin_symptom_types') }}"
         >
             ← {{ t("symptom_type.title") }}
         </a>

@@ -12,7 +12,7 @@
 
     <link
         rel="stylesheet"
-        href="/symptomtracker/static/css/style.css"
+        href="{{ url_for('static', filename='css/style.css') }}"
     >
 </head>
 
@@ -238,7 +238,7 @@
 
     <a
         class="home-button"
-        href="{% if return_to == 'admin' %}/symptomtracker/admin/foods{% else %}/symptomtracker/foods{% endif %}"
+        href="{{ url_for('main.admin_foods') if return_to == 'admin' else url_for('main.foods') }}"
     >
         ← Vissza
     </a>
@@ -353,7 +353,7 @@
 </script>
 
 <script
-    src="/symptomtracker/static/js/food_images.js?v=4"
+    src="{{ url_for('static', filename='js/food_images.js') }}?v=4"
 ></script>
 
 </body>

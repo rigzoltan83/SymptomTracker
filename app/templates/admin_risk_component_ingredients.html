@@ -17,7 +17,7 @@
 
     <link
         rel="stylesheet"
-        href="/symptomtracker/static/css/style.css"
+        href="{{ url_for('static', filename='css/style.css') }}"
     >
 
 </head>
@@ -229,7 +229,7 @@
 
         <a
             class="home-button"
-            href="/symptomtracker/admin/risk-components"
+            href="{{ url_for('main.admin_risk_components') }}"
         >
             ← {{ t("risk.title") }}
         </a>

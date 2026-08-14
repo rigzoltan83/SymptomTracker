@@ -12,7 +12,7 @@
 
     <link
         rel="stylesheet"
-        href="/symptomtracker/static/css/style.css"
+        href="{{ url_for('static', filename='css/style.css') }}"
     >
 </head>
 
@@ -45,12 +45,12 @@
 
                     <a
                         class="food-readonly-image"
-                        href="/symptomtracker/uploads/foods/{{ image.filename }}"
+                        href="{{ url_for('main.food_image', filename=image.filename) }}"
                         target="_blank"
                     >
 
                         <img
-                            src="/symptomtracker/uploads/foods/{{ image.filename }}"
+                            src="{{ url_for('main.food_image', filename=image.filename) }}"
                             alt="{{ food.name }}"
                             loading="lazy"
                         >
@@ -171,7 +171,7 @@
 
         <a
             class="home-button"
-            href="/symptomtracker/foods"
+            href="{{ url_for('main.foods') }}"
         >
             ← {{ t("food.other") }}
         </a>

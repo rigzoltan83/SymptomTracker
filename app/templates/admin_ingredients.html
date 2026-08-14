@@ -12,7 +12,7 @@
 
     <link
         rel="stylesheet"
-        href="/symptomtracker/static/css/style.css"
+        href="{{ url_for('static', filename='css/style.css') }}"
     >
 </head>
 
@@ -101,7 +101,7 @@
 
     <a
         class="risk-admin-main-link"
-        href="/symptomtracker/admin/ingredients/{{ ingredient.id }}/edit"
+        href="{{ url_for('main.admin_edit_ingredient', ingredient_id=ingredient.id) }}"
     >
 
         <div class="ingredient-admin-main">
@@ -168,7 +168,7 @@
 
         <a
             class="home-button"
-            href="/symptomtracker/admin"
+            href="{{ url_for('main.admin') }}"
         >
             ← {{ t("common.management") }}
         </a>

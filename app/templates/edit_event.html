@@ -12,7 +12,7 @@
 
     <link
         rel="stylesheet"
-        href="../../static/css/style.css"
+        href="{{ url_for('static', filename='css/style.css') }}"
     >
 </head>
 
@@ -170,12 +170,12 @@
 
                         <a
                             class="food-readonly-image"
-                            href="/symptomtracker/uploads/foods/{{ image.filename }}"
+                            href="{{ url_for('main.food_image', filename=image.filename) }}"
                             target="_blank"
                         >
 
                             <img
-                                src="/symptomtracker/uploads/foods/{{ image.filename }}"
+                                src="{{ url_for('main.food_image', filename=image.filename) }}"
                                 alt="{{ event.food_event.food.name }}"
                                 loading="lazy"
                             >
@@ -386,7 +386,7 @@
 <div class="image-manage-card">
 
     <img
-        src="/symptomtracker/uploads/symptoms/{{ image.filename }}"
+        src="{{ url_for('main.symptom_image', filename=image.filename) }}"
         alt="{{ t('common.image_alt') }}"
         loading="lazy"
     >
@@ -395,7 +395,7 @@
         class="image-delete-button"
         type="submit"
         formmethod="post"
-        formaction="/symptomtracker/symptoms/images/{{ image.id }}/delete"
+        formaction="{{ url_for('main.delete_symptom_image', image_id=image.id) }}"
         formnovalidate
         onclick="
             return confirm(
@@ -449,7 +449,7 @@
 
         <a
             class="home-button"
-            href="/symptomtracker/events"
+            href="{{ url_for('main.events') }}"
         >
             ← {{ t("event.back") }}
         </a>

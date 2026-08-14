@@ -12,7 +12,7 @@
 
 <link
     rel="stylesheet"
-    href="/symptomtracker/static/css/style.css"
+    href="{{ url_for('static', filename='css/style.css') }}"
 >
 </head>
 
@@ -352,14 +352,14 @@ placeholder="{{ t('events.search_placeholder') }}"
 
                         <a
                             class="edit-button"
-                            href="/symptomtracker/events/{{ event.id }}/edit"
+                            href="{{ url_for('main.edit_event', event_id=event.id) }}"
                         >
                             ✏️ {{ t("events.edit") }}
                         </a>
 
                         <form
                             method="post"
-                            action="/symptomtracker/events/{{ event.id }}/toggle"
+                            action="{{ url_for('main.toggle_event', event_id=event.id) }}"
                         >
 
                             <button
@@ -446,7 +446,7 @@ placeholder="{{ t('events.search_placeholder') }}"
 
         <a
             class="home-button"
-            href="/symptomtracker/"
+            href="{{ url_for('main.index') }}"
         >
             ← {{ t("common.home") }}
         </a>

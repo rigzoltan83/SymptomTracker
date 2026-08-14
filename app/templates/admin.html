@@ -12,7 +12,7 @@
 
     <link
         rel="stylesheet"
-        href="/symptomtracker/static/css/style.css"
+        href="{{ url_for('static', filename='css/style.css') }}"
     >
 </head>
 
@@ -36,7 +36,7 @@
 
         <a
             class="admin-card"
-href="/symptomtracker/admin/foods"
+href="{{ url_for('main.admin_foods') }}"
         >
             <span class="admin-icon">
                 🍽️
@@ -58,7 +58,7 @@ href="/symptomtracker/admin/foods"
 
         <a
             class="admin-card"
-            href="/symptomtracker/admin/ingredients"
+            href="{{ url_for('main.admin_ingredients') }}"
         >
             <span class="admin-icon">
                 🥕
@@ -80,7 +80,7 @@ href="/symptomtracker/admin/foods"
 
         <a
             class="admin-card"
-            href="/symptomtracker/admin/risk-components"
+            href="{{ url_for('main.admin_risk_components') }}"
         >
             <span class="admin-icon">
                 ⚠️
@@ -102,7 +102,7 @@ href="/symptomtracker/admin/foods"
 
 <a
     class="admin-card"
-    href="/symptomtracker/admin/symptom-types"
+    href="{{ url_for('main.admin_symptom_types') }}"
 >
     <span class="admin-icon">
         🔴
@@ -124,7 +124,7 @@ href="/symptomtracker/admin/foods"
 
 <a
     class="admin-card"
-    href="/symptomtracker/admin/body-parts"
+    href="{{ url_for('main.admin_body_parts') }}"
 >
     <span class="admin-icon">
         🧍
@@ -146,7 +146,7 @@ href="/symptomtracker/admin/foods"
 
 <a
     class="admin-card"
-    href="/symptomtracker/admin/medications"
+    href="{{ url_for('main.admin_medications') }}"
 >
     <span class="admin-icon">
         💊
@@ -168,7 +168,7 @@ href="/symptomtracker/admin/foods"
 
         <a
             class="admin-card"
-href="/symptomtracker/export?return_to=admin"
+href="{{ url_for('main.export_page', return_to='admin') }}"
         >
             <span class="admin-icon">
                 📊
@@ -194,7 +194,7 @@ href="/symptomtracker/export?return_to=admin"
 
         <a
             class="home-button"
-            href="/symptomtracker/"
+            href="{{ url_for('main.index') }}"
         >
             ← {{ t("common.home") }}
         </a>

@@ -12,7 +12,7 @@
 
     <link
         rel="stylesheet"
-        href="/symptomtracker/static/css/style.css"
+        href="{{ url_for('static', filename='css/style.css') }}"
     >
 </head>
 
@@ -87,7 +87,7 @@
 
     <a
         class="new-food-button"
-        href="/symptomtracker/admin/body-parts/new"
+        href="{{ url_for('main.admin_new_body_part') }}"
     >
         ＋ {{ t("body_part.new") }}
     </a>
@@ -103,7 +103,7 @@
 
                     <a
                         class="risk-admin-main-link"
-                        href="/symptomtracker/admin/body-parts/{{ body_part.id }}/edit"
+                        href="{{ url_for('main.admin_edit_body_part', body_part_id=body_part.id) }}"
                     >
 
                         <div class="ingredient-admin-main">
@@ -147,7 +147,7 @@
 
         <a
             class="home-button"
-            href="/symptomtracker/admin"
+            href="{{ url_for('main.admin') }}"
         >
             ← {{ t("common.management") }}
         </a>

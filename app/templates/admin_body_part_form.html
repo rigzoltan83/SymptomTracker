@@ -12,7 +12,7 @@
 
     <link
         rel="stylesheet"
-        href="/symptomtracker/static/css/style.css"
+        href="{{ url_for('static', filename='css/style.css') }}"
     >
 </head>
 
@@ -94,7 +94,7 @@ body_part_display_name
 
             <form
                 method="post"
-                action="/symptomtracker/admin/body-parts/{{ body_part.id }}/toggle"
+                action="{{ url_for('main.admin_toggle_body_part', body_part_id=body_part.id) }}"
             >
 
                 <button
@@ -121,7 +121,7 @@ body_part_display_name
 
         <a
             class="home-button"
-            href="/symptomtracker/admin/body-parts"
+            href="{{ url_for('main.admin_body_parts') }}"
         >
             ← {{ t("body_part.title") }}
         </a>

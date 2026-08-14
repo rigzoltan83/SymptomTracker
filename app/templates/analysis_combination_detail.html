@@ -18,7 +18,7 @@
 
     <link
         rel="stylesheet"
-        href="/symptomtracker/static/css/style.css"
+        href="{{ url_for('static', filename='css/style.css') }}"
     >
 
 </head>
@@ -59,11 +59,11 @@
                 <select name="days">
 
                     {% for value, label in [
-                        (30, "{{ t("analysis.last_30") }}"),
-                        (90, "{{ t("analysis.last_90") }}"),
-                        (180, "{{ t("analysis.last_180") }}"),
-                        (365, "{{ t("analysis.last_year") }}"),
-                        (0, "{{ t("analysis.all_data") }}")
+                        (30, t("analysis.last_30")),
+                        (90, t("analysis.last_90")),
+                        (180, t("analysis.last_180")),
+                        (365, t("analysis.last_year")),
+                        (0, t("analysis.all_data"))
                     ] %}
 
                         <option
@@ -553,7 +553,7 @@
 
         <a
             class="home-button"
-            href="/symptomtracker/analysis?days={{ selected_days }}&window={{ selected_window }}{% if selected_symptom_type_id %}&symptom_type_id={{ selected_symptom_type_id }}{% endif %}"
+            href="{{ url_for('main.analysis_page') }}?days={{ selected_days }}&window={{ selected_window }}{% if selected_symptom_type_id %}&symptom_type_id={{ selected_symptom_type_id }}{% endif %}"
         >
             ← {{ t("analysis.title") }}
         </a>

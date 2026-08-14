@@ -12,7 +12,7 @@
 
     <link
         rel="stylesheet"
-        href="/symptomtracker/static/css/style.css"
+        href="{{ url_for('static', filename='css/style.css') }}"
     >
 </head>
 
@@ -87,7 +87,7 @@
 
     <a
         class="new-food-button"
-        href="/symptomtracker/admin/risk-components/new"
+        href="{{ url_for('main.admin_new_risk_component') }}"
     >
         ＋ {{ t("risk.new_button") }}
     </a>
@@ -103,7 +103,7 @@
 
     <a
         class="compact-risk-main"
-        href="/symptomtracker/admin/risk-components/{{ risk.id }}/edit"
+        href="{{ url_for('main.admin_edit_risk_component', risk_component_id=risk.id) }}"
     >
 
         <strong>
@@ -125,7 +125,7 @@
 
     <a
         class="compact-risk-count"
-        href="/symptomtracker/admin/risk-components/{{ risk.id }}/ingredients"
+        href="{{ url_for('main.admin_risk_component_ingredients', risk_component_id=risk.id) }}"
     >
         {{ ingredient_counts.get(risk.id, 0) }}
         {{ t("risk.total_short") }}
@@ -134,7 +134,7 @@
 
     <a
         class="compact-risk-edit"
-        href="/symptomtracker/admin/risk-components/{{ risk.id }}/edit"
+        href="{{ url_for('main.admin_edit_risk_component', risk_component_id=risk.id) }}"
 aria-label="{{ t('risk.edit_aria', name=reference_name(risk)) }}"
     >
         ›
@@ -159,7 +159,7 @@ aria-label="{{ t('risk.edit_aria', name=reference_name(risk)) }}"
 
         <a
             class="home-button"
-            href="/symptomtracker/admin"
+            href="{{ url_for('main.admin') }}"
         >
             ← {{ t("common.management") }}
         </a>

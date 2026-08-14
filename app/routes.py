@@ -1016,7 +1016,9 @@ def admin_new_body_part():
         db.session.commit()
 
         return redirect(
-            "/symptomtracker/admin/body-parts"
+            url_for(
+                "main.admin_body_parts"
+            )
         )
 
     return render_template(
@@ -1085,9 +1087,10 @@ def admin_edit_body_part(
         db.session.commit()
 
         return redirect(
-            f"/symptomtracker/admin/"
-            f"body-parts/"
-            f"{body_part.id}/edit"
+            url_for(
+                "main.admin_edit_body_part",
+                body_part_id=body_part.id,
+            )
         )
 
     return render_template(
@@ -1120,9 +1123,10 @@ def admin_toggle_body_part(
     db.session.commit()
 
     return redirect(
-        f"/symptomtracker/admin/"
-        f"body-parts/"
-        f"{body_part.id}/edit"
+        url_for(
+            "main.admin_edit_body_part",
+            body_part_id=body_part.id,
+        )
     )
 
 
@@ -1178,7 +1182,9 @@ def admin_new_symptom_type():
         db.session.commit()
 
         return redirect(
-            "/symptomtracker/admin/symptom-types"
+            url_for(
+                "main.admin_symptom_types"
+            )
         )
 
     return render_template(
@@ -1247,9 +1253,10 @@ def admin_edit_symptom_type(
         db.session.commit()
 
         return redirect(
-            f"/symptomtracker/admin/"
-            f"symptom-types/"
-            f"{symptom_type.id}/edit"
+            url_for(
+                "main.admin_edit_symptom_type",
+                symptom_type_id=symptom_type.id,
+            )
         )
 
     return render_template(
@@ -1282,9 +1289,10 @@ def admin_toggle_symptom_type(
     db.session.commit()
 
     return redirect(
-        f"/symptomtracker/admin/"
-        f"symptom-types/"
-        f"{symptom_type.id}/edit"
+        url_for(
+            "main.admin_edit_symptom_type",
+            symptom_type_id=symptom_type.id,
+        )
     )
 
 
@@ -1450,9 +1458,10 @@ def admin_risk_component_ingredients(
         db.session.commit()
 
         return redirect(
-            f"/symptomtracker/admin/"
-            f"risk-components/"
-            f"{risk_component.id}/ingredients"
+            url_for(
+                "main.admin_risk_component_ingredients",
+                risk_component_id=risk_component.id,
+            )
         )
 
     search = request.args.get(
@@ -1602,7 +1611,9 @@ def admin_new_risk_component():
         db.session.commit()
 
         return redirect(
-            "/symptomtracker/admin/risk-components"
+            url_for(
+                "main.admin_risk_components"
+            )
         )
 
     return render_template(
@@ -1700,9 +1711,10 @@ def admin_edit_risk_component(
         db.session.commit()
 
         return redirect(
-            f"/symptomtracker/admin/"
-            f"risk-components/"
-            f"{risk_component.id}/edit"
+            url_for(
+                "main.admin_edit_risk_component",
+                risk_component_id=risk_component.id,
+            )
         )
 
     return render_template(
@@ -1742,9 +1754,10 @@ def admin_toggle_risk_component(
     db.session.commit()
 
     return redirect(
-        f"/symptomtracker/admin/"
-        f"risk-components/"
-        f"{risk_component.id}/edit"
+        url_for(
+            "main.admin_edit_risk_component",
+            risk_component_id=risk_component.id,
+        )
     )
 
 
@@ -1951,8 +1964,10 @@ def admin_edit_ingredient(ingredient_id):
         db.session.commit()
 
         return redirect(
-            f"/symptomtracker/admin/"
-            f"ingredients/{ingredient.id}/edit"
+            url_for(
+                "main.admin_edit_ingredient",
+                ingredient_id=ingredient.id,
+            )
         )
 
     selected_risks = {
@@ -2069,7 +2084,9 @@ def admin_new_medication():
         db.session.commit()
 
         return redirect(
-            "/symptomtracker/admin/medications"
+            url_for(
+                "main.admin_medications"
+            )
         )
 
     return render_template(
@@ -2136,9 +2153,10 @@ def admin_edit_medication(
         db.session.commit()
 
         return redirect(
-            f"/symptomtracker/admin/"
-            f"medications/"
-            f"{medication.id}/edit"
+            url_for(
+                "main.admin_edit_medication",
+                medication_id=medication.id,
+            )
         )
 
     return render_template(
@@ -2166,9 +2184,10 @@ def admin_toggle_medication(
         and medication.active
     ):
         return redirect(
-            f"/symptomtracker/admin/"
-            f"medications/"
-            f"{medication.id}/edit"
+            url_for(
+                "main.admin_edit_medication",
+                medication_id=medication.id,
+            )
         )
 
     medication.active = (
@@ -2178,9 +2197,10 @@ def admin_toggle_medication(
     db.session.commit()
 
     return redirect(
-        f"/symptomtracker/admin/"
-        f"medications/"
-        f"{medication.id}/edit"
+        url_for(
+            "main.admin_edit_medication",
+            medication_id=medication.id,
+        )
     )
 
 
@@ -2198,9 +2218,10 @@ def admin_set_default_medication(
 
     if not medication.active:
         return redirect(
-            f"/symptomtracker/admin/"
-            f"medications/"
-            f"{medication.id}/edit"
+            url_for(
+                "main.admin_edit_medication",
+                medication_id=medication.id,
+            )
         )
 
     Medication.query.update(
@@ -2215,9 +2236,10 @@ def admin_set_default_medication(
     db.session.commit()
 
     return redirect(
-        f"/symptomtracker/admin/"
-        f"medications/"
-        f"{medication.id}/edit"
+        url_for(
+            "main.admin_edit_medication",
+            medication_id=medication.id,
+        )
     )
 
 
@@ -2671,7 +2693,9 @@ def edit_event(event_id):
         db.session.commit()
 
         return redirect(
-            "/symptomtracker/events"
+            url_for(
+                "main.events"
+            )
         )
 
     foods = []
@@ -2748,7 +2772,9 @@ def toggle_event(event_id):
 
     return redirect(
         request.referrer
-        or "/symptomtracker/events"
+        or url_for(
+            "main.events"
+        )
     )
 
 
@@ -3103,12 +3129,16 @@ def new_food():
 
         if return_to == "admin":
             return redirect(
-                "/symptomtracker/admin/foods"
+                url_for(
+                    "main.admin_foods"
+                )
             )
 
         return redirect(
-            f"/symptomtracker/foods/"
-            f"{food.id}/log"
+            url_for(
+                "main.log_food",
+                food_id=food.id,
+            )
         )
 
     return render_template(
@@ -3369,8 +3399,10 @@ def edit_food(food_id):
         db.session.commit()
 
         return redirect(
-            f"/symptomtracker/foods/"
-            f"{food.id}/edit"
+            url_for(
+                "main.edit_food",
+                food_id=food.id,
+            )
         )
 
     selected_ingredient_ids = [
@@ -3453,8 +3485,10 @@ def toggle_food(food_id):
     db.session.commit()
 
     return redirect(
-        f"/symptomtracker/foods/"
-        f"{food.id}/edit"
+        url_for(
+            "main.edit_food",
+            food_id=food.id,
+        )
     )
 
 
@@ -3470,7 +3504,9 @@ def log_food(food_id):
 
     if not food.active:
         return redirect(
-            "/symptomtracker/foods"
+            url_for(
+                "main.foods"
+            )
         )
 
     if request.method == "POST":
@@ -3529,7 +3565,9 @@ def log_food(food_id):
         db.session.commit()
 
         return redirect(
-            "/symptomtracker/"
+            url_for(
+                "main.index"
+            )
         )
 
     local_now = (
@@ -3707,7 +3745,9 @@ def add_symptom():
         db.session.commit()
 
         return redirect(
-            "/symptomtracker/"
+            url_for(
+                "main.index"
+            )
         )
 
     local_now = (
@@ -3752,8 +3792,10 @@ def delete_symptom_image(image_id):
     )
 
     return redirect(
-        f"/symptomtracker/events/"
-        f"{event_id}/edit"
+        url_for(
+            "main.edit_event",
+            event_id=event_id,
+        )
     )
 
 
@@ -3792,8 +3834,10 @@ def delete_food_image(image_id):
     )
 
     return redirect(
-        f"/symptomtracker/foods/"
-        f"{food_id}/edit"
+        url_for(
+            "main.edit_food",
+            food_id=food_id,
+        )
     )
 
 

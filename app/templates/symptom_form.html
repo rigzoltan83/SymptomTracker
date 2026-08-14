@@ -12,7 +12,7 @@
 
     <link
         rel="stylesheet"
-        href="../static/css/style.css"
+        href="{{ url_for('static', filename='css/style.css') }}"
     >
 </head>
 
@@ -255,7 +255,7 @@
 
         <a
             class="home-button"
-            href="/symptomtracker/"
+            href="{{ url_for('main.index') }}"
         >
             ← {{ t("common.cancel") }}
         </a>

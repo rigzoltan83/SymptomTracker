@@ -12,7 +12,7 @@
 
     <link
         rel="stylesheet"
-        href="/symptomtracker/static/css/style.css"
+        href="{{ url_for('static', filename='css/style.css') }}"
     >
 </head>
 
@@ -93,7 +93,7 @@
 
         <form
             method="post"
-            action="/symptomtracker/admin/medications/{{ medication.id }}/default"
+            action="{{ url_for('main.admin_set_default_medication', medication_id=medication.id) }}"
         >
 
             <button
@@ -115,7 +115,7 @@
 
             <form
                 method="post"
-                action="/symptomtracker/admin/medications/{{ medication.id }}/toggle"
+                action="{{ url_for('main.admin_toggle_medication', medication_id=medication.id) }}"
             >
 
                 <button
@@ -153,7 +153,7 @@
 
         <a
             class="home-button"
-            href="/symptomtracker/admin/medications"
+            href="{{ url_for('main.admin_medications') }}"
         >
             ← {{ t("medication.title") }}
         </a>

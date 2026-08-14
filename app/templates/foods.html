@@ -12,7 +12,7 @@
 
     <link
         rel="stylesheet"
-        href="/symptomtracker/static/css/style.css"
+        href="{{ url_for('static', filename='css/style.css') }}"
     >
 </head>
 
@@ -84,7 +84,7 @@
 
 <a
     class="new-food-button"
-    href="/symptomtracker/foods/new{% if admin_mode %}?return_to=admin{% endif %}"
+    href="{{ url_for('main.new_food', return_to='admin') if admin_mode else url_for('main.new_food') }}"
 >
 
         ＋ {{ t("foods.new") }}
@@ -99,7 +99,7 @@
 
                 <a
                     class="food-card"
-href="{% if admin_mode %}/symptomtracker/foods/{{ food.id }}/edit{% else %}/symptomtracker/foods/{{ food.id }}/log{% endif %}"
+href="{{ url_for('main.edit_food', food_id=food.id) if admin_mode else url_for('main.log_food', food_id=food.id) }}"
                 >
 
                     <div class="food-card-main">
@@ -185,7 +185,7 @@ href="{% if admin_mode %}/symptomtracker/foods/{{ food.id }}/edit{% else %}/symp
 
     <a
         class="home-button"
-        href="{% if admin_mode %}/symptomtracker/admin{% else %}/symptomtracker/{% endif %}"
+        href="{{ url_for('main.admin') if admin_mode else url_for('main.index') }}"
     >
         {% if admin_mode %}
             ← {{ t("common.management") }}

@@ -12,7 +12,7 @@
 
     <link
         rel="stylesheet"
-        href="/symptomtracker/static/css/style.css"
+        href="{{ url_for('static', filename='css/style.css') }}"
     >
 </head>
 
@@ -258,7 +258,7 @@
 
 <a
     class="analysis-risk-title-link"
-    href="/symptomtracker/analysis/risk/{{ row.risk_id }}?days={{ selected_days }}&window={{ selected_window }}{% if selected_symptom_type_id %}&symptom_type_id={{ selected_symptom_type_id }}{% endif %}"
+    href="{{ url_for('main.analysis_risk_detail', risk_component_id=row.risk_id) }}?days={{ selected_days }}&window={{ selected_window }}{% if selected_symptom_type_id %}&symptom_type_id={{ selected_symptom_type_id }}{% endif %}"
 >
     {{ row.name }}
 </a>
@@ -503,7 +503,7 @@
 
 <a
     class="analysis-combination-names analysis-combination-link"
-    href="/symptomtracker/analysis/combination/{{ row.first_risk_id }}/{{ row.second_risk_id }}?days={{ selected_days }}&window={{ selected_window }}{% if selected_symptom_type_id %}&symptom_type_id={{ selected_symptom_type_id }}{% endif %}"
+    href="{{ url_for('main.analysis_combination_detail', first_risk_id=row.first_risk_id, second_risk_id=row.second_risk_id) }}?days={{ selected_days }}&window={{ selected_window }}{% if selected_symptom_type_id %}&symptom_type_id={{ selected_symptom_type_id }}{% endif %}"
 >
 
     <span class="analysis-chip">
@@ -864,7 +864,7 @@
 
         <a
             class="home-button"
-            href="/symptomtracker/"
+            href="{{ url_for('main.index') }}"
         >
             ← {{ t("common.home") }}
         </a>

@@ -12,7 +12,7 @@
 
     <link
         rel="stylesheet"
-        href="/symptomtracker/static/css/style.css"
+        href="{{ url_for('static', filename='css/style.css') }}"
     >
 </head>
 
@@ -280,7 +280,7 @@
     <div class="image-manage-card">
 
         <img
-            src="/symptomtracker/uploads/foods/{{ image.filename }}"
+            src="{{ url_for('main.food_image', filename=image.filename) }}"
             alt="{{ food.name }}"
             loading="lazy"
         >
@@ -289,7 +289,7 @@
     class="image-delete-button"
     type="submit"
     formmethod="post"
-    formaction="/symptomtracker/foods/images/{{ image.id }}/delete"
+    formaction="{{ url_for('main.delete_food_image', image_id=image.id) }}"
     formnovalidate
     onclick="
         return confirm(
@@ -352,7 +352,7 @@
 
     <form
         method="post"
-        action="/symptomtracker/foods/{{ food.id }}/toggle"
+        action="{{ url_for('main.toggle_food', food_id=food.id) }}"
     >
 
         <button
@@ -374,7 +374,7 @@
 
 <a
     class="home-button"
-    href="/symptomtracker/admin/foods"
+    href="{{ url_for('main.admin_foods') }}"
 >
     ← {{ t("food.back") }}
 </a>
@@ -484,7 +484,7 @@
 </script>
 
 <script
-    src="/symptomtracker/static/js/food_images.js?v=4"
+    src="{{ url_for('static', filename='js/food_images.js') }}?v=4"
 ></script>
 
 </body>

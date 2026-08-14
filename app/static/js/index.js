@@ -1,6 +1,9 @@
 const i18n =
     window.SYMPTOMTRACKER_I18N || {};
 
+const urls =
+    window.SYMPTOMTRACKER_URLS || {};
+
 const medicationButton =
     document.getElementById("medication-button");
 
@@ -30,7 +33,7 @@ async function addDefaultMedication() {
 
     try {
         const response = await fetch(
-            "api/events/default-medication",
+            urls.addDefaultMedication,
             {
                 method: "POST",
             }

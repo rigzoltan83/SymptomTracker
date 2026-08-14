@@ -12,7 +12,7 @@
 
     <link
         rel="stylesheet"
-        href="/symptomtracker/static/css/style.css"
+        href="{{ url_for('static', filename='css/style.css') }}"
     >
 </head>
 
@@ -111,7 +111,7 @@
 
 <a
     class="home-button"
-    href="{% if return_to == 'admin' %}/symptomtracker/admin{% else %}/symptomtracker/{% endif %}"
+    href="{{ url_for('main.admin') if return_to == 'admin' else url_for('main.index') }}"
 >
     {% if return_to == "admin" %}
         ← {{ t("common.management") }}
@@ -140,8 +140,21 @@
                 new FormData(form)
             );
 
+        const exportUrls = {
+            csv: "{{ url_for('main.export_csv') }}",
+            xlsx: "{{ url_for('main.export_xlsx') }}"
+        };
+
+        const exportUrl =
+            exportUrls[format];
+
+        if (!exportUrl) {
+            return;
+        }
+
         window.location.href =
-            `/symptomtracker/export/${format}?`
+            exportUrl
+            + "?"
             + params.toString();
     }
 </script>
