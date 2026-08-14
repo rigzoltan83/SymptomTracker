@@ -24,7 +24,7 @@ During a fresh installation the installer:
 2. refuses to overwrite a detected existing SymptomTracker installation;
 3. installs required Ubuntu packages;
 4. installs Docker Engine / Docker Compose when required, or uses a compatible existing installation;
-5. automatically finds free ports instead of assuming that `5432` and `5060` are available;
+5. automatically finds free ports instead of assuming that `5432` and `8000` are available;
 6. creates the `symptomtracker` system user;
 7. installs the application under `/opt/symptomtracker`;
 8. generates a unique PostgreSQL password and Flask secret key;
@@ -90,9 +90,9 @@ The installer searches for a free PostgreSQL host port starting at:
 
 and a free application port starting at:
 
-`5060`
+`8000`
 
-For example, if another PostgreSQL instance already occupies `5432` and another application occupies `5060`, the installer can automatically choose `5433` and `5061`.
+For example, if another PostgreSQL instance already occupies `5432` and another application occupies `8000`, the installer can automatically choose `5433` and `8001`.
 
 The selected ports are written to the installation configuration and used consistently by Docker, the database connection and the systemd service.
 

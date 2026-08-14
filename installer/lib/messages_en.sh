@@ -73,3 +73,11 @@ MSG_DOCKER_UNKNOWN="Unknown or manually installed Docker detected."
 MSG_DOCKER_UNKNOWN_ABORT="For safety, the installer will not modify this Docker installation. Install the Docker Compose plugin and run the installer again."
 MSG_ARCH_OK="Supported processor architecture detected."
 MSG_ARCH_UNSUPPORTED="This alpha installer supports amd64 / x86_64 architecture only."
+MSG_EXISTING_DIR="The installation directory already exists and is not empty."
+MSG_EXISTING_VOLUME="An existing SymptomTracker database volume was detected."
+MSG_EXISTING_USER="An existing symptomtracker system user was detected."
+MSG_EXISTING_GROUP="An existing symptomtracker system group was detected."
+
+MSG_DOCKER_SERVICE="Enabling and starting Docker service..."
+
+MSG_UFW_WARNING="WARNING: the UFW firewall is active. If the application cannot be reached from the LAN, allow the application TCP port:"

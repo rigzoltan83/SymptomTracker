@@ -73,3 +73,11 @@ MSG_DOCKER_UNKNOWN="Ismeretlen vagy kézzel telepített Docker található."
 MSG_DOCKER_UNKNOWN_ABORT="A telepítő biztonsági okból nem módosítja ezt a Docker telepítést. Telepítsd hozzá a Docker Compose plugint, majd futtasd újra a telepítőt."
 MSG_ARCH_OK="Támogatott processzor-architektúra."
 MSG_ARCH_UNSUPPORTED="Ez az alpha telepítő kizárólag amd64 / x86_64 architektúrát támogat."
+MSG_EXISTING_DIR="A telepítési könyvtár már létezik és nem üres."
+MSG_EXISTING_VOLUME="Meglévő SymptomTracker adatbázis-volume található."
+MSG_EXISTING_USER="Meglévő symptomtracker rendszerfelhasználó található."
+MSG_EXISTING_GROUP="Meglévő symptomtracker rendszercsoport található."
+
+MSG_DOCKER_SERVICE="Docker szolgáltatás engedélyezése és indítása..."
+
+MSG_UFW_WARNING="FIGYELEM: az UFW tűzfal aktív. Ha az alkalmazás LAN-ról nem érhető el, engedélyezze az alkalmazás TCP portját:"

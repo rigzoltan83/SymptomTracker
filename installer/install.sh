@@ -17,8 +17,8 @@ LIB_DIR="${SCRIPT_DIR}/lib"
 
 DRY_RUN=false
 
-APP_PORT_START=5060
-APP_PORT_END=5199
+APP_PORT_START=8000
+APP_PORT_END=8199
 
 DB_PORT_START=5432
 DB_PORT_END=5499
@@ -160,6 +160,7 @@ required_files=(
     "${PROJECT_DIR}/docker-compose.yml"
     "${PROJECT_DIR}/seed/reference_data.json"
     "${PROJECT_DIR}/scripts/import_reference_seed.py"
+    "${PROJECT_DIR}/scripts/wait_for_database.py"
     "${PROJECT_DIR}/migrations/alembic.ini"
     "${PROJECT_DIR}/run.py"
 )
@@ -180,6 +181,31 @@ echo "$MSG_FILES_OK"
 # =========================================================
 
 existing_install=false
+
+
+if [ -d "$INSTALL_DIR" ] \
+    && [ -n "$(ls -A "$INSTALL_DIR" 2>/dev/null)" ]
+then
+    echo
+    echo "$MSG_EXISTING_DIR"
+
+    existing_install=true
+fi
+
+
+if getent passwd symptomtracker >/dev/null 2>&1; then
+    echo
+    echo "$MSG_EXISTING_USER"
+
+    existing_install=true
+fi
+
+if getent group symptomtracker >/dev/null 2>&1; then
+    echo
+    echo "$MSG_EXISTING_GROUP"
+
+    existing_install=true
+fi
 
 
 if [ -f "${INSTALL_DIR}/.env" ]; then
@@ -205,6 +231,16 @@ fi
 
 
 if command -v docker >/dev/null 2>&1; then
+    if docker volume inspect \
+        symptomtracker_symptomtracker_pgdata \
+        >/dev/null 2>&1
+    then
+        echo
+        echo "$MSG_EXISTING_VOLUME"
+
+        existing_install=true
+    fi
+
     if docker ps -a \
         --format '{{.Names}}' \
         2>/dev/null \
@@ -258,7 +294,9 @@ if [ "$DRY_RUN" = false ]; then
         python3-venv \
         python3-pip \
         ca-certificates \
-        curl
+        curl \
+        tar \
+        iproute2
 
     if command -v docker >/dev/null 2>&1; then
         if docker compose version \
@@ -278,6 +316,13 @@ if [ "$DRY_RUN" = false ]; then
 
         install_docker_ubuntu
     fi
+
+    echo
+    echo "$MSG_DOCKER_SERVICE"
+
+    systemctl enable \
+        --now \
+        docker
 
     echo "$MSG_BOOTSTRAP_DONE"
 fi
@@ -413,12 +458,19 @@ fi
 echo
 echo "$MSG_CREATE_USER"
 
+if ! getent group symptomtracker >/dev/null 2>&1; then
+    groupadd \
+        --system \
+        symptomtracker
+fi
+
 if ! id \
     symptomtracker \
     >/dev/null 2>&1
 then
     useradd \
         --system \
+        --gid symptomtracker \
         --home "$INSTALL_DIR" \
         --shell /usr/sbin/nologin \
         symptomtracker
@@ -452,7 +504,7 @@ if [ "$PROJECT_DIR" != "$INSTALL_DIR" ]; then
         -xf -
 fi
 
-chown \
+chown -R \
     root:root \
     "$INSTALL_DIR"
 
@@ -705,6 +757,7 @@ WorkingDirectory=${INSTALL_DIR}
 EnvironmentFile=${INSTALL_DIR}/.env
 Environment=PYTHONUNBUFFERED=1
 
+ExecStartPre=${INSTALL_DIR}/venv/bin/python ${INSTALL_DIR}/scripts/wait_for_database.py
 ExecStart=${INSTALL_DIR}/venv/bin/gunicorn --workers 2 --bind 0.0.0.0:\${APP_PORT} --timeout 60 run:app
 
 Restart=always
@@ -744,10 +797,10 @@ systemctl restart \
 echo
 echo "$MSG_WAIT_APP"
 
-APP_URL="http://127.0.0.1:${APP_PORT}/"
+HEALTH_URL="http://127.0.0.1:${APP_PORT}/"
 
 if ! wait_for_http \
-    "$APP_URL" \
+    "$HEALTH_URL" \
     30 \
     2
 then
@@ -771,6 +824,39 @@ then
 fi
 
 echo "$MSG_APP_READY"
+
+SERVER_IP="$(
+    ip -4 route get 1.1.1.1 2>/dev/null \
+        | awk '{
+            for (i = 1; i <= NF; i++) {
+                if ($i == "src") {
+                    print $(i + 1)
+                    exit
+                }
+            }
+        }'
+)"
+
+if [ -n "$SERVER_IP" ]; then
+    APP_URL="http://${SERVER_IP}:${APP_PORT}/"
+else
+    APP_URL="http://SERVER_IP:${APP_PORT}/"
+fi
+
+
+# ---------------------------------------------------------
+# FIREWALL FIGYELMEZTETÉS
+# ---------------------------------------------------------
+
+if command -v ufw >/dev/null 2>&1; then
+    if ufw status 2>/dev/null \
+        | grep -Fq "Status: active"
+    then
+        echo
+        echo "$MSG_UFW_WARNING"
+        echo "  sudo ufw allow ${APP_PORT}/tcp"
+    fi
+fi
 
 
 # ---------------------------------------------------------

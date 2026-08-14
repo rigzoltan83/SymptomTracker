@@ -24,7 +24,7 @@ Friss telepítéskor a telepítő:
 2. meglévő SymptomTracker telepítés észlelésekor nem írja azt felül;
 3. telepíti a szükséges Ubuntu csomagokat;
 4. szükség esetén telepíti a Docker Engine-t és Docker Compose-t, illetve megfelelő meglévő telepítés esetén azt használja;
-5. automatikusan szabad portokat keres, tehát nem feltételezi, hogy az ``5432`` és ``5060`` szabad;
+5. automatikusan szabad portokat keres, tehát nem feltételezi, hogy az ``5432`` és ``8000`` szabad;
 6. létrehozza a ``symptomtracker`` rendszerfelhasználót;
 7. telepíti az alkalmazást a ``/opt/symptomtracker`` könyvtárba;
 8. egyedi PostgreSQL-jelszót és Flask titkos kulcsot generál;
@@ -90,9 +90,9 @@ Az adatbázis host portjához innen kezd szabad portot keresni:
 
 Az alkalmazáshoz pedig innen:
 
-`5060`
+`8000`
 
-Ha például egy másik PostgreSQL már használja az ``5432`` portot, és egy másik alkalmazás az ``5060`` portot, a telepítő automatikusan választhatja az ``5433`` és ``5061`` portokat.
+Ha például egy másik PostgreSQL már használja az ``5432`` portot, és egy másik alkalmazás az ``8000`` portot, a telepítő automatikusan választhatja az ``5433`` és ``8001`` portokat.
 
 A kiválasztott portokat elmenti a telepítés konfigurációjába, és ugyanazokat használja a Docker, az adatbázis-kapcsolat és a systemd szolgáltatás konfigurálásakor.
 
