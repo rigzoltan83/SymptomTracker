@@ -74,8 +74,22 @@ def change_language(language_code):
         language_code
     )
 
+    next_url = request.args.get(
+        "next",
+        "",
+    ).strip()
+
+    if (
+        not next_url
+        or not next_url.startswith("/")
+        or next_url.startswith("//")
+    ):
+        next_url = url_for(
+            "main.index"
+        )
+
     return redirect(
-        url_for("main.index")
+        next_url
     )
 
 

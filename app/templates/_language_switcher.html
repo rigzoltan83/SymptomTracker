@@ -4,7 +4,8 @@
         class="language-button"
         href="{{ url_for(
             'main.change_language',
-            language_code='hu'
+            language_code='hu',
+            next=request.script_root ~ request.full_path
         ) }}"
         title="Magyar"
         aria-label="Magyar"
@@ -25,7 +26,8 @@
         class="language-button"
         href="{{ url_for(
             'main.change_language',
-            language_code='en'
+            language_code='en',
+            next=request.script_root ~ request.full_path
         ) }}"
         title="English"
         aria-label="English"
