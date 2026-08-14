@@ -58,7 +58,7 @@ def _signal_label(
     control_rate,
 ):
     if exposed_count < 3:
-        return "Kevés adat"
+        return "low_data"
 
     difference = (
         exposed_rate
@@ -69,18 +69,18 @@ def _signal_label(
         exposed_count >= 5
         and difference >= 0.30
     ):
-        return "Magasabb együttjárás"
+        return "high"
 
     if (
         exposed_count >= 4
         and difference >= 0.15
     ):
-        return "Mérsékelt együttjárás"
+        return "medium"
 
     if difference > 0:
-        return "Enyhe együttjárás"
+        return "mild"
 
-    return "Nem látszik többlet"
+    return "none"
 
 
 def build_analysis(
@@ -563,30 +563,22 @@ def build_analysis(
             )
 
             if pair_count < 3:
-                signal = "Kevés adat"
+                signal = "low_data"
 
             elif (
                 pair_count >= 5
                 and difference >= 0.30
             ):
-                signal = (
-                    "Erős kombinációs jel"
-                )
+                signal = "high"
 
             elif difference >= 0.15:
-                signal = (
-                    "Mérsékelt kombinációs jel"
-                )
+                signal = "medium"
 
             elif difference > 0:
-                signal = (
-                    "Enyhe kombinációs jel"
-                )
+                signal = "mild"
 
             else:
-                signal = (
-                    "Nem látszik kombinációs többlet"
-                )
+                signal = "none"
 
             combination_stats.append(
                 {
@@ -742,15 +734,14 @@ def build_analysis(
                     symptom.occurred_at
                 ),
                 "symptom_name": (
-                    symptom_event
-                    .symptom_type
-                    .name
+                    get_reference_name(
+                        symptom_event.symptom_type
+                    )
                     if (
                         symptom_event
-                        and symptom_event
-                        .symptom_type
+                        and symptom_event.symptom_type
                     )
-                    else "Tünet"
+                    else None
                 ),
                 "severity": (
                     symptom_event.severity
@@ -952,11 +943,11 @@ def build_risk_detail(
                 {
                     "event_id": symptom.id,
                     "name": (
-                        symptom_event
-                        .symptom_type
-                        .name
+                        get_reference_name(
+                            symptom_event.symptom_type
+                        )
                         if symptom_event.symptom_type
-                        else "Tünet"
+                        else None
                     ),
                     "occurred_at": (
                         symptom.occurred_at
@@ -1297,11 +1288,11 @@ def build_combination_detail(
                 {
                     "event_id": symptom.id,
                     "name": (
-                        symptom_event
-                        .symptom_type
-                        .name
+                        get_reference_name(
+                            symptom_event.symptom_type
+                        )
                         if symptom_event.symptom_type
-                        else "Tünet"
+                        else None
                     ),
                     "occurred_at": (
                         symptom.occurred_at
