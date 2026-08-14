@@ -435,13 +435,6 @@ echo "$MSG_COPY_FILES"
 mkdir -p \
     "$INSTALL_DIR"
 
-chown \
-    root:root \
-    "$INSTALL_DIR"
-
-chmod 755 \
-    "$INSTALL_DIR"
-
 if [ "$PROJECT_DIR" != "$INSTALL_DIR" ]; then
     tar \
         --exclude='.git' \
@@ -458,6 +451,13 @@ if [ "$PROJECT_DIR" != "$INSTALL_DIR" ]; then
         -C "$INSTALL_DIR" \
         -xf -
 fi
+
+chown \
+    root:root \
+    "$INSTALL_DIR"
+
+chmod 755 \
+    "$INSTALL_DIR"
 
 mkdir -p \
     "$INSTALL_DIR/uploads/foods" \
