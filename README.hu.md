@@ -68,8 +68,9 @@ konfigurálja.
 
 A SymptomTracker jelenleg alpha fejlesztési állapotban van.
 
-A publikus alpha kiadáshoz tartozó pontos telepítési útmutató a
-kiadási csomag elkészülte után kerül ide.
+Részletes magyar telepítési útmutató:
+
+[Telepítési útmutató](docs/INSTALL.hu.md)
 
 ## Nyelvek
 

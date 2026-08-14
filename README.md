@@ -67,8 +67,9 @@ runtime components automatically.
 
 SymptomTracker is currently in alpha development.
 
-Installation instructions for the public alpha release will be
-provided here once the release package is ready.
+Detailed installation instructions:
+
+[Installation guide](docs/INSTALL.md)
 
 ## Languages
 

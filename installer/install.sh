@@ -137,6 +137,19 @@ fi
 echo "$MSG_OS_OK"
 echo "  ${PRETTY_NAME:-Ubuntu 24.04}"
 
+ARCH="$(
+    dpkg --print-architecture
+)"
+
+if [ "$ARCH" != "amd64" ]; then
+    echo "$MSG_ARCH_UNSUPPORTED" >&2
+    echo "  $ARCH" >&2
+    exit 1
+fi
+
+echo "$MSG_ARCH_OK"
+echo "  $ARCH"
+
 
 # =========================================================
 # FÁJLOK
