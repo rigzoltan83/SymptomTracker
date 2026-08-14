@@ -599,6 +599,191 @@ class BodyPart(db.Model):
     )
 
 
+class IngredientTranslation(db.Model):
+    __tablename__ = "ingredient_translations"
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True,
+    )
+
+    ingredient_id = db.Column(
+        db.Integer,
+        db.ForeignKey(
+            "ingredients.id",
+            ondelete="CASCADE",
+        ),
+        nullable=False,
+        index=True,
+    )
+
+    language_code = db.Column(
+        db.String(10),
+        nullable=False,
+    )
+
+    name = db.Column(
+        db.String(250),
+        nullable=False,
+    )
+
+    ingredient = db.relationship(
+        "Ingredient",
+        backref=db.backref(
+            "translations",
+            cascade="all, delete-orphan",
+        ),
+    )
+
+    __table_args__ = (
+        db.UniqueConstraint(
+            "ingredient_id",
+            "language_code",
+            name="uq_ingredient_translation_language",
+        ),
+    )
+
+
+class RiskComponentTranslation(db.Model):
+    __tablename__ = "risk_component_translations"
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True,
+    )
+
+    risk_component_id = db.Column(
+        db.Integer,
+        db.ForeignKey(
+            "risk_components.id",
+            ondelete="CASCADE",
+        ),
+        nullable=False,
+        index=True,
+    )
+
+    language_code = db.Column(
+        db.String(10),
+        nullable=False,
+    )
+
+    name = db.Column(
+        db.String(200),
+        nullable=False,
+    )
+
+    description = db.Column(
+        db.Text,
+        nullable=True,
+    )
+
+    risk_component = db.relationship(
+        "RiskComponent",
+        backref=db.backref(
+            "translations",
+            cascade="all, delete-orphan",
+        ),
+    )
+
+    __table_args__ = (
+        db.UniqueConstraint(
+            "risk_component_id",
+            "language_code",
+            name="uq_risk_component_translation_language",
+        ),
+    )
+
+
+class SymptomTypeTranslation(db.Model):
+    __tablename__ = "symptom_type_translations"
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True,
+    )
+
+    symptom_type_id = db.Column(
+        db.Integer,
+        db.ForeignKey(
+            "symptom_types.id",
+            ondelete="CASCADE",
+        ),
+        nullable=False,
+        index=True,
+    )
+
+    language_code = db.Column(
+        db.String(10),
+        nullable=False,
+    )
+
+    name = db.Column(
+        db.String(200),
+        nullable=False,
+    )
+
+    symptom_type = db.relationship(
+        "SymptomType",
+        backref=db.backref(
+            "translations",
+            cascade="all, delete-orphan",
+        ),
+    )
+
+    __table_args__ = (
+        db.UniqueConstraint(
+            "symptom_type_id",
+            "language_code",
+            name="uq_symptom_type_translation_language",
+        ),
+    )
+
+
+class BodyPartTranslation(db.Model):
+    __tablename__ = "body_part_translations"
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True,
+    )
+
+    body_part_id = db.Column(
+        db.Integer,
+        db.ForeignKey(
+            "body_parts.id",
+            ondelete="CASCADE",
+        ),
+        nullable=False,
+        index=True,
+    )
+
+    language_code = db.Column(
+        db.String(10),
+        nullable=False,
+    )
+
+    name = db.Column(
+        db.String(200),
+        nullable=False,
+    )
+
+    body_part = db.relationship(
+        "BodyPart",
+        backref=db.backref(
+            "translations",
+            cascade="all, delete-orphan",
+        ),
+    )
+
+    __table_args__ = (
+        db.UniqueConstraint(
+            "body_part_id",
+            "language_code",
+            name="uq_body_part_translation_language",
+        ),
+    )
+
+
 symptom_event_body_parts = db.Table(
     "symptom_event_body_parts",
 
