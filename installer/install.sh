@@ -578,4 +578,114 @@ PYTHONDONTWRITEBYTECODE=1 \
 echo
 echo "$MSG_PHASE2_DONE"
 
+# ---------------------------------------------------------
+# SYSTEMD SERVICE
+# ---------------------------------------------------------
+
+echo
+echo "$MSG_CREATE_SERVICE"
+
+cat > /etc/systemd/system/symptomtracker.service <<EOF
+[Unit]
+Description=SymptomTracker Flask application
+After=network.target docker.service
+Requires=docker.service
+
+[Service]
+User=symptomtracker
+Group=symptomtracker
+WorkingDirectory=${INSTALL_DIR}
+
+EnvironmentFile=${INSTALL_DIR}/.env
+Environment=PYTHONUNBUFFERED=1
+
+ExecStart=${INSTALL_DIR}/venv/bin/gunicorn --workers 2 --bind 127.0.0.1:\${APP_PORT} --timeout 60 run:app
+
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+chmod 644 \
+    /etc/systemd/system/symptomtracker.service
+
+
+# ---------------------------------------------------------
+# SYSTEMD RELOAD / START
+# ---------------------------------------------------------
+
+echo
+echo "$MSG_RELOAD_SYSTEMD"
+
+systemctl daemon-reload
+
+echo
+echo "$MSG_START_SERVICE"
+
+systemctl enable \
+    symptomtracker.service
+
+systemctl restart \
+    symptomtracker.service
+
+
+# ---------------------------------------------------------
+# HTTP HEALTH CHECK
+# ---------------------------------------------------------
+
+echo
+echo "$MSG_WAIT_APP"
+
+APP_URL="http://127.0.0.1:${APP_PORT}/"
+
+if ! wait_for_http \
+    "$APP_URL" \
+    30 \
+    2
+then
+    echo "$MSG_APP_FAILED" >&2
+
+    systemctl status \
+        symptomtracker.service \
+        --no-pager \
+        -l \
+        >&2 \
+        || true
+
+    journalctl \
+        -u symptomtracker.service \
+        -n 100 \
+        --no-pager \
+        >&2 \
+        || true
+
+    exit 1
+fi
+
+echo "$MSG_APP_READY"
+
+
+# ---------------------------------------------------------
+# TELEPÍTÉS KÉSZ
+# ---------------------------------------------------------
+
+echo
+echo "========================================"
+echo "$MSG_INSTALL_DONE"
+echo "========================================"
+
+printf "%-24s %s\n" \
+    "$MSG_APP_PORT:" \
+    "$APP_PORT"
+
+printf "%-24s %s\n" \
+    "$MSG_DB_PORT:" \
+    "$DB_PORT"
+
+printf "%-24s %s\n" \
+    "$MSG_LOCAL_URL:" \
+    "$APP_URL"
+
 exit 0

@@ -106,3 +106,42 @@ wait_for_container_health() {
 
     return 1
 }
+
+wait_for_http() {
+    local url="$1"
+    local max_attempts="${2:-30}"
+    local sleep_seconds="${3:-2}"
+    local attempt=1
+
+    while [ "$attempt" -le "$max_attempts" ]; do
+        if python3 - "$url" <<'PY'
+import sys
+import urllib.request
+
+url = sys.argv[1]
+
+try:
+    with urllib.request.urlopen(
+        url,
+        timeout=3,
+    ) as response:
+        status = response.status
+
+except Exception:
+    raise SystemExit(1)
+
+if 200 <= status < 400:
+    raise SystemExit(0)
+
+raise SystemExit(1)
+PY
+        then
+            return 0
+        fi
+
+        sleep "$sleep_seconds"
+        attempt=$((attempt + 1))
+    done
+
+    return 1
+}
