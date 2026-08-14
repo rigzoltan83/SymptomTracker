@@ -186,6 +186,14 @@
 
     </main>
 
+    <script>
+        window.SYMPTOMTRACKER_I18N = {
+            saving: {{ t("js.saving") | tojson }},
+            saveFailed: {{ t("js.save_failed") | tojson }},
+            genericError: {{ t("js.generic_error") | tojson }}
+        };
+    </script>
+
     <script src="static/js/index.js"></script>
 
 </body>

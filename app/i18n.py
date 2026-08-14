@@ -683,6 +683,100 @@ TRANSLATIONS["en"].update({
 })
 
 
+TRANSLATIONS["hu"].update({
+    "food.basic_data_once": "Az alapadatokat csak egyszer kell megadni",
+
+    "export.heading": "Export",
+    "export.sheet_name": "Események",
+    "export.column.date_time": "Dátum és idő",
+    "export.column.event_type": "Eseménytípus",
+    "export.column.active": "Aktív",
+    "export.column.medication": "Gyógyszer",
+    "export.column.dose": "Adag",
+    "export.column.food": "Étel / ital",
+    "export.column.brand": "Márka",
+    "export.column.amount": "Mennyiség",
+    "export.column.ingredients": "Összetevők",
+    "export.column.symptom": "Tünet",
+    "export.column.severity": "Erősség",
+    "export.column.body_parts": "Testrészek",
+    "export.column.notes": "Megjegyzés",
+
+    "medication.no_default": "Nincs aktív alapértelmezett gyógyszer beállítva.",
+    "medication.logged": "{name} rögzítve.",
+
+    "js.saving": "Mentés...",
+    "js.save_failed": "Sikertelen mentés.",
+    "js.generic_error": "Hiba történt.",
+
+    "image.processing": "Képek feldolgozása…",
+    "image.count": "{count} kép",
+    "image.unreadable": "A kép nem olvasható.",
+    "image.processing_failed": "A kép nem dolgozható fel.",
+    "image.compression_failed": "A tömörítés sikertelen.",
+    "image.selected_food": "Kiválasztott ételkép",
+    "image.remove": "Kép eltávolítása",
+    "image.one_failed": "Az egyik kép feldolgozása nem sikerült.",
+    "image.still_processing": "A képek feldolgozása még folyamatban van.",
+})
+
+TRANSLATIONS["en"].update({
+    "food.basic_data_once": "Basic information only needs to be entered once",
+
+    "export.heading": "Export",
+    "export.sheet_name": "Events",
+    "export.column.date_time": "Date and time",
+    "export.column.event_type": "Event type",
+    "export.column.active": "Active",
+    "export.column.medication": "Medication",
+    "export.column.dose": "Dose",
+    "export.column.food": "Food / drink",
+    "export.column.brand": "Brand",
+    "export.column.amount": "Amount",
+    "export.column.ingredients": "Ingredients",
+    "export.column.symptom": "Symptom",
+    "export.column.severity": "Severity",
+    "export.column.body_parts": "Body parts",
+    "export.column.notes": "Notes",
+
+    "medication.no_default": "No active default medication is configured.",
+    "medication.logged": "{name} logged.",
+
+    "js.saving": "Saving...",
+    "js.save_failed": "Save failed.",
+    "js.generic_error": "An error occurred.",
+
+    "image.processing": "Processing images…",
+    "image.count": "{count} image(s)",
+    "image.unreadable": "The image cannot be read.",
+    "image.processing_failed": "The image cannot be processed.",
+    "image.compression_failed": "Image compression failed.",
+    "image.selected_food": "Selected food image",
+    "image.remove": "Remove image",
+    "image.one_failed": "One of the images could not be processed.",
+    "image.still_processing": "Image processing is still in progress.",
+})
+
+
+TRANSLATIONS["hu"].update({
+    "common.yes": "Igen",
+    "common.no": "Nem",
+
+    "export.event_type.medication": "Gyógyszer",
+    "export.event_type.food": "Étel / ital",
+    "export.event_type.symptom": "Tünet",
+})
+
+TRANSLATIONS["en"].update({
+    "common.yes": "Yes",
+    "common.no": "No",
+
+    "export.event_type.medication": "Medication",
+    "export.event_type.food": "Food / drink",
+    "export.event_type.symptom": "Symptom",
+})
+
+
 def normalize_language(language_code):
     if not language_code:
         return DEFAULT_LANGUAGE

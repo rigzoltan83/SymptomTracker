@@ -469,8 +469,22 @@
     );
 </script>
 
+<script>
+    window.FOOD_IMAGE_I18N = {
+        processing: {{ t("image.processing") | tojson }},
+        count: {{ t("image.count") | tojson }},
+        unreadable: {{ t("image.unreadable") | tojson }},
+        processingFailed: {{ t("image.processing_failed") | tojson }},
+        compressionFailed: {{ t("image.compression_failed") | tojson }},
+        selectedFood: {{ t("image.selected_food") | tojson }},
+        remove: {{ t("image.remove") | tojson }},
+        oneFailed: {{ t("image.one_failed") | tojson }},
+        stillProcessing: {{ t("image.still_processing") | tojson }}
+    };
+</script>
+
 <script
-    src="/symptomtracker/static/js/food_images.js?v=3"
+    src="/symptomtracker/static/js/food_images.js?v=4"
 ></script>
 
 </body>

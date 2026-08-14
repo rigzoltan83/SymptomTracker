@@ -134,7 +134,9 @@ def event_export_row(event):
         )
 
         ingredients = ", ".join(
-            item.ingredient.name
+            get_reference_name(
+                item.ingredient
+            )
             for item in food.ingredients
         )
 
@@ -143,9 +145,9 @@ def event_export_row(event):
         and event.symptom_event
     ):
         symptom_type = (
-            event.symptom_event
-            .symptom_type
-            .name
+            get_reference_name(
+                event.symptom_event.symptom_type
+            )
         )
 
         if event.symptom_event.severity is not None:
@@ -154,7 +156,9 @@ def event_export_row(event):
             )
 
         body_parts = ", ".join(
-            body_part.name
+            get_reference_name(
+                body_part
+            )
             for body_part
             in event.symptom_event.body_parts
         )
@@ -166,12 +170,15 @@ def event_export_row(event):
             event.occurred_at
         ).replace("T", " "),
 
-        "event_type": event.event_type,
+        "event_type": translate(
+            "export.event_type."
+            + event.event_type
+        ),
 
         "active": (
-            "Igen"
+            translate("common.yes")
             if event.active
-            else "Nem"
+            else translate("common.no")
         ),
 
         "medication": medication,
@@ -687,19 +694,19 @@ def export_csv():
     writer.writerow(
         [
             "ID",
-            "Dátum és idő",
-            "Eseménytípus",
-            "Aktív",
-            "Gyógyszer",
-            "Adag",
-            "Étel / ital",
-            "Márka",
-            "Mennyiség",
-            "Összetevők",
-            "Tünet",
-            "Erősség",
-            "Testrészek",
-            "Megjegyzés",
+            translate("export.column.date_time"),
+            translate("export.column.event_type"),
+            translate("export.column.active"),
+            translate("export.column.medication"),
+            translate("export.column.dose"),
+            translate("export.column.food"),
+            translate("export.column.brand"),
+            translate("export.column.amount"),
+            translate("export.column.ingredients"),
+            translate("export.column.symptom"),
+            translate("export.column.severity"),
+            translate("export.column.body_parts"),
+            translate("export.column.notes"),
         ]
     )
 
@@ -755,23 +762,25 @@ def export_xlsx():
     workbook = Workbook()
 
     sheet = workbook.active
-    sheet.title = "Események"
+    sheet.title = translate(
+        "export.sheet_name"
+    )
 
     headers = [
         "ID",
-        "Dátum és idő",
-        "Eseménytípus",
-        "Aktív",
-        "Gyógyszer",
-        "Adag",
-        "Étel / ital",
-        "Márka",
-        "Mennyiség",
-        "Összetevők",
-        "Tünet",
-        "Erősség",
-        "Testrészek",
-        "Megjegyzés",
+        translate("export.column.date_time"),
+        translate("export.column.event_type"),
+        translate("export.column.active"),
+        translate("export.column.medication"),
+        translate("export.column.dose"),
+        translate("export.column.food"),
+        translate("export.column.brand"),
+        translate("export.column.amount"),
+        translate("export.column.ingredients"),
+        translate("export.column.symptom"),
+        translate("export.column.severity"),
+        translate("export.column.body_parts"),
+        translate("export.column.notes"),
     ]
 
     sheet.append(headers)
@@ -3380,7 +3389,9 @@ def edit_food(food_id):
     confidence_labels = {
         "certain": "Biztos",
         "typical": "Tipikus",
-        "product_dependent": "Termékfüggő",
+        "product_dependent": translate(
+            "ingredient.product_dependent"
+        ),
     }
 
     for food_ingredient in food.ingredients:
@@ -3397,7 +3408,9 @@ def edit_food(food_id):
 
             risk_details_by_id[risk.id]["sources"].append(
                 {
-                    "ingredient": ingredient.name,
+                    "ingredient": get_reference_name(
+                        ingredient
+                    ),
                     "confidence": confidence_labels.get(
                         ingredient_risk.confidence,
                         ingredient_risk.confidence,
@@ -3812,9 +3825,8 @@ def add_default_medication():
         return jsonify(
             {
                 "ok": False,
-                "message": (
-                    "Nincs aktív alapértelmezett "
-                    "gyógyszer beállítva."
+                "message": translate(
+                    "medication.no_default"
                 ),
             }
         ), 500
@@ -3841,8 +3853,9 @@ def add_default_medication():
         {
             "ok": True,
             "event_id": event.id,
-            "message": (
-                f"{medication.name} rögzítve."
+            "message": translate(
+                "medication.logged",
+                name=medication.name,
             ),
         }
     )

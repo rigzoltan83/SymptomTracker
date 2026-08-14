@@ -1,3 +1,6 @@
+const i18n =
+    window.SYMPTOMTRACKER_I18N || {};
+
 const medicationButton =
     document.getElementById("medication-button");
 
@@ -21,7 +24,7 @@ async function addDefaultMedication() {
     medicationButton.disabled = true;
 
     showStatus(
-        "Mentés...",
+        (i18n.saving || "Saving..."),
         true
     );
 
@@ -37,7 +40,7 @@ async function addDefaultMedication() {
 
         if (!response.ok || !data.ok) {
             throw new Error(
-                data.message || "Sikertelen mentés."
+                data.message || i18n.saveFailed || "Save failed."
             );
         }
 
@@ -57,7 +60,7 @@ async function addDefaultMedication() {
         console.error(error);
 
         showStatus(
-            error.message || "Hiba történt.",
+            error.message || i18n.genericError || "An error occurred.",
             false
         );
 
