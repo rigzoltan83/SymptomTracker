@@ -2,6 +2,41 @@
 
 All notable changes to SymptomTracker will be documented in this file.
 
+## [0.1.0-alpha.6] - 2026-08-14
+
+Sixth public alpha release.
+
+### Fixed
+
+- Moved the default application port range to browser-friendly ports
+  8000-8199.
+- Updated local development fallback port to 8000.
+- Changed free-port detection to test all IPv4 interfaces.
+- Added LAN access URL detection after installation.
+- Added startup waiting for PostgreSQL before Gunicorn starts.
+- Ensured Docker is enabled and started during installation.
+- Added protection against leftover installation directories, system
+  users, system groups, database containers and database volumes.
+- Hardened system user/group creation.
+- Added explicit installation dependencies for tar and iproute2.
+- Added UFW firewall guidance when UFW is active.
+
+### Documentation
+
+- Updated installation documentation and `.env.example` for the new
+  application port range.
+
+### Validation
+
+- Installer and helper scripts pass ShellCheck and Bash syntax checks.
+- Python startup helper and application launcher pass syntax checks.
+- Legacy 5060/5061 application-port references were removed.
+
+### Status
+
+This is an alpha release intended for full clean-install and reboot
+validation.
+
 ## [0.1.0-alpha.5] - 2026-08-14
 
 Fifth public alpha release.
