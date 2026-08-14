@@ -7,9 +7,13 @@ BASE_DIR = Path(__file__).resolve().parent
 class Config:
     APPLICATION_ROOT = "/symptomtracker"
     SECRET_KEY = os.environ.get(
-        "SECRET_KEY",
-        "dev-only-secret",
+        "SECRET_KEY"
     )
+
+    if not SECRET_KEY:
+        raise RuntimeError(
+            "SECRET_KEY environment variable is required."
+        )
 
     SQLALCHEMY_DATABASE_URI = os.environ.get(
         "DATABASE_URL"

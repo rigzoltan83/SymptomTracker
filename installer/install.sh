@@ -114,6 +114,69 @@ fi
 
 
 # =========================================================
+# OPERÁCIÓS RENDSZER
+# =========================================================
+
+echo "$MSG_CHECK_OS"
+
+if [ ! -r /etc/os-release ]; then
+    echo "$MSG_OS_UNSUPPORTED" >&2
+    exit 1
+fi
+
+# shellcheck source=/dev/null
+source /etc/os-release
+
+if [ "${ID:-}" != "ubuntu" ] \
+    || [ "${VERSION_ID:-}" != "24.04" ]
+then
+    echo "$MSG_OS_UNSUPPORTED" >&2
+    exit 1
+fi
+
+echo "$MSG_OS_OK"
+echo "  ${PRETTY_NAME:-Ubuntu 24.04}"
+
+
+# =========================================================
+# ROOT / BOOTSTRAP
+# =========================================================
+
+if [ "$DRY_RUN" = false ]; then
+    if [ "$(id -u)" -ne 0 ]; then
+        echo "$MSG_ROOT" >&2
+        exit 1
+    fi
+
+    echo
+    echo "$MSG_BOOTSTRAP"
+
+    echo "$MSG_APT_PACKAGES"
+
+    apt-get update
+
+    apt-get install -y \
+        python3 \
+        python3-venv \
+        python3-pip \
+        ca-certificates \
+        curl
+
+    if command -v docker >/dev/null 2>&1 \
+        && docker compose version >/dev/null 2>&1
+    then
+        echo "$MSG_DOCKER_EXISTS"
+    else
+        echo "$MSG_INSTALL_DOCKER"
+
+        install_docker_ubuntu
+    fi
+
+    echo "$MSG_BOOTSTRAP_DONE"
+fi
+
+
+# =========================================================
 # FÁJLOK
 # =========================================================
 
