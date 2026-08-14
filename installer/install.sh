@@ -705,7 +705,7 @@ WorkingDirectory=${INSTALL_DIR}
 EnvironmentFile=${INSTALL_DIR}/.env
 Environment=PYTHONUNBUFFERED=1
 
-ExecStart=${INSTALL_DIR}/venv/bin/gunicorn --workers 2 --bind 127.0.0.1:\${APP_PORT} --timeout 60 run:app
+ExecStart=${INSTALL_DIR}/venv/bin/gunicorn --workers 2 --bind 0.0.0.0:\${APP_PORT} --timeout 60 run:app
 
 Restart=always
 RestartSec=3
