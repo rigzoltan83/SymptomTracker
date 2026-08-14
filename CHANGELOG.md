@@ -2,6 +2,38 @@
 
 All notable changes to SymptomTracker will be documented in this file.
 
+## [0.1.0-alpha.7] - 2026-08-14
+
+Seventh public alpha release.
+
+### Fixed
+
+- Reworked application URL generation to use Flask `url_for()` instead
+  of hardcoded `/symptomtracker` paths.
+- Fixed stylesheet and JavaScript asset loading on nested pages.
+- Fixed oversized language flags caused by missing stylesheet loading.
+- Fixed internal navigation, form actions, image URLs and redirects for
+  direct LAN access.
+- Added configurable reverse-proxy application prefix support.
+- Preserved direct root access while supporting deployments under a
+  `/symptomtracker` reverse-proxy path.
+- Fixed JavaScript API and export URLs to use server-generated routes.
+- Removed duplicated Flask and SQLAlchemy initialization code.
+
+### Validation
+
+- Direct LAN access works from the application root.
+- Reverse-proxy / Tailscale subpath access works with the configured
+  application prefix.
+- All HTML templates load successfully.
+- Python syntax and Git diff validation pass.
+- No hardcoded HTTP `/symptomtracker` paths remain in application
+  routes or templates.
+
+### Status
+
+This is an alpha release intended for clean-install validation.
+
 ## [0.1.0-alpha.6] - 2026-08-14
 
 Sixth public alpha release.
