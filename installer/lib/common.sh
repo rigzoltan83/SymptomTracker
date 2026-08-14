@@ -188,3 +188,54 @@ EOF
         --now \
         docker
 }
+
+package_is_installed() {
+    local package="$1"
+
+    dpkg-query \
+        -W \
+        -f='${Status}' \
+        "$package" \
+        2>/dev/null \
+        | grep -Fq \
+            'install ok installed'
+}
+
+
+ensure_docker_compose() {
+    if docker compose version \
+        >/dev/null 2>&1
+    then
+        return 0
+    fi
+
+    echo "$MSG_COMPOSE_MISSING"
+
+    if package_is_installed docker-ce; then
+        echo "$MSG_DOCKER_CE_FOUND"
+        echo "$MSG_INSTALL_COMPOSE"
+
+        apt-get update
+
+        apt-get install -y \
+            docker-compose-plugin
+
+    elif package_is_installed docker.io; then
+        echo "$MSG_DOCKER_IO_FOUND"
+        echo "$MSG_INSTALL_COMPOSE"
+
+        apt-get update
+
+        apt-get install -y \
+            docker-compose-v2
+
+    else
+        echo "$MSG_DOCKER_UNKNOWN" >&2
+        echo "$MSG_DOCKER_UNKNOWN_ABORT" >&2
+
+        return 1
+    fi
+
+    docker compose version \
+        >/dev/null 2>&1
+}

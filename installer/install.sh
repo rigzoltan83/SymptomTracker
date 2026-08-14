@@ -247,10 +247,19 @@ if [ "$DRY_RUN" = false ]; then
         ca-certificates \
         curl
 
-    if command -v docker >/dev/null 2>&1 \
-        && docker compose version >/dev/null 2>&1
-    then
-        echo "$MSG_DOCKER_EXISTS"
+    if command -v docker >/dev/null 2>&1; then
+        if docker compose version \
+            >/dev/null 2>&1
+        then
+            echo "$MSG_DOCKER_EXISTS"
+
+        else
+            if ! ensure_docker_compose; then
+                echo "$MSG_FAILED" >&2
+                exit 1
+            fi
+        fi
+
     else
         echo "$MSG_INSTALL_DOCKER"
 
