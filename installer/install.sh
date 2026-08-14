@@ -304,7 +304,209 @@ fi
 
 echo
 echo "$MSG_START"
+
+
+# ---------------------------------------------------------
+# ROOT ELLENŐRZÉS
+# ---------------------------------------------------------
+
+if [
+    "$(id -u)"
+    -ne 0
+]; then
+    echo "$MSG_ROOT" >&2
+    exit 1
+fi
+
+
+# ---------------------------------------------------------
+# SYSTEM USER
+# ---------------------------------------------------------
+
 echo
-echo "The installation phase is not enabled yet."
-echo "Use --dry-run."
-exit 1
+echo "$MSG_CREATE_USER"
+
+if ! id \
+    symptomtracker \
+    >/dev/null 2>&1
+then
+    useradd \
+        --system \
+        --home "$INSTALL_DIR" \
+        --shell /usr/sbin/nologin \
+        symptomtracker
+fi
+
+
+# ---------------------------------------------------------
+# TELEPÍTÉSI KÖNYVTÁR
+# ---------------------------------------------------------
+
+echo
+echo "$MSG_COPY_FILES"
+
+mkdir -p \
+    "$INSTALL_DIR"
+
+if [
+    "$PROJECT_DIR"
+    != "$INSTALL_DIR"
+]; then
+    tar \
+        --exclude='.git' \
+        --exclude='.env' \
+        --exclude='venv' \
+        --exclude='backups' \
+        --exclude='uploads/*' \
+        --exclude='__pycache__' \
+        --exclude='*.pyc' \
+        -C "$PROJECT_DIR" \
+        -cf - \
+        . \
+    | tar \
+        -C "$INSTALL_DIR" \
+        -xf -
+fi
+
+mkdir -p \
+    "$INSTALL_DIR/uploads/foods" \
+    "$INSTALL_DIR/uploads/symptoms" \
+    "$INSTALL_DIR/.gunicorn" \
+    "$INSTALL_DIR/backups"
+
+
+# ---------------------------------------------------------
+# TITKOK
+# ---------------------------------------------------------
+
+echo
+echo "$MSG_GENERATE_SECRETS"
+
+DB_PASSWORD="$(
+    generate_hex_secret 32
+)"
+
+SECRET_KEY="$(
+    generate_hex_secret 48
+)"
+
+
+# ---------------------------------------------------------
+# .ENV
+# ---------------------------------------------------------
+
+echo
+echo "$MSG_WRITE_ENV"
+
+umask 027
+
+cat > "${INSTALL_DIR}/.env" <<EOF
+DATABASE_URL=postgresql://symptomtracker_user:${DB_PASSWORD}@127.0.0.1:${DB_PORT}/symptomtracker
+SECRET_KEY=${SECRET_KEY}
+
+APP_PORT=${APP_PORT}
+DB_PORT=${DB_PORT}
+
+SYMPTOMTRACKER_DB_PASSWORD=${DB_PASSWORD}
+EOF
+
+chown \
+    root:symptomtracker \
+    "${INSTALL_DIR}/.env"
+
+chmod 640 \
+    "${INSTALL_DIR}/.env"
+
+
+# ---------------------------------------------------------
+# FÁJLJOGOSULTSÁGOK
+# ---------------------------------------------------------
+
+chown -R \
+    root:root \
+    "${INSTALL_DIR}/app" \
+    "${INSTALL_DIR}/migrations" \
+    "${INSTALL_DIR}/scripts" \
+    "${INSTALL_DIR}/seed" \
+    "${INSTALL_DIR}/installer"
+
+chown \
+    root:root \
+    "${INSTALL_DIR}/run.py" \
+    "${INSTALL_DIR}/config.py" \
+    "${INSTALL_DIR}/requirements.txt" \
+    "${INSTALL_DIR}/docker-compose.yml"
+
+chown -R \
+    symptomtracker:symptomtracker \
+    "${INSTALL_DIR}/uploads" \
+    "${INSTALL_DIR}/.gunicorn" \
+    "${INSTALL_DIR}/backups"
+
+chmod 750 \
+    "${INSTALL_DIR}/uploads" \
+    "${INSTALL_DIR}/uploads/foods" \
+    "${INSTALL_DIR}/uploads/symptoms" \
+    "${INSTALL_DIR}/.gunicorn" \
+    "${INSTALL_DIR}/backups"
+
+
+# ---------------------------------------------------------
+# POSTGRESQL
+# ---------------------------------------------------------
+
+echo
+echo "$MSG_START_DB"
+
+cd "$INSTALL_DIR"
+
+docker compose \
+    --env-file "${INSTALL_DIR}/.env" \
+    -f "${INSTALL_DIR}/docker-compose.yml" \
+    up \
+    -d \
+    db
+
+
+echo
+echo "$MSG_WAIT_DB"
+
+if ! wait_for_container_health \
+    symptomtracker-db \
+    30 \
+    2
+then
+    echo "$MSG_DB_FAILED" >&2
+
+    docker compose \
+        --env-file "${INSTALL_DIR}/.env" \
+        -f "${INSTALL_DIR}/docker-compose.yml" \
+        logs \
+        --tail=100 \
+        db \
+        >&2 \
+        || true
+
+    exit 1
+fi
+
+echo "$MSG_DB_READY"
+
+
+# ---------------------------------------------------------
+# ELSŐ SZAKASZ KÉSZ
+# ---------------------------------------------------------
+
+echo
+echo "$MSG_PHASE1_DONE"
+
+echo
+printf "%-24s %s\n" \
+    "$MSG_DB_PORT:" \
+    "$DB_PORT"
+
+printf "%-24s %s\n" \
+    "$MSG_APP_PORT:" \
+    "$APP_PORT"
+
+exit 0

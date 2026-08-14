@@ -53,3 +53,56 @@ find_free_port() {
 
     return 1
 }
+
+generate_hex_secret() {
+    local bytes="${1:-32}"
+
+    python3 - "$bytes" <<'PY'
+import secrets
+import sys
+
+byte_count = int(
+    sys.argv[1]
+)
+
+print(
+    secrets.token_hex(
+        byte_count
+    )
+)
+PY
+}
+
+
+wait_for_container_health() {
+    local container_name="$1"
+    local max_attempts="${2:-30}"
+    local sleep_seconds="${3:-2}"
+    local attempt=1
+
+    while [ "$attempt" -le "$max_attempts" ]; do
+        local status
+
+        status="$(
+            docker inspect \
+                --format '{{if .State.Health}}{{.State.Health.Status}}{{else}}none{{end}}' \
+                "$container_name" \
+                2>/dev/null \
+                || true
+        )"
+
+        if [ "$status" = "healthy" ]; then
+            return 0
+        fi
+
+        if [ "$status" = "unhealthy" ]; then
+            return 1
+        fi
+
+        sleep "$sleep_seconds"
+
+        attempt=$((attempt + 1))
+    done
+
+    return 1
+}
