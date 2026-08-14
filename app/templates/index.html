@@ -154,7 +154,7 @@
     🔴
 
     {% if event.symptom_event %}
-        {{ event.symptom_event.symptom_type.name }}
+{{ reference_name(event.symptom_event.symptom_type) }}
 
         {% if event.symptom_event.severity is not none %}
             ({{ event.symptom_event.severity }}/10)

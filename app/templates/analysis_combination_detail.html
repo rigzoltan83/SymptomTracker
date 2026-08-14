@@ -10,9 +10,9 @@
     >
 
     <title>
-        {{ detail.first_risk.name }}
+        {{ reference_name(detail.first_risk) }}
         +
-        {{ detail.second_risk.name }}
+        {{ reference_name(detail.second_risk) }}
         - SymptomTracker
     </title>
 
@@ -33,9 +33,9 @@
     <header class="header">
 
         <h1>
-            🧩 {{ detail.first_risk.name }}
+            🧩 {{ reference_name(detail.first_risk) }}
             +
-            {{ detail.second_risk.name }}
+            {{ reference_name(detail.second_risk) }}
         </h1>
 
         <p>
@@ -105,7 +105,7 @@
                                 selected
                             {% endif %}
                         >
-                            {{ symptom_type.name }}
+                            {{ reference_name(symptom_type) }}
                         </option>
 
                     {% endfor %}

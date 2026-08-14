@@ -202,7 +202,7 @@ placeholder="🔎 Étel, összetevő, tünet..."
     <span>
 
         {% if event.symptom_event %}
-            {{ event.symptom_event.symptom_type.name }}
+{{ reference_name(event.symptom_event.symptom_type) }}
         {% else %}
             Tünet
         {% endif %}
@@ -311,7 +311,7 @@ placeholder="🔎 Étel, összetevő, tünet..."
                     in event.symptom_event.body_parts
                 %}
 
-                    {{ body_part.name }}{%
+                    {{ reference_name(body_part) }}{%
                         if not loop.last
                     %}, {% endif %}
 

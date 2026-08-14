@@ -11,7 +11,7 @@
     >
 
     <title>
-        {{ risk_component.name }}
+        {{ reference_name(risk_component) }}
         - Összetevők
     </title>
 
@@ -34,7 +34,7 @@
     <header class="header">
 
         <h1>
-            ⚠️ {{ risk_component.name }}
+            ⚠️ {{ reference_name(risk_component) }}
         </h1>
 
         <p>
@@ -142,7 +142,7 @@
                             >
 
                             <span>
-                                {{ ingredient.name }}
+                                {{ reference_name(ingredient) }}
                             </span>
 
                         </label>

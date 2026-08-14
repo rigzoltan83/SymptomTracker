@@ -107,7 +107,7 @@
     >
 
         <strong>
-            {{ risk.name }}
+{{ reference_name(risk) }}
         </strong>
 
         <span class="compact-risk-meta">
@@ -135,7 +135,7 @@
     <a
         class="compact-risk-edit"
         href="/symptomtracker/admin/risk-components/{{ risk.id }}/edit"
-        aria-label="{{ risk.name }} szerkesztése"
+aria-label="{{ reference_name(risk) }} szerkesztése"
     >
         ›
     </a>

@@ -9,7 +9,7 @@
     >
 
     <title>
-        {{ detail.risk.name }} - Elemzés
+        {{ reference_name(detail.risk) }} - Elemzés
     </title>
 
     <link
@@ -28,7 +28,7 @@
     <header class="header">
 
         <h1>
-            ⚠️ {{ detail.risk.name }}
+            ⚠️ {{ reference_name(detail.risk) }}
         </h1>
 
         <p>
@@ -124,7 +124,7 @@
                                 selected
                             {% endif %}
                         >
-                            {{ symptom_type.name }}
+                            {{ reference_name(symptom_type) }}
                         </option>
 
                     {% endfor %}
@@ -544,7 +544,7 @@
                 <p>
                     Minden olyan étkezés,
                     amelynél a
-                    {{ detail.risk.name }}
+                    {{ reference_name(detail.risk) }}
                     faktor aktív volt.
                 </p>
 

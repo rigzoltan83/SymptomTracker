@@ -321,3 +321,186 @@ def find_reference_by_name(
         )
 
     return query.first()
+
+def reference_name_expression(
+    model,
+    language_code=None,
+):
+    config = REFERENCE_CONFIG.get(model)
+
+    if config is None:
+        raise ValueError(
+            "Nem támogatott többnyelvű törzsadat."
+        )
+
+    language_code = normalize_language(
+        language_code
+        or get_current_language()
+    )
+
+    translation_model = config[
+        "translation_model"
+    ]
+
+    foreign_key = config[
+        "foreign_key"
+    ]
+
+    expression = db.func.coalesce(
+        translation_model.name,
+        model.name,
+    )
+
+    return (
+        translation_model,
+        foreign_key,
+        language_code,
+        expression,
+    )
+
+
+def apply_reference_name_join(
+    query,
+    model,
+    language_code=None,
+):
+    (
+        translation_model,
+        foreign_key,
+        language_code,
+        expression,
+    ) = reference_name_expression(
+        model,
+        language_code,
+    )
+
+    query = query.outerjoin(
+        translation_model,
+        db.and_(
+            getattr(
+                translation_model,
+                foreign_key,
+            ) == model.id,
+            translation_model.language_code
+            == language_code,
+        ),
+    )
+
+    return query, expression
+
+def order_reference_query(
+    query,
+    model,
+    language_code=None,
+):
+    query, display_name = (
+        apply_reference_name_join(
+            query,
+            model,
+            language_code,
+        )
+    )
+
+    return query.order_by(
+        display_name
+    )
+
+def reference_name_matches(
+    model,
+    pattern,
+    language_code=None,
+):
+    config = REFERENCE_CONFIG.get(model)
+
+    if config is None:
+        raise ValueError(
+            "Nem támogatott többnyelvű törzsadat."
+        )
+
+    language_code = normalize_language(
+        language_code
+        or get_current_language()
+    )
+
+    translation_model = config[
+        "translation_model"
+    ]
+
+    language_exists = model.translations.any(
+        translation_model.language_code
+        == language_code
+    )
+
+    translated_match = (
+        model.translations.any(
+            db.and_(
+                translation_model.language_code
+                == language_code,
+                translation_model.name.ilike(
+                    pattern
+                ),
+            )
+        )
+    )
+
+    fallback_match = db.and_(
+        ~language_exists,
+        model.name.ilike(pattern),
+    )
+
+    return db.or_(
+        translated_match,
+        fallback_match,
+    )
+
+
+def reference_description_matches(
+    model,
+    pattern,
+    language_code=None,
+):
+    config = REFERENCE_CONFIG.get(model)
+
+    if (
+        config is None
+        or not config["has_description"]
+    ):
+        raise ValueError(
+            "A törzsadatnak nincs fordítható leírása."
+        )
+
+    language_code = normalize_language(
+        language_code
+        or get_current_language()
+    )
+
+    translation_model = config[
+        "translation_model"
+    ]
+
+    language_exists = model.translations.any(
+        translation_model.language_code
+        == language_code
+    )
+
+    translated_match = (
+        model.translations.any(
+            db.and_(
+                translation_model.language_code
+                == language_code,
+                translation_model.description.ilike(
+                    pattern
+                ),
+            )
+        )
+    )
+
+    fallback_match = db.and_(
+        ~language_exists,
+        model.description.ilike(pattern),
+    )
+
+    return db.or_(
+        translated_match,
+        fallback_match,
+    )

@@ -107,7 +107,7 @@
         <div class="ingredient-admin-main">
 
             <strong>
-                {{ ingredient.name }}
+{{ reference_name(ingredient) }}
             </strong>
 
             {% if ingredient.risk_components %}
@@ -117,7 +117,7 @@
                     {% for link in ingredient.risk_components %}
 
                         <span class="ingredient-risk-chip">
-                            {{ link.risk_component.name }}
+{{ reference_name(link.risk_component) }}
                         </span>
 
                     {% endfor %}

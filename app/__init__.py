@@ -67,6 +67,11 @@ def create_app():
         translate,
     )
 
+    from app.reference_i18n import (
+        get_reference_description,
+        get_reference_name,
+    )
+
     @app.context_processor
     def inject_i18n():
         return {
@@ -77,6 +82,12 @@ def create_app():
                 SUPPORTED_LANGUAGES
             ),
             "t": translate,
+            "reference_name": (
+                get_reference_name
+            ),
+            "reference_description": (
+                get_reference_description
+            ),
         }
 
     db.init_app(app)

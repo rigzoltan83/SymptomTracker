@@ -53,10 +53,14 @@ from app.i18n import (
 
 
 from app.reference_i18n import (
+    apply_reference_name_join,
     create_reference_translations,
     find_reference_by_name,
     get_reference_description,
     get_reference_name,
+    order_reference_query,
+    reference_description_matches,
+    reference_name_matches,
     update_current_reference_translation,
 )
 
@@ -415,12 +419,12 @@ def analysis_page():
     )
 
     symptom_types = (
-        SymptomType.query
-        .filter(
-            SymptomType.active.is_(True)
-        )
-        .order_by(
-            SymptomType.name
+        order_reference_query(
+            SymptomType.query
+            .filter(
+                SymptomType.active.is_(True)
+            ),
+            SymptomType,
         )
         .all()
     )
@@ -512,12 +516,12 @@ def analysis_risk_detail(
     )
 
     symptom_types = (
-        SymptomType.query
-        .filter(
-            SymptomType.active.is_(True)
-        )
-        .order_by(
-            SymptomType.name
+        order_reference_query(
+            SymptomType.query
+            .filter(
+                SymptomType.active.is_(True)
+            ),
+            SymptomType,
         )
         .all()
     )
@@ -609,12 +613,12 @@ def analysis_combination_detail(
         abort(404)
 
     symptom_types = (
-        SymptomType.query
-        .filter(
-            SymptomType.active.is_(True)
-        )
-        .order_by(
-            SymptomType.name
+        order_reference_query(
+            SymptomType.query
+            .filter(
+                SymptomType.active.is_(True)
+            ),
+            SymptomType,
         )
         .all()
     )
@@ -848,7 +852,12 @@ def admin_symptom_types():
         "active",
     ).strip()
 
-    query = SymptomType.query
+    query, display_name = (
+        apply_reference_name_join(
+            SymptomType.query,
+            SymptomType,
+        )
+    )
 
     if status == "active":
         query = query.filter(
@@ -864,12 +873,12 @@ def admin_symptom_types():
         pattern = f"%{search}%"
 
         query = query.filter(
-            SymptomType.name.ilike(pattern)
+            display_name.ilike(pattern)
         )
 
     symptom_types = (
         query
-        .order_by(SymptomType.name)
+        .order_by(display_name)
         .all()
     )
 
@@ -893,7 +902,12 @@ def admin_body_parts():
         "active",
     ).strip()
 
-    query = BodyPart.query
+    query, display_name = (
+        apply_reference_name_join(
+            BodyPart.query,
+            BodyPart,
+        )
+    )
 
     if status == "active":
         query = query.filter(
@@ -909,12 +923,12 @@ def admin_body_parts():
         pattern = f"%{search}%"
 
         query = query.filter(
-            BodyPart.name.ilike(pattern)
+            display_name.ilike(pattern)
         )
 
     body_parts = (
         query
-        .order_by(BodyPart.name)
+        .order_by(display_name)
         .all()
     )
 
@@ -1262,7 +1276,12 @@ def admin_risk_components():
         "active",
     ).strip()
 
-    query = RiskComponent.query
+    query, display_name = (
+        apply_reference_name_join(
+            RiskComponent.query,
+            RiskComponent,
+        )
+    )
 
     if status == "active":
         query = query.filter(
@@ -1279,9 +1298,12 @@ def admin_risk_components():
 
         query = query.filter(
             or_(
-                RiskComponent.name.ilike(pattern),
+                display_name.ilike(pattern),
                 RiskComponent.category.ilike(pattern),
-                RiskComponent.description.ilike(pattern),
+                reference_description_matches(
+                    RiskComponent,
+                    pattern,
+                )
             )
         )
 
@@ -1289,7 +1311,7 @@ def admin_risk_components():
         query
         .order_by(
             RiskComponent.category,
-            RiskComponent.name,
+            display_name,
         )
         .all()
     )
@@ -1439,8 +1461,9 @@ def admin_risk_component_ingredients(
         pattern = f"%{search}%"
 
         query = query.filter(
-            Ingredient.name.ilike(
-                pattern
+            reference_name_matches(
+                Ingredient,
+                pattern,
             )
         )
 
@@ -1463,14 +1486,6 @@ def admin_risk_component_ingredients(
                     existing_links.keys()
                 )
             )
-
-    ingredients = (
-        query
-        .order_by(
-            Ingredient.name
-        )
-        .all()
-    )
 
     selected_confidences = {
         ingredient_id:
@@ -1730,13 +1745,18 @@ def admin_ingredients():
     ):
         risk_status = "all"
 
-    query = Ingredient.query
+    query, display_name = (
+        apply_reference_name_join(
+            Ingredient.query,
+            Ingredient,
+        )
+    )
 
     if search:
         pattern = f"%{search}%"
 
         query = query.filter(
-            Ingredient.name.ilike(pattern)
+            display_name.ilike(pattern)
         )
 
     if risk_status == "with":
@@ -1751,7 +1771,7 @@ def admin_ingredients():
 
     ingredients = (
         query
-        .order_by(Ingredient.name)
+        .order_by(display_name)
         .all()
     )
 
@@ -1773,12 +1793,21 @@ def admin_edit_ingredient(ingredient_id):
         ingredient_id,
     )
 
+    risk_query, risk_display_name = (
+        apply_reference_name_join(
+            RiskComponent.query
+            .filter(
+                RiskComponent.active.is_(True)
+            ),
+            RiskComponent,
+        )
+    )
+
     risk_components = (
-        RiskComponent.query
-        .filter(RiskComponent.active.is_(True))
+        risk_query
         .order_by(
             RiskComponent.category,
-            RiskComponent.name,
+            risk_display_name,
         )
         .all()
     )
@@ -2258,11 +2287,11 @@ def events():
                         or_(
                             Food.name.ilike(pattern),
                             Food.brand.ilike(pattern),
-
                             Food.ingredients.any(
                                 FoodIngredient.ingredient.has(
-                                    Ingredient.name.ilike(
-                                        pattern
+                                    reference_name_matches(
+                                        Ingredient,
+                                        pattern,
                                     )
                                 )
                             ),
@@ -2273,14 +2302,16 @@ def events():
                 Event.symptom_event.has(
                     or_(
                         SymptomEvent.symptom_type.has(
-                            SymptomType.name.ilike(
-                                pattern
+                            reference_name_matches(
+                                SymptomType,
+                                pattern,
                             )
                         ),
 
                         SymptomEvent.body_parts.any(
-                            BodyPart.name.ilike(
-                                pattern
+                            reference_name_matches(
+                                BodyPart,
+                                pattern,
                             )
                         ),
                     )
@@ -2445,19 +2476,23 @@ def edit_event(event_id):
                     event=event,
                     local_occurred_at=occurred_at,
                     symptom_types=(
+                        order_reference_query(
                         SymptomType.query
                         .filter(
                             SymptomType.active.is_(True)
-                        )
-                        .order_by(SymptomType.name)
+                        ),
+                        SymptomType,
+                    )
                         .all()
                     ),
                     body_parts=(
+                        order_reference_query(
                         BodyPart.query
                         .filter(
                             BodyPart.active.is_(True)
-                        )
-                        .order_by(BodyPart.name)
+                        ),
+                        BodyPart,
+                    )
                         .all()
                     ),
                     selected_body_part_ids=(
@@ -2476,19 +2511,23 @@ def edit_event(event_id):
                     event=event,
                     local_occurred_at=occurred_at,
                     symptom_types=(
+                        order_reference_query(
                         SymptomType.query
                         .filter(
                             SymptomType.active.is_(True)
-                        )
-                        .order_by(SymptomType.name)
+                        ),
+                        SymptomType,
+                    )
                         .all()
                     ),
                     body_parts=(
+                        order_reference_query(
                         BodyPart.query
                         .filter(
                             BodyPart.active.is_(True)
-                        )
-                        .order_by(BodyPart.name)
+                        ),
+                        BodyPart,
+                    )
                         .all()
                     ),
                     selected_body_part_ids=(
@@ -2513,20 +2552,24 @@ def edit_event(event_id):
                         event=event,
                         local_occurred_at=occurred_at,
                         symptom_types=(
+                            order_reference_query(
                             SymptomType.query
                             .filter(
                                 SymptomType.active.is_(True)
-                            )
-                            .order_by(SymptomType.name)
-                            .all()
+                            ),
+                            SymptomType,
+                        )
+                        .all()
                         ),
                         body_parts=(
+                            order_reference_query(
                             BodyPart.query
                             .filter(
                                 BodyPart.active.is_(True)
-                            )
-                            .order_by(BodyPart.name)
-                            .all()
+                            ),
+                            BodyPart,
+                        )
+                        .all()
                         ),
                         selected_body_part_ids=(
                             selected_body_part_ids
@@ -2542,20 +2585,24 @@ def edit_event(event_id):
                         event=event,
                         local_occurred_at=occurred_at,
                         symptom_types=(
+                            order_reference_query(
                             SymptomType.query
                             .filter(
                                 SymptomType.active.is_(True)
-                            )
-                            .order_by(SymptomType.name)
-                            .all()
+                            ),
+                            SymptomType,
+                        )
+                        .all()
                         ),
                         body_parts=(
+                            order_reference_query(
                             BodyPart.query
                             .filter(
                                 BodyPart.active.is_(True)
-                            )
-                            .order_by(BodyPart.name)
-                            .all()
+                            ),
+                            BodyPart,
+                        )
+                        .all()
                         ),
                         selected_body_part_ids=(
                             selected_body_part_ids
@@ -2628,16 +2675,20 @@ def edit_event(event_id):
         and event.symptom_event
     ):
         symptom_types = (
+            order_reference_query(
             SymptomType.query
-            .filter(SymptomType.active.is_(True))
-            .order_by(SymptomType.name)
+            .filter(SymptomType.active.is_(True)),
+            SymptomType,
+        )
             .all()
         )
 
         body_parts = (
+            order_reference_query(
             BodyPart.query
-            .filter(BodyPart.active.is_(True))
-            .order_by(BodyPart.name)
+            .filter(BodyPart.active.is_(True)),
+            BodyPart,
+        )
             .all()
         )
 
@@ -2804,8 +2855,10 @@ def new_food():
         return_to = "log"
 
     ingredients = (
-        Ingredient.query
-        .order_by(Ingredient.name)
+        order_reference_query(
+        Ingredient.query,
+        Ingredient,
+    )
         .all()
     )
 
@@ -3060,8 +3113,10 @@ def edit_food(food_id):
     )
 
     ingredients = (
-        Ingredient.query
-        .order_by(Ingredient.name)
+        order_reference_query(
+        Ingredient.query,
+        Ingredient,
+    )
         .all()
     )
 
@@ -3475,17 +3530,21 @@ def log_food(food_id):
 )
 def add_symptom():
     symptom_types = (
+        order_reference_query(
         SymptomType.query
-        .filter(SymptomType.active.is_(True))
-        .order_by(SymptomType.name)
-        .all()
+        .filter(SymptomType.active.is_(True)),
+        SymptomType,
+    )
+    .all()
     )
 
     body_parts = (
+        order_reference_query(
         BodyPart.query
-        .filter(BodyPart.active.is_(True))
-        .order_by(BodyPart.name)
-        .all()
+        .filter(BodyPart.active.is_(True)),
+        BodyPart,
+    )
+    .all()
     )
 
     if request.method == "POST":

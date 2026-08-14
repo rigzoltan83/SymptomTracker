@@ -10,6 +10,10 @@ from app.models import (
     RiskComponent,
 )
 
+from app.reference_i18n import (
+    get_reference_name,
+)
+
 from app import db
 
 def _food_risk_ids(event):
@@ -336,11 +340,15 @@ def build_analysis(
                 if symptom_type is None:
                     continue
 
+                symptom_name = get_reference_name(
+                    symptom_type
+                )
+
                 symptom_counts[
-                    symptom_type.name
+                    symptom_name
                 ] = (
                     symptom_counts.get(
-                        symptom_type.name,
+                        symptom_name,
                         0,
                     )
                     + 1
@@ -364,7 +372,9 @@ def build_analysis(
         risk_stats.append(
             {
                 "risk_id": risk.id,
-                "name": risk.name,
+                "name": get_reference_name(
+                    risk
+                ),
                 "category": (
                     risk.category
                 ),
@@ -584,13 +594,17 @@ def build_analysis(
                         first_risk.id
                     ),
                     "first_name": (
-                        first_risk.name
+                        get_reference_name(
+                            first_risk
+                        )
                     ),
                     "second_risk_id": (
                         second_risk.id
                     ),
                     "second_name": (
-                        second_risk.name
+                        get_reference_name(
+                            second_risk
+                        )
                     ),
                     "pair_count": (
                         pair_count
@@ -713,7 +727,9 @@ def build_analysis(
                 if risk is not None:
                     risks[
                         risk.id
-                    ] = risk.name
+                    ] = get_reference_name(
+                        risk
+                    )
 
         symptom_event = (
             symptom.symptom_event
